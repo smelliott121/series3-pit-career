@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pit Career: Series 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Archivo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0d12;--panel:#11161e;--panel2:#171e29;--line:#232c3a;
+  --text:#e7ecf2;--mute:#8a96a8;--amber:#ffb000;--amberD:#7a5500;
+  --green:#22d37a;--red:#ff4d5e;--blue:#4da3ff;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--sans:'Archivo',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;background:
+  radial-gradient(1200px 500px at 50% -200px,#1a2433 0%,transparent 70%),var(--bg)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px 60px}
+
+/* ticker */
+.ticker{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid var(--amberD);overflow:hidden;white-space:nowrap;height:30px;display:flex;align-items:center}
+.ticker .track{display:inline-block;animation:scroll 140s linear infinite;font:500 12px/30px var(--mono);color:var(--amber)}
+.ticker span{margin-right:34px}.ticker b{color:var(--green);font-weight:500}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* header */
+.top{display:flex;justify-content:space-between;align-items:flex-end;padding:18px 0 14px;gap:10px}
+.brand{font:900 26px/1 var(--sans);letter-spacing:-.02em;text-transform:uppercase}
+.brand em{font-style:normal;color:var(--amber)}
+.brand small{display:block;font:500 11px var(--mono);color:var(--mute);letter-spacing:.12em;margin-top:6px}
+.iconbtn{font:500 11px var(--mono);color:var(--mute);border:1px solid var(--line);padding:6px 9px;border-radius:6px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.badge{display:flex;gap:14px;align-items:center}
+.rankchip{width:54px;height:54px;border-radius:10px;background:linear-gradient(160deg,#2a1f00,#000);border:1px solid var(--amberD);display:grid;place-items:center;font:800 20px var(--mono);color:var(--amber);flex:none}
+.lbl{font:500 10px var(--mono);letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+.rankname{font:800 20px var(--sans);margin:2px 0}
+.bar{height:6px;background:#000;border-radius:3px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--amber);border-radius:3px;transition:width .5s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:var(--panel2);border-radius:8px;padding:9px 10px}
+.stat .v{font:700 16px var(--mono);margin-top:3px}
+.pos{color:var(--green)}.neg{color:var(--red)}
+
+.sect{font:800 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px;display:flex;justify-content:space-between;align-items:center}
+.sect .lbl{letter-spacing:.06em}
+
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left;position:relative;overflow:hidden}
+.mode:active{transform:scale(.98)}
+.mode h3{font:800 16px var(--sans);margin:4px 0}
+.mode p{font-size:12px;color:var(--mute);line-height:1.35}
+.mode.boss{grid-column:1/-1;border-color:var(--amberD);background:linear-gradient(120deg,#1d1600,#11161e 60%)}
+.mode.boss h3{font-size:20px;color:var(--amber)}
+.mode .k{font:700 11px var(--mono);color:var(--amber)}
+.mode .cnt{position:absolute;right:12px;top:12px;font:700 12px var(--mono);background:var(--red);color:#fff;border-radius:10px;padding:2px 8px}
+
+.desk{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.desk:active{transform:scale(.99)}
+.desk .no{font:700 14px var(--mono);color:var(--amber);width:28px;flex:none}
+.desk .t{flex:1;min-width:0}
+.desk h4{font:700 15px var(--sans)}
+.desk p{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.desk .r{text-align:right;flex:none}
+.stars{font-size:13px;letter-spacing:1px;color:var(--amber)}
+.stars .off{color:#333c4a}
+.desk.locked{opacity:.45}
+.desk.locked .no{color:var(--mute)}
+.mastery{font:500 10px var(--mono);color:var(--mute);margin-top:2px}
+
+/* play */
+.hud{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:14px 0 10px}
+.quit{font:500 12px var(--mono);color:var(--mute);border:1px solid var(--line);border-radius:6px;padding:6px 9px}
+.prog{height:6px;background:#000;border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--amber);transition:width .3s}
+.hudr{font:700 13px var(--mono)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:500 12px var(--mono)}
+.chip b{font-weight:700}
+.lives{letter-spacing:2px}
+.qcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+.qmeta{font:500 11px var(--mono);color:var(--mute);letter-spacing:.08em;display:flex;justify-content:space-between;margin-bottom:10px}
+.qtext{font:600 19px/1.35 var(--sans)}
+.proposal{margin-top:14px;border-left:3px solid var(--amber);background:#1a1606;padding:10px 12px;border-radius:0 8px 8px 0;font:600 16px/1.35 var(--sans)}
+.proposal .lbl{display:block;margin-bottom:4px;color:var(--amber)}
+.opts{display:grid;gap:9px;margin-top:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;font:500 15px/1.35 var(--sans);transition:background .15s,border-color .15s}
+.opt .key{font:700 12px var(--mono);color:var(--mute);border:1px solid var(--line);border-radius:5px;padding:1px 6px;flex:none;margin-top:1px}
+.opt:not([disabled]):active{transform:scale(.99)}
+.opt.sel{border-color:var(--amber)}
+.opt.ok{background:#0c2a1b;border-color:var(--green)}
+.opt.bad{background:#2c0e13;border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.tfrow{grid-template-columns:1fr 1fr}
+.tfrow .opt{justify-content:center;font:800 17px var(--sans)}
+.fb{margin-top:12px;border-radius:12px;padding:14px;border:1px solid}
+.fb.ok{background:#0b1f15;border-color:#145c37}.fb.bad{background:#230c10;border-color:#6b1a24}
+.fb h5{font:800 15px var(--sans);display:flex;justify-content:space-between}
+.fb p{font-size:14px;line-height:1.45;margin-top:6px;color:#cfd7e1}
+.fb .delta{font:700 15px var(--mono)}
+.next{display:block;width:100%;margin-top:12px;background:var(--amber);color:#000;font:800 16px var(--sans);border-radius:10px;padding:14px;letter-spacing:.02em}
+.next.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:50;display:grid;place-items:center;opacity:0}
+.flash.show{animation:flash .9s ease-out}
+.flash div{font:900 40px var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:14px 22px;border:3px solid;border-radius:10px;transform:rotate(-6deg);background:rgba(0,0,0,.6)}
+@keyframes flash{0%{opacity:0;transform:scale(1.3)}15%{opacity:1;transform:scale(1)}70%{opacity:1}100%{opacity:0}}
+.float{position:fixed;left:50%;top:40%;transform:translateX(-50%);font:800 28px var(--mono);pointer-events:none;z-index:40;animation:up 1s ease-out forwards}
+@keyframes up{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-70px)}}
+
+/* results */
+.big{font:900 54px/1 var(--mono);letter-spacing:-.03em}
+.verdict{font:900 28px var(--sans);text-transform:uppercase;letter-spacing:.02em}
+.res-head{text-align:center;padding:26px 16px}
+.res-head .stars{font-size:30px;margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{font:500 10px var(--mono);letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
+td.n{text-align:right;font-family:var(--mono)}
+.miss{border-bottom:1px solid var(--line);padding:12px 0}
+.miss q{display:block;font-weight:600;quotes:none;font-size:14px}
+.miss .a{font-size:13px;color:var(--green);margin-top:4px}
+.miss .y{font-size:13px;color:var(--red);margin-top:2px}
+.miss .e{font-size:13px;color:var(--mute);margin-top:4px;line-height:1.4}
+.row{display:flex;gap:10px}.row>*{flex:1}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:60;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal .card{max-width:420px;width:100%;text-align:center;padding:26px 20px}
+.modal h2{font:900 26px var(--sans);margin:8px 0;text-transform:uppercase}
+.modal p{color:var(--mute);font-size:14px;line-height:1.45}
+.toggle{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;text-align:left;width:100%}
+.sw{width:42px;height:24px;border-radius:12px;background:#333c4a;position:relative;flex:none;transition:.2s}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--amber)}.sw.on::after{left:21px}
+.cs{margin-bottom:12px;scroll-margin-top:44px}
+.cs h3{font:800 18px var(--sans);margin:4px 0 10px}
+.cs p,.cs li{font-size:14px;line-height:1.5;color:#d3dae4}
+.cs ul,.cs ol{padding-left:20px;margin:8px 0}.cs li{margin-bottom:6px}
+.cs-hook{font:800 18px var(--sans);color:var(--amber);text-align:center;border:1px dashed var(--amberD);border-radius:8px;padding:10px;margin:10px 0}
+.cs-note{font-size:13px!important;color:var(--mute)!important;margin-top:8px}
+.cs-ex{background:var(--panel2);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:8px}
+.cs-line{display:flex;justify-content:space-between;gap:6px;font:500 11px var(--mono);background:#000;border-radius:8px;padding:10px;margin:8px 0;flex-wrap:wrap}
+.cs-pic{font:700 13px var(--mono);text-align:center;background:#000;border-radius:8px;padding:12px;line-height:2;color:var(--amber)}
+.cs-mkt{color:var(--text)}
+.cs-eq{font:700 16px/1.8 var(--mono);background:#000;border-radius:8px;padding:10px 14px;color:var(--amber);margin:8px 0}
+.cs-t{margin:6px 0}.cs-t td,.cs-t th{font-size:13px;padding:7px 6px}
+.cs-t td:last-child{font-family:var(--mono);text-align:right}
+.mode.wide{grid-column:1/-1;display:flex;align-items:center;gap:14px}
+.mode.wide .ic{font:800 22px var(--mono);color:var(--amber);border:1px solid var(--amberD);border-radius:8px;width:44px;height:44px;display:grid;place-items:center;flex:none}
+.cd{border-color:var(--amberD)}
+.cdtop{display:flex;justify-content:space-between;align-items:flex-start}
+.cdn{font:900 46px/1 var(--mono);color:var(--amber);letter-spacing:-.03em}
+.streak{text-align:right}.streak .v{font:800 26px var(--mono);margin-top:2px;color:var(--mute)}.streak.on .v{color:var(--green)}
+.ph{font-size:14px;line-height:1.45;margin-top:12px;color:#d3dae4}.ph .k{font:700 11px var(--mono);color:var(--amber);margin-right:4px}
+.din{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px;font:500 13px var(--mono);color-scheme:dark}
+.ladder{width:100%;display:block;margin-top:12px;border-radius:8px;border:1px solid var(--line)}
+.ladder .tk{font:500 10px var(--mono);fill:#6b778a}.ladder .zl{font:700 10px var(--mono);letter-spacing:.1em}
+.ladder .mk{font:700 11px var(--mono);fill:#000}.ladder .tg{font:700 13px var(--mono);fill:#4da3ff}
+.ladder .pl{animation:drop .35s ease-out}@keyframes drop{from{opacity:0;transform:translateX(30px)}to{opacity:1}}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mgrid>div{display:grid;gap:8px}
+.mt{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 10px;font:600 14px var(--sans);min-height:56px;transition:.15s}
+.mt.r{font-family:var(--mono);font-size:13px}
+.mt.sel{border-color:var(--amber);background:#1d1600}.mt.done{opacity:.25;border-color:var(--green)}.mt.bad{border-color:var(--red);background:#2c0e13}
+/* ===== polish pass ===== */
+body{background:
+  radial-gradient(900px 420px at 50% -160px,rgba(255,176,0,.10) 0%,transparent 70%),
+  linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px) 0 0/100% 28px,
+  var(--bg)}
+#app>*{animation:rise .36s cubic-bezier(.2,.8,.2,1) both}
+#app>*:nth-child(2){animation-delay:.03s}#app>*:nth-child(3){animation-delay:.06s}#app>*:nth-child(4){animation-delay:.09s}
+#app>*:nth-child(5){animation-delay:.12s}#app>*:nth-child(6){animation-delay:.15s}#app>*:nth-child(n+7){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.modal.show .card{animation:pop .28s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.qtext{font:700 20px/1.38 var(--sans);letter-spacing:-.01em}
+.qcard{box-shadow:0 10px 30px -18px #000}
+.qcard.pulse{animation:gpulse .6s ease-out}
+@keyframes gpulse{0%{box-shadow:0 0 0 0 rgba(34,211,122,.55)}100%{box-shadow:0 0 0 18px rgba(34,211,122,0)}}
+.qcard.shake{animation:shake .42s}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+@media(hover:hover){.opt:not([disabled]):hover{border-color:#3a475a;background:#1b2330}}
+.opt.ok{box-shadow:inset 3px 0 0 var(--green)}.opt.bad{box-shadow:inset 3px 0 0 var(--red)}
+.fb{animation:rise .3s both}
+.toast{position:fixed;top:40px;left:50%;z-index:70;transform:translateX(-50%);font:900 15px var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  padding:10px 18px;border-radius:999px;color:#fff;background:var(--red);box-shadow:0 8px 30px rgba(255,77,94,.45);animation:toast 1.6s ease both;white-space:nowrap}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,-20px)}12%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
+.tick-up{animation:tup .7s}.tick-dn{animation:tdn .7s}
+@keyframes tup{0%{background:rgba(34,211,122,.35)}100%{background:transparent}}
+@keyframes tdn{0%{background:rgba(255,77,94,.35)}100%{background:transparent}}
+.chip b{border-radius:4px;padding:0 2px}
+
+/* hero countdown */
+.cd{background:linear-gradient(150deg,#1e1700 0%,#11161e 55%);position:relative;overflow:hidden}
+.cd::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(rgba(255,176,0,.18),transparent 70%)}
+.cdn{font-size:64px;text-shadow:0 0 28px rgba(255,176,0,.35)}
+.cdbar{height:4px;background:#000;border-radius:2px;margin-top:12px;overflow:hidden}.cdbar i{display:block;height:100%;background:linear-gradient(90deg,var(--amberD),var(--amber))}
+
+/* rank strip */
+.rstrip{display:flex;align-items:center;gap:12px;margin-top:10px}
+.rstrip .rankchip{width:46px;height:46px;font-size:16px}
+.rstrip .mid{flex:1;min-width:0}.rstrip .rankname{font-size:17px;margin:1px 0 0}
+.rstrip .pl{text-align:right}.rstrip .pl .v{font:700 15px var(--mono);margin-top:3px}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tile{display:flex;align-items:center;gap:11px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;position:relative;transition:transform .12s,border-color .2s}
+.tile:active{transform:scale(.97)}
+.tile .ic{width:38px;height:38px;border-radius:9px;background:#000;border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--amber)}
+.tile .ic svg{width:20px;height:20px}
+.tile h3{font:800 14px var(--sans)}.tile p{font:500 11px var(--mono);color:var(--mute);margin-top:2px}
+.tile.boss{grid-column:1/-1;border-color:var(--amberD);background:linear-gradient(110deg,#251c00,#11161e 65%);padding:14px}
+.tile.boss .ic{background:var(--amber);color:#000;border-color:var(--amber)}
+.tile.boss h3{font-size:18px;color:var(--amber)}
+.tile .cnt{position:absolute;right:8px;top:8px;font:700 11px var(--mono);background:var(--red);color:#fff;border-radius:10px;padding:1px 7px}
+
+/* career track */
+.track{margin-top:4px}
+.stop{display:flex;align-items:center;gap:12px;width:100%;text-align:left;position:relative;padding:6px 0}
+.stop::before{content:"";position:absolute;left:19px;top:0;bottom:0;width:2px;background:#232c3a}
+.stop.done::before{background:var(--amber)}
+.stop:first-child::before{top:50%}.stop:last-child::before{bottom:50%}
+.node{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font:700 13px var(--mono);z-index:1;background:var(--bg);border:2px solid #2a3443;color:var(--mute)}
+.stop.done .node{background:var(--amber);border-color:var(--amber);color:#000}
+.stop.cur .node{border-color:var(--amber);color:var(--amber);animation:glow 1.8s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,176,0,.5)}50%{box-shadow:0 0 0 8px rgba(255,176,0,0)}}
+.stop .box{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;transition:transform .12s}
+.stop:active .box{transform:scale(.98)}
+.stop.cur .box{border-color:var(--amberD);background:linear-gradient(110deg,#1d1600,var(--panel) 70%)}
+.stop .box .t{flex:1;min-width:0}.stop h4{font:700 15px var(--sans)}
+.stop p{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.stop .tag{display:inline-block;font:700 9px var(--mono);letter-spacing:.12em;color:#000;background:var(--amber);border-radius:4px;padding:2px 6px;margin-bottom:4px}
+.stop.lock{opacity:.42}
+.stop .r{text-align:right;flex:none}
+
+/* shift chart */
+.spark{width:100%;display:block}
+.spark .ax{font:500 9px var(--mono);fill:#5d697c}
+.spark .ln{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 1.1s .2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.spark .dot{opacity:0;animation:fadein .3s forwards}
+@keyframes fadein{to{opacity:1}}
+.posbox{margin-top:12px;background:#000;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:500 14px/1.55 var(--mono);color:#e8d9b0}
+.posbox .rnl{font-family:var(--sans);color:var(--text);font-size:15px;padding-left:4px}
+.opt .key{text-transform:lowercase}
+.stbadge{margin-top:12px;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;border:1px solid}
+.stbadge b{font:800 13px var(--mono);letter-spacing:.08em}.stbadge span{font-size:13px;color:#d3dae4;line-height:1.4}
+.st-ahead{background:#0b2216;border-color:#1c6b42}.st-ahead b{color:var(--green)}
+.st-on{background:#1d1700;border-color:var(--amberD)}.st-on b{color:var(--amber)}
+.st-more{background:#250d12;border-color:#7a2230}.st-more b{color:var(--red)}
+.foot{font:500 10px var(--mono);color:#4b5668;text-align:center;margin-top:30px;line-height:1.6}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="ticker"><div class="track" id="ticker"></div></div>
+<div class="wrap" id="app"></div>
+<div class="flash" id="flash"><div></div></div>
+<div class="modal" id="modal"><div class="card" id="modalc"></div></div>
+
+<script>
+const Q=[];
+/*QUESTIONS*/
+
+/* ---------- data ---------- */
+const DESKS=[
+ {c:1,name:"Market Participants",sub:"Exchanges, clearing, FCMs, IBs, APs, CPOs, CTAs"},
+ {c:2,name:"The Regulators",sub:"CFTC, NFA, arbitration, promo rules, price limits"},
+ {c:3,name:"Technical Analysis",sub:"Charts, open interest, volume, fundamentals"},
+ {c:4,name:"Futures & Forwards",sub:"Hedgers, speculators, economics"},
+ {c:5,name:"Customer Accounts",sub:"KYC 2-30, documents, margin, discretionary"},
+ {c:6,name:"Order Desk",sub:"Limits, stops, MIT, FOK, IOC, OCO"},
+ {c:7,name:"Contract Specs",sub:"Grains, softs, metals, energy, financials"},
+ {c:8,name:"Hedging Desk",sub:"Basis, long & short hedges, calc setups"},
+ {c:9,name:"Spreads & Carry",sub:"Bull/bear spreads, contango, cost of carry"},
+ {c:10,name:"Options Pit",sub:"Calls, puts, Greeks, spreads, straddles"}
+];
+const RANKS=["Runner","Trading Clerk","Associated Person","Floor Broker","Local","Introducing Broker","FCM Desk Head","Commodity Trading Advisor","Pool Operator","Partner","Managing Partner"];
+const RANKCODE=["RN","TC","AP","FB","LC","IB","FCM","CTA","CPO","PT","MP"];
+// Mock exam blueprint (from the Series 3 outline)
+const AREAS=[
+ {id:"theory",p:1,n:16,name:"Futures trading theory & terminology",ch:[4,3,1]},
+ {id:"margin",p:1,n:15,name:"Margins, premiums, limits, delivery, exercise",ch:[5,10,7]},
+ {id:"orders",p:1,n:11,name:"Orders, customer accounts, price analysis",ch:[6,5,3]},
+ {id:"hedge",p:1,n:9,name:"Basic hedging & hedging calcs",ch:[8]},
+ {id:"fin",p:1,n:10,name:"Financial hedging",ch:[7,8]},
+ {id:"spread",p:1,n:3,name:"Spreading",ch:[9]},
+ {id:"spec",p:1,n:16,name:"Speculation in commodity & financial futures",ch:[7,9,4]},
+ {id:"opt",p:1,n:5,name:"Option speculation, hedging & spreading",ch:[10]},
+ {id:"rules",p:2,n:35,name:"CFTC/NFA rules & regulations",ch:[1,2]}
+];
+const FACTS=["FCM net capital <b>$1,000,000</b>","Independent IB <b>$45,000</b>","Records <b>5 yrs</b> (2 accessible)","Arbitration claim <b>2 yrs</b>","&gt;$150k = <b>3 arbitrators</b>","NFA fine <b>$500k</b>/violation","Answer complaint <b>30 days</b>","Disclosure doc valid <b>12 months</b>","Performance data &le; <b>3 months</b> old","Pool annual report <b>90 days</b>","CPO exempt &le; <b>$400k / 15</b>","Monthly stmts if pool &gt; <b>$500k</b>","Discretionary: <b>2 yrs</b> exp, <b>$5,000</b> min","QEP <b>$2m</b> securities","Variation margin <b>1 hour</b>, cash","Maintenance &asymp; <b>75%</b> of initial","Stock collateral haircut <b>30%</b>","CBOT limit x<b>150%</b> after 3 days","Basis = <b>Cash &minus; Futures</b>","Short hedge wins if basis <b>strengthens</b>","Long hedge wins if basis <b>weakens</b>","Grains <b>5,000 bu</b> &middot; 1&cent; = $50","T-bond 1/32 = <b>$31.25</b>","T-bond option 1/64 = <b>$15.625</b>","3m T-bill / ED bp = <b>$25</b>","Crude <b>1,000 bbl</b>","Gold <b>100 oz</b> &middot; Silver <b>5,000 oz</b>","Live cattle <b>40,000 lb</b> &middot; Feeder <b>50,000</b>","BL/SS: <b>Buy Limit / Sell Stop</b> below market","Pass = <b>70%</b> in EACH part"];
+
+const sv=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICONS={
+ exam:sv('<path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12l3 3 5-6"/>'),
+ bolt:sv('<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'),
+ fix:sv('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>'),
+ ladder:sv('<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="12" r="2" fill="currentColor"/>'),
+ cards:sv('<rect x="3" y="5" width="8" height="12" rx="1.5"/><rect x="13" y="7" width="8" height="12" rx="1.5"/>'),
+ book:sv('<path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3"/><path d="M20 4v14h-7"/>')
+};
+/* ---------- cheat sheet ---------- */
+const CHEAT=[
+ {id:"basis",ch:[8],t:"Basis: up or down?",b:`<p><b>Basis = Cash − Futures.</b> Picture it as a number on a line.</p>
+  <div class="cs-line"><div style="text-align:center;width:100%;font-size:14px">−30 &nbsp; −20 &nbsp; −10 &nbsp; 0 &nbsp; +10</div><span class="neg">◀ weakens</span><span class="pos">strengthens ▶</span></div>
+  <ul><li>Number goes <b>up</b> (−20 → −10, or −5 → +5) = <b>strengthened</b>. Good for a <b>short</b> hedger.</li>
+  <li>Number goes <b>down</b> = <b>weakened</b>. Good for a <b>long</b> hedger.</li></ul>
+  <div class="cs-hook">Short likes Strong.</div>
+  <p class="cs-note">Skip "narrow" and "widen". Their meaning flips once the basis turns positive. Just ask whether the number went up or down.</p>`},
+ {id:"hedgecalc",ch:[8],t:"Hedging calcs: one method",b:`<ol><li><b>Futures P&amp;L</b> = sell price − buy price. Always.</li>
+  <li><b>Net price</b> = the cash price you actually dealt at, adjusted by the futures P&amp;L. A seller adds a futures gain; a buyer subtracts it. A futures loss works the other way.</li>
+  <li><b>Basis question?</b> Closing basis − opening basis, then apply <i>Short likes Strong</i>.</li></ol>
+  <div class="cs-ex"><b>Example:</b> a distributor buys futures at 2.80 and sells them at 3.30, so the futures make +0.50. He buys the cash product at 3.20. Net price = 3.20 − 0.50 = <b>2.70</b>.</div>`},
+ {id:"hedgedir",ch:[4,8],t:"Which way to hedge?",b:`<ul><li>Worried prices <b>rise</b>? You're a buyer, so <b>buy futures</b> (long hedge). Examples: importers, processors, a manufacturer.</li>
+  <li>Worried prices <b>fall</b>? You're a seller, so <b>sell futures</b> (short hedge). Examples: farmers, exporters, inventory holders.</li>
+  <li><b>Bonds:</b> always hedge the <i>price</i>. Rates up means prices down, so short. Rates down means prices up, so long.</li>
+  <li><b>Currency:</b> paying in foreign currency? <b>Buy</b> that currency's futures. Receiving it? <b>Sell</b> them.</li></ul>`},
+ {id:"spreads",ch:[9],t:"Spreads: do the arithmetic, skip the words",b:`<ul><li><b>Bull spread</b> = long the nearby month. <b>Bear spread</b> = short the nearby month.</li>
+  <li>For the result: P&amp;L on each leg (sell − buy), add them, then × contract size × contracts.</li></ul>
+  <div class="cs-ex"><b>Example:</b> buy Sep 8.67 / sell Nov 8.84. Close Sep 8.72 / Nov 8.85.<br>Sep +0.05, Nov −0.01 = +0.04 × 5,000 = $200 × 3 contracts = <b>+$600</b>.</div>
+  <p class="cs-note">The book says bull spreads profit when they "weaken or narrow". That only holds in a normal market, so the arithmetic is safer than the words.</p>`},
+ {id:"orders",ch:[6],t:"Orders: one picture",b:`<div class="cs-pic"><div>SELL LIMIT &nbsp;/&nbsp; BUY STOP</div><div class="cs-mkt">── market price ──</div><div>BUY LIMIT &nbsp;/&nbsp; SELL STOP</div></div>
+  <ul><li><b>Limit</b> = a better price you're waiting for. Fills at that price or better.</li>
+  <li><b>Stop</b> = protection or a breakout. Becomes a market order once hit.</li>
+  <li><b>MIT</b> = sits where a limit would, but becomes a market order once touched.</li>
+  <li><b>Stop limit</b> = becomes a limit order once hit, so it may never fill.</li></ul>`},
+ {id:"options",ch:[10],t:"Options: who ends up long?",b:`<table class="cs-t"><tr><th></th><th>If exercised you get…</th><th>View</th></tr>
+  <tr><td>Buy call</td><td class="pos">Long future</td><td>Bullish</td></tr>
+  <tr><td>Sell put</td><td class="pos">Long future</td><td>Bullish</td></tr>
+  <tr><td>Buy put</td><td class="neg">Short future</td><td>Bearish</td></tr>
+  <tr><td>Sell call</td><td class="neg">Short future</td><td>Bearish</td></tr></table>
+  <ul><li>Long hedge equivalent = the bullish pair (buy a call / sell a put). Short hedge equivalent = the bearish pair.</li>
+  <li>Breakeven: <b>call = strike + premium</b>, <b>put = strike − premium</b>.</li>
+  <li>Time value = premium − intrinsic value.</li></ul>`},
+ {id:"synth",ch:[10],t:"Synthetics as equations",b:`<p>F = long future, C = long call, P = long put. A minus sign means short.</p>
+  <div class="cs-eq">Long future = C − P<br>Long put = C − F<br>Long call = F + P</div>
+  <p class="cs-note">Remember the first line and rearrange it for the others. A conversion (buy future, buy put, sell call) is F + P − C = 0, which is why it's riskless.</p>`},
+ {id:"traps",ch:[5,7,8,10],t:"Traps worth memorising",b:`<ul><li><b>Hedge size:</b> futures, slightly <b>under</b>-hedged. Options, slightly <b>over</b>-hedged.</li>
+  <li><b>T-bonds:</b> futures are quoted in <b>32nds</b> ($31.25 each). Options are in <b>64ths</b> ($15.625 each).</li>
+  <li><b>Margin call</b> restores you to <b>initial</b> margin, not maintenance.</li>
+  <li><b>Settlement price</b> is the last trade of the day, per the book. It's not the closing range.</li>
+  <li><b>Spreads</b> ARE subject to position limits. <b>Bona fide hedgers</b> are not.</li></ul>`},
+ {id:"numbers",ch:[1,2,5],t:"The numbers that keep coming up",b:`<table class="cs-t">
+  <tr><td>FCM net capital</td><td>$1,000,000</td></tr><tr><td>Independent IB</td><td>$45,000</td></tr>
+  <tr><td>Records kept</td><td>5 yrs (2 readily accessible)</td></tr><tr><td>Answer an NFA complaint</td><td>30 days</td></tr>
+  <tr><td>Arbitration claim filed within</td><td>2 yrs</td></tr><tr><td>3 arbitrators</td><td>over $150k</td></tr>
+  <tr><td>NFA max fine</td><td>$500k per violation</td></tr><tr><td>Disclosure doc valid</td><td>12 months</td></tr>
+  <tr><td>Performance data</td><td>no more than 3 months old</td></tr><tr><td>Pool annual report</td><td>within 90 days</td></tr>
+  <tr><td>CPO exemption</td><td>≤ $400k and ≤ 15 people</td></tr><tr><td>CTA exemption</td><td>≤ 15 people in 12 months</td></tr>
+  <tr><td>Discretionary accounts</td><td>2 yrs experience, $5k equity</td></tr><tr><td>Variation margin</td><td>1 hour, cash</td></tr></table>`}
+];
+function cheat(focus){
+  stopTimer();R=null;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="home()">&#10005;</button><div class="brand" style="font-size:20px">Cheat<em>Sheet</em></div><div></div></div>
+  <p style="color:var(--mute);font-size:13px;margin-bottom:12px">The book's trickiest bits, simplified. Read before a shift.</p>
+  <div class="chips">${CHEAT.map(c=>`<button class="chip" onclick="document.getElementById('cs-${c.id}').scrollIntoView({behavior:'smooth'})">${c.t.split(":")[0]}</button>`).join("")}</div>
+  ${CHEAT.map(c=>`<div class="card cs" id="cs-${c.id}"><div class="lbl">Ch ${c.ch.join(", ")}</div><h3>${c.t}</h3>${c.b}</div>`).join("")}
+  <button class="next" onclick="home()">Back to the floor</button>`;
+  if(focus){const e=document.getElementById("cs-"+focus);e&&setTimeout(()=>e.scrollIntoView(),30)}else window.scrollTo(0,0);
+}
+function cheatFor(c){const x=CHEAT.find(k=>k.ch.includes(c));return x?x.id:null}
+
+/* ---------- storage ---------- */
+const KEY="s3pitcareer.v1";
+let S={cleared:{},best:{},seen:{},missed:{},pnl:0,outcry:0,mockBest:null,unlockAll:false,sound:true,tf:true,examDate:"2026-12-08",daily:{last:null,streak:0},mocks:[],orderBest:0,matchBest:{}};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ---------- helpers ---------- */
+function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)}
+Q.forEach(q=>q.id=hash(q.q+(q.l?"|"+q.l.join("|"):"")));
+const byId={};Q.forEach(q=>byId[q.id]=q);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+const money=v=>(v<0?"−$":"$")+Math.abs(Math.round(v)).toLocaleString("en-US");
+const smoney=v=>(v>=0?"+":"")+money(v);
+function clearedCount(){return DESKS.filter(d=>S.cleared[d.c]).length}
+function rankIdx(){return Math.min(clearedCount(),RANKS.length-1)}
+function unlocked(c){return S.unlockAll||c===1||S.cleared[c-1]}
+function mastery(c){const qs=Q.filter(q=>q.c===c);const m=qs.filter(q=>S.seen[q.id]&&S.seen[q.id].r>0).length;return Math.round(100*m/qs.length)}
+function record(q,ok){const s=S.seen[q.id]||{r:0,w:0};ok?s.r++:s.w++;S.seen[q.id]=s;
+  if(!ok)S.missed[q.id]=0}
+
+/* ---------- audio ---------- */
+let AC=null;
+function beep(ok){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain();o.type=ok?"triangle":"sawtooth";
+  const t=AC.currentTime;o.frequency.setValueAtTime(ok?660:200,t);if(ok)o.frequency.setValueAtTime(990,t+.08);
+  g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+(ok?.25:.35));
+  o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.4)}catch(e){}}
+
+/* ---------- item building ---------- */
+// Turns a bank question into a playable item; may convert MCQ to true/false like the real exam
+function makeItem(q,tfChance){
+  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a};
+  if(false){
+    const showRight=Math.random()<.5;
+    const wrongs=q.o.filter((_,i)=>i!==q.a);
+    const shown=showRight?q.o[q.a]:wrongs[Math.random()*wrongs.length|0];
+    return{q,tf:true,chk:true,proposal:shown,opts:["True","False"],ans:showRight?0:1};
+  }
+  const order=shuffle(q.o.map((t,i)=>i));
+  return{q,tf:false,opts:order.map(i=>q.o[i]),ans:order.indexOf(q.a)};
+}
+function pickFor(chs,n,used){
+  const pool=Q.filter(q=>chs.includes(q.c)&&!used.has(q.id));
+  // weight: unseen and previously-missed questions come up first
+  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
+  const out=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,n).map(x=>x[1]);
+  out.forEach(q=>used.add(q.id));return shuffle(out);
+}
+
+/* ---------- ticker ---------- */
+(function(){const t=FACTS.map(f=>"<span>&#9650; "+f+"</span>").join("");$("#ticker").innerHTML=t+t})();
+
+/* ---------- screens ---------- */
+let R=null; // current run
+let timerId=null;
+function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
+
+function home(){
+  stopTimer();R=null;window.scrollTo(0,0);
+  const ri=rankIdx(),cc=clearedCount();
+  const missN=Object.keys(S.missed).filter(id=>byId[id]).length;
+  const seenN=Object.keys(S.seen).length;
+  const curDesk=(DESKS.find(d=>unlocked(d.c)&&!S.cleared[d.c])||{}).c;
+  const I=ICONS;
+  let h=`<div class="top"><div class="brand">Pit<em>Career</em><small>SERIES 3 &middot; NFA FUTURES EXAM</small></div>
+  <button class="iconbtn" onclick="settings()">SETTINGS</button></div>
+  ${countdownCard()}
+  <div class="card rstrip"><div class="rankchip">${RANKCODE[ri]}</div><div class="mid"><div class="lbl">Rank &middot; ${cc}/10 desks</div><div class="rankname">${RANKS[ri]}</div><div class="bar"><i style="width:${cc*10}%"></i></div></div>
+   <div class="pl"><div class="lbl">Career P&amp;L</div><div class="v ${S.pnl>=0?"pos":"neg"}">${smoney(S.pnl)}</div><div class="lbl" style="margin-top:4px">${seenN}/${Q.length} seen</div></div></div>
+  <div class="sect">The floor <span class="lbl">4th wrong = liquidated</span></div>
+  <div class="track">`;
+  DESKS.forEach(d=>{
+    const u=unlocked(d.c),b=S.best[d.c]||0,st=b>=100?3:b>=85?2:b>=70?1:0,done=!!S.cleared[d.c],cur=d.c===curDesk;
+    h+=`<button class="stop ${done?"done":""} ${cur?"cur":""} ${u?"":"lock"}" onclick="${u?`deskIntro(${d.c})`:`lockedMsg(${d.c})`}">
+     <span class="node">${done?"&#10003;":u?d.c:"&#128274;"}</span>
+     <span class="box"><span class="t">${cur?`<span class="tag">YOU ARE HERE</span>`:""}<h4>${d.name}</h4><p>${d.sub}</p></span>
+     <span class="r"><div class="stars">${[1,2,3].map(i=>`<span class="${i<=st?"":"off"}">&#9733;</span>`).join("")}</div>
+     <div class="mastery">${mastery(d.c)}% known</div></span></span></button>`;
+  });
+  h+=`</div>
+  <div class="sect">Trading modes</div>
+  <div class="tiles">
+   <button class="tile boss" onclick="mockIntro()"><span class="ic">${I.exam}</span><span><h3>The Real Exam</h3><p>120 Qs &middot; 2h30 &middot; 70% in both parts${S.mockBest?" &middot; best "+S.mockBest+"%":""}</p></span></button>
+   <button class="tile" onclick="startOutcry()"><span class="ic">${I.bolt}</span><span><h3>Open Outcry</h3><p>60s &middot; best ${S.outcry}</p></span></button>
+   <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" to clear":"no misses yet"}</p></span></button>
+   <button class="tile" onclick="startOrders()"><span class="ic">${I.ladder}</span><span><h3>Order Desk</h3><p>best ${S.orderBest||0}</p></span></button>
+   <button class="tile" onclick="matchIntro()"><span class="ic">${I.cards}</span><span><h3>Contract Match</h3><p>${S.matchBest&&S.matchBest.sizes?"best "+S.matchBest.sizes+"s":"beat the clock"}</p></span></button>
+   <button class="tile" style="grid-column:1/-1" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>basis &middot; hedges &middot; spreads &middot; orders &middot; options</p></span></button>
+  </div>`;
+  h+=`<div class="foot">${Q.length} questions written from your Series 3 textbook.<br>Progress is saved in this browser only.</div>`;
+  $("#app").innerHTML=h;
+}
+function lockedMsg(c){modal(`<div class="lbl">Desk locked</div><h2>Not yet, ${RANKS[rankIdx()]}</h2><p>Clear <b>Desk ${c-1}</b> with 70%+ to get access. Want to study out of order? Turn on <b>Unlock all desks</b> in Settings.</p><button class="next" onclick="closeModal()">Got it</button>`)}
+function modal(html){$("#modalc").innerHTML=html;$("#modal").classList.add("show")}
+function closeModal(){$("#modal").classList.remove("show")}
+function settings(){
+  const sw=(k,l,d)=>`<button class="toggle" onclick="S.${k}=!S.${k};save();settings()"><span>${l}<br><span style="color:var(--mute);font-size:12px">${d}</span></span><span class="sw ${S[k]?"on":""}"></span></button>`;
+  modal(`<div class="lbl">Settings</div><h2>Desk setup</h2>
+  ${sw("unlockAll","Unlock all desks","Study chapters in any order")}
+  ${sw("sound","Sound","Bell on right answers, buzzer on wrong")}
+  <label class="toggle"><span>Exam date<br><span style="color:var(--mute);font-size:12px">Drives the countdown and daily plan</span></span><input type="date" value="${S.examDate}" onchange="if(this.value){S.examDate=this.value;save()}" class="din"></label>
+  <button class="next" style="margin-top:16px" onclick="closeModal();home()">Done</button>
+  <button class="next ghost" onclick="resetAsk()">Reset all progress</button>`)}
+function resetAsk(){modal(`<h2>Reset career?</h2><p>This wipes your rank, stars, P&amp;L and Damage Control list. It can't be undone.</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="settings()">Cancel</button><button class="next" style="background:var(--red);color:#fff" onclick="localStorage.removeItem(KEY);location.reload()">Reset</button></div>`)}
+
+/* ---------- desk shift ---------- */
+function deskIntro(c){
+  const d=DESKS[c-1],b=S.best[c];
+  modal(`<div class="lbl">Desk ${c}</div><h2>${d.name}</h2><p>${d.sub}</p>
+  <p style="margin-top:12px;text-align:left">&#9656; 10 questions, $10,000 starting account<br>&#9656; Right answers make money. Streaks raise your multiplier, up to x3<br>&#9656; Each wrong answer is a <b style="color:var(--red)">margin call</b>. You get 3. The 4th liquidates you<br>&#9656; Score 70%+ to clear the desk${c<10?" and unlock the next":""}</p>
+  ${b!=null?`<p style="margin-top:8px">Best: <b>${b}%</b></p>`:""}
+  <button class="next" onclick="closeModal();startDesk(${c})">Open the shift</button>
+  ${cheatFor(c)?`<button class="next ghost" onclick="closeModal();cheat('${cheatFor(c)}')">Read the cheat sheet first</button>`:""}
+  <button class="next ghost" onclick="closeModal()">Back</button>`)}
+function startDesk(c){
+  const items=pickFor([c],10,new Set()).map(q=>makeItem(q,.25));
+  R={mode:"desk",c,items,i:0,right:0,wrong:0,bal:10000,streak:0,lives:3,misses:[],t0:0,done:false,liq:false,hist:[10000]};
+  play();
+}
+function startDamage(){
+  const ids=Object.keys(S.missed).filter(id=>byId[id]);
+  if(!ids.length){modal(`<h2>Clean book</h2><p>Nothing to review yet. Questions you miss anywhere in the game land here until you've answered them right twice in a row.</p><button class="next" onclick="closeModal()">OK</button>`);return}
+  const items=shuffle(ids).slice(0,15).map(id=>makeItem(byId[id],.2));
+  R={mode:"damage",items,i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
+}
+function mult(){const s=R.streak;return s>=6?3:s>=4?2:s>=2?1.5:1}
+
+function play(){
+  window.scrollTo(0,0);
+  const it=R.items[R.i],n=R.items.length,q=it.q,d=DESKS[q.c-1];
+  R.t0=Date.now();R.answered=null;
+  let chips="";
+  if(R.mode==="desk")chips=`<div class="chips"><span class="chip">ACCT <b id="bal" class="${R.bal>=10000?"pos":"neg"}">${money(R.bal)}</b></span><span class="chip">STREAK <b>${R.streak}</b> &middot; x${mult()}</span><span class="chip lives">${"&#9679;".repeat(Math.max(R.lives,0))}${"&#9675;".repeat(3-Math.max(R.lives,0))}</span></div>`;
+  if(R.mode==="daily")chips=`<div class="chips"><span class="chip">DAILY DRILL</span><span class="chip">Streak <b>${S.daily.streak||0}</b></span></div>`;
+  if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span><span class="chip">Cleared <b>${R.cleared}</b></span></div>`;
+  if(R.mode==="mock")chips=`<div class="chips"><span class="chip">PART <b>${it.part}</b></span><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b>${R.i}</b>/${n}</span></div>`;
+  if(R.mode==="outcry")chips=`<div class="chips"><span class="chip">&#9201; <b id="clock">${Math.max(0,Math.ceil((R.end-Date.now())/1000))}s</b></span><span class="chip">SCORE <b id="score">${R.score}</b></span><span class="chip">COMBO <b>x${Math.min(1+R.streak,5)}</b></span></div>`;
+  const keys=it.tf?["T","F"]:["a","b","c","d"];
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.i/n}%"></i></div><div class="hudr">${R.mode==="outcry"?"#"+(R.i+1):(R.i+1)+"/"+n}</div></div>
+  ${chips}
+  <div class="qcard"><div class="qmeta"><span>CH ${q.c} &middot; ${d.name.toUpperCase()}</span><span>${it.tf?"TRUE / FALSE":"MULTIPLE CHOICE"}</span></div>
+   <div class="qtext">${esc(it.proposal!=null?q.q.replace(/^TRUE or FALSE:\s*/,""):q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>
+   ${q.l?`<div class="posbox">${q.l.map(x=>x?`<div class="${/^[IV]+\./.test(x)?"rnl":""}">${esc(x)}</div>`:`<div style="height:6px"></div>`).join("")}</div>`:""}
+   ${it.proposal!=null?`<div class="proposal"><span class="lbl">True or false: the answer is…</span>${esc(it.proposal)}</div>`:""}
+   <div class="opts ${it.tf?"tfrow":""}">${it.opts.map((o,i)=>`<button class="opt" data-i="${i}" onclick="answer(${i})">${it.tf?"":`<span class="key">${keys[i]}</span>`}<span>${esc(o)}</span></button>`).join("")}</div>
+  </div><div id="fbx"></div>`;
+}
+function fmtClock(){const s=Math.max(0,Math.round((R.end-Date.now())/1000));const h=s/3600|0,m=(s%3600)/60|0,x=s%60;return (h?h+":":"")+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0")}
+
+function answer(i){
+  if(!R||R.answered!=null)return;
+  const it=R.items[R.i],ok=i===it.ans;R.answered=i;
+  record(it.q,ok);
+  if(R.mode==="mock"){it.chosen=i;it.ok=ok;R.i++;save();R.i>=R.items.length?finishMock():play();return}
+  const btns=[...document.querySelectorAll(".opt")];btns.forEach(b=>b.disabled=true);
+  btns[i].classList.add(ok?"ok":"bad");if(!ok)btns[it.ans].classList.add("ok");
+  beep(ok);buzz(ok);cardFx(ok);
+  if(!ok)R.misses.push({it,chosen:i});
+  if(R.mode==="outcry"){
+    if(ok){R.streak++;const pts=Math.min(R.streak,5);R.score+=pts;floatTxt("+"+pts,"var(--green)")}else{R.streak=0;floatTxt("✕","var(--red)")}
+    R.right+=ok?1:0;R.i++;
+    if(R.i>=R.items.length)R.items.push(...pickFor(R.chs,20,R.used).map(q=>makeItem(q,.3)));
+    setTimeout(()=>{if(R&&R.mode==="outcry"&&!R.done)play()},ok?350:900);return;
+  }
+  let delta=0,title;
+  if(ok){R.right++;
+    if(R.mode==="desk"){R.streak++;const sec=(Date.now()-R.t0)/1000;delta=Math.round(400*mult()+(sec<12?100:0));R.bal+=delta}
+    if(S.missed[it.q.id]!=null&&R.mode!=="desk"){S.missed[it.q.id]++;if(S.missed[it.q.id]>=2){delete S.missed[it.q.id];R.cleared++}}
+    title=["Filled.","Nice trade.","Correct.","On the money.","Locked in."][Math.random()*5|0];
+  }else{R.wrong++;
+    if(R.mode==="desk"){R.streak=0;delta=-1500;R.bal+=delta;R.lives--;
+      if(R.lives<0){R.liq=true;flash("Liquidated","var(--red)")}else flash("Margin call","var(--red)")}
+    title=["Not quite.","Missed that one.","Close, but no."][Math.random()*3|0];
+  }
+  save();
+  const correct=it.q.o[it.q.a];
+  const ex=(it.proposal!=null?`Correct answer: <b>${esc(correct)}</b>. `:"")+esc(it.q.e);
+  const last=R.i>=R.items.length-1||R.liq;
+  $("#fbx").innerHTML=`<div class="fb ${ok?"ok":"bad"}"><h5><span>${title}</span>${R.mode==="desk"?`<span class="delta ${delta>=0?"pos":"neg"}">${smoney(delta)}</span>`:""}</h5><p>${ex}</p></div>
+   <button class="next" id="nextb" onclick="nextQ()">${R.liq?"See the damage":last?"Close the shift":"Next &rarr;"}</button>`;
+  if(R.mode==="desk"){R.hist.push(R.bal);const b=$("#bal");if(b){b.className=R.bal>=10000?"pos":"neg";tickNum(b,R.bal-delta,R.bal,money)}}
+  setTimeout(()=>{const n=$("#nextb");n&&n.scrollIntoView({behavior:"smooth",block:"nearest"})},50);
+}
+function nextQ(){if(R.liq||R.i>=R.items.length-1)return finishRun();R.i++;play()}
+function flash(t,c){const e=document.createElement("div");e.className="toast";e.textContent=t;e.style.background=c;document.body.appendChild(e);setTimeout(()=>e.remove(),1700)}
+function buzz(ok){try{navigator.vibrate&&navigator.vibrate(ok?15:[60,40,90])}catch(e){}}
+function cardFx(ok){const c=$(".qcard");if(!c)return;c.classList.remove("pulse","shake");void c.offsetWidth;c.classList.add(ok?"pulse":"shake")}
+function tickNum(el,from,to,fmt){if(!el)return;const t0=performance.now(),d=550;el.classList.remove("tick-up","tick-dn");void el.offsetWidth;el.classList.add(to>=from?"tick-up":"tick-dn");
+  (function f(n){const k=Math.min(1,(n-t0)/d),e=1-Math.pow(1-k,3);el.textContent=fmt(from+(to-from)*e);if(k<1)requestAnimationFrame(f)})(t0)}
+function countUp(el,to,suf){if(!el)return;const t0=performance.now();(function f(n){const k=Math.min(1,(n-t0)/700),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e)+suf;if(k<1)requestAnimationFrame(f)})(t0)}
+function floatTxt(t,c){const e=document.createElement("div");e.className="float";e.textContent=t;e.style.color=c;document.body.appendChild(e);setTimeout(()=>e.remove(),1000)}
+function quitAsk(){modal(`<h2>Leave the floor?</h2><p>${R&&R.mode==="mock"?"Your mock exam will be abandoned.":"This run won't count, but anything you got wrong is still saved to Damage Control."}</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="closeModal()">Stay</button><button class="next" onclick="closeModal();home()">Leave</button></div>`)}
+
+function pnlChart(hs){
+  const W=330,H=130,L=44,Rr=8,T=10,B=20,n=hs.length;
+  const lo=Math.min(...hs,10000),hi=Math.max(...hs,10000),pad=Math.max(500,(hi-lo)*.12),a=lo-pad,b=hi+pad;
+  const x=i=>L+(W-L-Rr)*(n>1?i/(n-1):0),y=v=>T+(H-T-B)*(1-(v-a)/(b-a));
+  const up=hs[n-1]>=10000,col=up?"#22d37a":"#ff4d5e";
+  const pts=hs.map((v,i)=>x(i).toFixed(1)+","+y(v).toFixed(1)).join(" ");
+  let s=`<svg viewBox="0 0 ${W} ${H}" class="spark"><defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".28"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>`;
+  [a+pad,b-pad,10000].forEach(v=>{s+=`<text x="${L-6}" y="${y(v)+3}" text-anchor="end" class="ax">${(v/1000).toFixed(1)}k</text>`});
+  s+=`<line x1="${L}" x2="${W-Rr}" y1="${y(10000)}" y2="${y(10000)}" stroke="#3a4556" stroke-dasharray="3 4"/>`;
+  s+=`<polygon points="${x(0)},${H-B} ${pts} ${x(n-1)},${H-B}" fill="url(#gf)" style="opacity:0;animation:fadein .6s .9s forwards"/>`;
+  s+=`<polyline points="${pts}" class="ln" stroke="${col}"/>`;
+  hs.forEach((v,i)=>{if(!i)return;const c=v>=hs[i-1]?"#22d37a":"#ff4d5e";s+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="${c}" class="dot" style="animation-delay:${.2+i*.1}s"/><text x="${x(i)}" y="${H-5}" text-anchor="middle" class="ax">${i}</text>`});
+  return s+"</svg>";
+}
+function missList(ms){
+  if(!ms.length)return "";
+  return `<div class="sect">Your misses <span class="lbl">sent to Damage Control</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
+    const your=m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
+    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">✕ ${esc(your)}</div><div class="a">✓ ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+}
+
+function finishRun(){
+  stopTimer();R.answered=-1;window.scrollTo(0,0);
+  const m=R.mode;let h="";
+  if(m==="desk"){
+    const pct=Math.round(100*R.right/R.items.length);
+    const pass=!R.liq&&pct>=70,pnl=R.bal-10000;
+    const st=pass?(pct>=100?3:pct>=85?2:1):0;
+    const before=rankIdx(),wasCleared=!!S.cleared[R.c];
+    S.pnl+=pnl;if(!R.liq)S.best[R.c]=Math.max(S.best[R.c]||0,pct);if(pass)S.cleared[R.c]=true;save();
+    const promoted=pass&&!wasCleared&&rankIdx()>before;
+    h=`<div class="res-head"><div class="lbl">Desk ${R.c} &middot; ${DESKS[R.c-1].name}</div>
+     <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${R.liq?"Liquidated":pass?"Desk cleared":"Shift failed"}</div>
+     <div class="stars">${[1,2,3].map(i=>`<span class="${i<=st?"":"off"}">&#9733;</span>`).join("")}</div>
+     <div class="big" id="bigpct">0%</div><div class="lbl" style="margin-top:6px">${R.right}/${R.items.length} correct &middot; need 70%</div></div>
+     <div class="card" style="padding:12px 10px 6px"><div class="lbl" style="padding:0 4px">Your account, question by question</div>${pnlChart(R.hist)}</div>
+     <div class="stats" style="margin-top:10px"><div class="stat"><div class="lbl">Shift P&amp;L</div><div class="v ${pnl>=0?"pos":"neg"}">${smoney(pnl)}</div></div>
+     <div class="stat"><div class="lbl">Closing acct</div><div class="v">${money(R.bal)}</div></div>
+     <div class="stat"><div class="lbl">Mastery</div><div class="v">${mastery(R.c)}%</div></div></div>
+     <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDesk(${R.c})">Run it again</button></div>
+     ${pass&&R.c<10?`<button class="next ghost" onclick="deskIntro(${R.c+1})">Next desk &rarr; ${DESKS[R.c].name}</button>`:""}
+     ${missList(R.misses)}`;
+    $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");
+    if(promoted)setTimeout(()=>{beep(true);modal(`<div class="lbl">Promotion</div><div class="rankchip" style="margin:12px auto;width:70px;height:70px;font-size:24px">${RANKCODE[rankIdx()]}</div><h2>${RANKS[rankIdx()]}</h2><p>${rankIdx()>=10?"Every desk cleared. Now beat the Final Boss: a full mock exam with 70%+ in both parts.":"New desk unlocked: <b>"+DESKS[R.c].name+"</b>."}</p><button class="next" onclick="closeModal()">Back to work</button>`)},400);
+    return;
+  }
+  if(m==="daily"){
+    const inc=markDaily();
+    h=`<div class="res-head"><div class="lbl">Daily drill</div><div class="big">${R.right}/${R.items.length}</div>
+     <div class="verdict pos" style="font-size:18px;margin-top:8px">${inc?"Streak: "+S.daily.streak+" day"+(S.daily.streak>1?"s":""):"Bonus round done"}</div>
+     <div class="lbl" style="margin-top:6px">${daysLeft()} days to exam</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDaily()">Another 10</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;return;
+  }
+  if(m==="damage"){
+    const left=Object.keys(S.missed).filter(id=>byId[id]).length;
+    h=`<div class="res-head"><div class="lbl">Damage Control</div><div class="big">${R.right}/${R.items.length}</div>
+     <div class="lbl" style="margin-top:6px">${R.cleared} cleared &middot; ${left} still on the list</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button>${left?`<button class="next" onclick="startDamage()">Another round</button>`:""}</div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;return;
+  }
+  if(m==="outcry"){
+    const best=R.score>S.outcry;if(best){S.outcry=R.score;save()}
+    h=`<div class="res-head"><div class="lbl">Open Outcry &middot; Closing bell</div><div class="big">${R.score}</div>
+     <div class="verdict ${best?"pos":""}" style="font-size:18px;margin-top:8px">${best?"New personal best":"Best: "+S.outcry}</div>
+     <div class="lbl" style="margin-top:6px">${R.right} right from ${R.i} answered</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startOutcry()">Again</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;
+  }
+}
+
+/* ---------- open outcry ---------- */
+function startOutcry(){
+  const chs=DESKS.filter(d=>unlocked(d.c)).map(d=>d.c);
+  const used=new Set();
+  R={mode:"outcry",chs,used,items:pickFor(chs,25,used).map(q=>makeItem(q,.3)),i:0,right:0,score:0,streak:0,misses:[],end:Date.now()+60000,done:false};
+  play();
+  timerId=setInterval(()=>{const c=$("#clock");const s=Math.ceil((R.end-Date.now())/1000);if(c)c.textContent=Math.max(0,s)+"s";
+    if(s<=0){R.done=true;finishRun()}},250);
+}
+
+/* ---------- mock exam ---------- */
+function mockIntro(){
+  modal(`<div class="lbl">Final Boss</div><h2>The Real Exam</h2>
+  <p style="text-align:left">Built to the Series 3 outline: <b>Part 1</b> has 85 questions across 8 areas and <b>Part 2</b> has 35 on CFTC/NFA rules. You need <b>70% in each part</b>. There's no feedback until the end, and the first answer you pick is the one that counts, so go with your gut.</p>
+  <button class="next" onclick="closeModal();startMock(1)">Full exam: 120 Qs, 2h30</button>
+  <button class="next ghost" onclick="closeModal();startMock(.334)">Mini mock: 40 Qs, 50 min</button>
+  <button class="next ghost" onclick="closeModal()">Not today</button>`)}
+function startMock(scale){
+  const used=new Set();let items=[];
+  let counts=AREAS.map(a=>Math.max(1,Math.round(a.n*scale)));
+  if(scale<1){const t1=Math.round(85*scale),t2=Math.round(35*scale);
+    let s1=counts.slice(0,8).reduce((a,b)=>a+b,0);counts[6]+=t1-s1;counts[8]=t2}
+  AREAS.forEach((a,k)=>{pickFor(a.ch,counts[k],used).forEach(q=>{const it=makeItem(q,.2);it.area=a.id;it.part=a.p;items.push(it)})});
+  // real exam mixes topics; keep Part 1 first then Part 2
+  items=shuffle(items.filter(x=>x.part===1)).concat(shuffle(items.filter(x=>x.part===2)));
+  const mins=scale<1?50:150;
+  R={mode:"mock",items,i:0,end:Date.now()+mins*60000,misses:[],scale};
+  play();
+  timerId=setInterval(()=>{const c=$("#clock");if(c)c.textContent=fmtClock();if(Date.now()>=R.end)finishMock()},1000);
+}
+function finishMock(){
+  stopTimer();R.answered=-1;window.scrollTo(0,0);
+  const it=R.items,ans=it.filter(x=>x.chosen!=null);
+  const part=p=>{const all=it.filter(x=>x.part===p);const ok=all.filter(x=>x.ok).length;return{ok,n:all.length,pct:all.length?Math.round(100*ok/all.length):0}};
+  const p1=part(1),p2=part(2),pass=p1.pct>=70&&p2.pct>=70;
+  const total=Math.round(100*it.filter(x=>x.ok).length/it.length);
+  S.lastMock={p1:p1.pct,p2:p2.pct,full:R.scale===1};if(R.scale===1){S.mockBest=Math.max(S.mockBest||0,total);S.mocks.push(pass)}
+  it.filter(x=>x.chosen==null).forEach(x=>record(x.q,false));
+  save();
+  const rows=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);const ok=xs.filter(x=>x.ok).length;const pc=xs.length?Math.round(100*ok/xs.length):0;
+    return `<tr><td>${a.p===2?"<b>P2</b> ":""}${a.name}</td><td class="n">${ok}/${xs.length}</td><td class="n ${pc>=70?"pos":"neg"}">${pc}%</td></tr>`}).join("");
+  const ms=it.filter(x=>!x.ok).map(x=>({it:x,chosen:x.chosen==null?null:x.chosen}));
+  const weakest=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);return{a,pc:xs.length?xs.filter(x=>x.ok).length/xs.length:1}}).sort((x,y)=>x.pc-y.pc)[0];
+  $("#app").innerHTML=`<div class="res-head"><div class="lbl">${R.scale===1?"Full mock exam":"Mini mock"} &middot; ${ans.length}/${it.length} answered</div>
+   <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${pass?"Passed":"Not yet"}</div><div class="big" style="margin-top:8px">${total}%</div></div>
+   <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="lbl">Part 1 &middot; need 70%</div><div class="v ${p1.pct>=70?"pos":"neg"}">${p1.pct}% <span style="color:var(--mute);font-size:12px">${p1.ok}/${p1.n}</span></div></div>
+   <div class="stat"><div class="lbl">Part 2 rules &middot; need 70%</div><div class="v ${p2.pct>=70?"pos":"neg"}">${p2.pct}% <span style="color:var(--mute);font-size:12px">${p2.ok}/${p2.n}</span></div></div></div>
+   <div class="sect">By exam area</div><div class="card" style="padding:6px 12px"><table><tr><th>Area</th><th style="text-align:right">Score</th><th style="text-align:right">%</th></tr>${rows}</table></div>
+   <div class="card" style="margin-top:10px;border-color:var(--amberD)"><div class="lbl" style="color:var(--amber)">Damage control plan</div><p style="font-size:14px;margin-top:6px;line-height:1.45">Weakest area: <b>${weakest.a.name}</b>. Re-read chapter ${weakest.a.ch.join(" & ")} in the book, then run ${weakest.a.ch.map(c=>"Desk "+c).join(" / ")} and clear your Damage Control list before your next mock.</p></div>
+   <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDamage()">Damage Control</button></div>
+   ${missListMock(ms)}`;
+}
+function missListMock(ms){
+  if(!ms.length)return "";
+  return `<div class="sect">Review <span class="lbl">${ms.length} missed</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
+    const your=m.chosen==null?"Not answered":m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
+    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">✕ ${esc(your)}</div><div class="a">✓ ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+}
+
+/* ---------- exam countdown + daily drill ---------- */
+function todayStr(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function parseD(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function daysLeft(){const t=parseD(todayStr());return Math.round((parseD(S.examDate)-t)/86400000)}
+function mockStreak(){let n=0;for(let i=S.mocks.length-1;i>=0&&S.mocks[i];i--)n++;return n}
+function isWknd(d){const w=d.getDay();return w===0||w===6}
+function wDays(from,to){let w=0;const d=new Date(from);while(d<=to){w+=isWknd(d)?1:.4;d.setDate(d.getDate()+1)}return w}
+function plan(){
+  const dl=daysLeft(),cc=clearedCount(),today=parseD(todayStr()),wk=isWknd(today);
+  const exam=parseD(S.examDate),learnEnd=new Date(exam);learnEnd.setDate(learnEnd.getDate()-11);
+  const start=parseD(S.planStart||"2026-11-16");
+  const slot=wk?"<b>Weekend:</b> bigger session":"<b>Workday:</b> short breaks only";
+  const lm=S.lastMock;
+  const mockVerdict=()=>{
+    if(cc<10)return{st:"more",why:`${10-cc} desk${10-cc>1?"s":""} still to clear before mocks count.`};
+    if(!lm)return{st:"more",why:"No mock sat yet: you need one to know where you stand."};
+    const pass=lm.p1>=70&&lm.p2>=70;
+    if(pass&&mockStreak()>=2)return{st:"ahead",why:`Last mock passed (P1 ${lm.p1}%, P2 ${lm.p2}%) and ${mockStreak()} full passes in a row.`};
+    if(pass)return{st:"on",why:`Last mock passed: P1 ${lm.p1}%, P2 ${lm.p2}%. One more full pass and you're ready.`};
+    const weak=lm.p2<70&&lm.p1<70?"both parts":lm.p2<70?"Part 2 (rules)":"Part 1 (markets)";
+    return{st:"more",why:`Last mock: P1 ${lm.p1}%, P2 ${lm.p2}%. ${weak} below 70%.`};
+  };
+  if(dl<0)return{head:"Exam done",st:null,txt:"How did it go? Set a new date in Settings if there's a resit.",act:null};
+  if(dl===0)return{head:"Exam day",st:null,txt:"No new material today. Skim the Cheat Sheet and trust the work.",act:["Cheat Sheet","cheat()"]};
+  if(dl<=2){const v=mockVerdict();return{head:"Taper",...v,txt:"Light work only: Cheat Sheet, Contract Match and Damage Control. Early night.",act:["Cheat Sheet","cheat()"]}}
+  if(dl<=10){const v=mockVerdict();
+    if(cc<10)return{head:"Exam practice",...v,txt:`${slot}. Finish the last desks first: turn on <b>Unlock all desks</b> in Settings and go straight to your gaps.`,act:["Open the floor",""]};
+    return wk?{head:"Mock day",...v,txt:`${slot}. Sit a <b>full mock</b> (2h30), then work through every miss in Damage Control.`,act:["Full mock","startMock(1)"]}
+             :{head:"Repair day",...v,txt:`${slot}. Daily drill + Damage Control in your gaps. Mini mock (50 min) if you get a free lunch hour.`,act:["Damage Control","startDamage()"]};
+  }
+  const tot=wDays(start,learnEnd),yest=new Date(today);yest.setDate(yest.getDate()-1);
+  const tgt=d=>Math.max(0,Math.min(10,Math.floor(10*wDays(start,d)/tot+1e-9)));
+  const tToday=Math.max(1,tgt(today)),tYest=tgt(yest);
+  let st,why;
+  if(cc>tToday){st="ahead";why=`${cc} desks cleared: ahead of today's target of ${tToday}.`}
+  else if(cc>=tYest){st="on";why=cc>=tToday?`Today's target of ${tToday} desk${tToday>1?"s":""} done.`:`On pace: get to ${tToday} desk${tToday>1?"s":""} by tonight.`}
+  else{st="more";why=`${cc} cleared vs a target of ${tToday}. Catch up ${wk?"this weekend":"over the next few breaks"}.`}
+  const nextDesk=DESKS.find(d=>!S.cleared[d.c]);
+  const todo=wk?"2 desk shifts + the daily drill":"the daily drill + one desk shift (about 15 min in total)";
+  return{head:"Learning phase",st,why,txt:`${slot}. Today: ${todo}. Mocks start ${learnEnd.getDate()+1} ${learnEnd.toLocaleDateString("en-GB",{month:"short"})}.`,act:nextDesk?["Desk "+nextDesk.c+": "+nextDesk.name,`deskIntro(${nextDesk.c})`]:null};
+}
+function countdownCard(){
+  const dl=daysLeft(),p=plan(),ds=parseD(S.examDate).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});
+  const done=S.daily.last===todayStr();
+  return `<div class="card cd"><div class="cdtop"><div><div class="cdn">${Math.max(dl,0)}</div><div class="lbl">day${dl===1?"":"s"} to exam &middot; ${ds}</div></div>
+   <div class="streak ${done?"on":""}"><div class="lbl">Daily streak</div><div class="v">${S.daily.streak||0}<span>${done?" &#10003;":""}</span></div></div></div>
+   <div class="cdbar"><i style="width:${Math.max(0,Math.min(100,100*(1-dl/22)))}%"></i></div>
+   ${p.st?`<div class="stbadge st-${p.st}"><b>${{ahead:"&#9650; EXCEEDING",on:"&#9679; ON TRACK",more:"&#9660; MORE WORK NEEDED"}[p.st]}</b><span>${p.why}</span></div>`:""}
+   <div class="ph"><span class="k">${p.head.toUpperCase()}</span> ${p.txt}</div>
+   <div class="row" style="margin-top:10px"><button class="next ${done?"ghost":""}" style="margin-top:0" onclick="startDaily()">${done?"Daily drill done: go again":"Today's 10-question drill"}</button>
+   ${p.act&&p.act[1]?`<button class="next ghost" style="margin-top:0" onclick="${p.act[1]}">${p.act[0]}</button>`:""}</div>
+   <div class="lbl" style="margin-top:10px">Readiness: ${mockStreak()}/2 full mocks passed in a row</div></div>`;
+}
+function startDaily(){
+  const used=new Set(),items=[];
+  const due=shuffle(Object.keys(S.missed).filter(id=>byId[id])).slice(0,4);
+  due.forEach(id=>{used.add(id);items.push(makeItem(byId[id],.2))});
+  const chs=DESKS.filter(d=>unlocked(d.c)).map(d=>d.c);
+  pickFor(chs,10-items.length,used).forEach(q=>items.push(makeItem(q,.25)));
+  R={mode:"daily",items:shuffle(items),i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
+}
+function markDaily(){
+  const t=todayStr();if(S.daily.last===t)return false;
+  const y=new Date();y.setDate(y.getDate()-1);
+  S.daily.streak=S.daily.last===todayStr(y)?(S.daily.streak||0)+1:1;S.daily.last=t;save();return true;
+}
+
+/* ---------- order desk game ---------- */
+const ORDER_SETS=[
+ {name:"Dec Corn",unit:"¢",lo:380,hi:520,step:1},
+ {name:"Crude Oil",unit:"$",lo:62,hi:88,step:.25},
+ {name:"Gold",unit:"$",lo:1900,hi:2500,step:5}
+];
+const SCEN=[
+ {k:"BL",side:-1,t:"You want to <b>buy</b>, but only if the price dips to <b>{p}</b>. You'll take that price or better."},
+ {k:"SL",side:1,t:"You want to <b>sell</b>, but only if the price rallies to <b>{p}</b>. You'll take that price or better."},
+ {k:"SS",side:-1,t:"You're <b>long</b>. Protect yourself: get out if the market falls to <b>{p}</b>."},
+ {k:"BS",side:1,t:"You're <b>short</b>. Limit the damage: get out if the market climbs to <b>{p}</b>."},
+ {k:"BS",side:1,t:"Resistance sits just under <b>{p}</b>. If the market breaks through, you want to <b>get long</b> straight away."},
+ {k:"SS",side:-1,t:"Support sits just above <b>{p}</b>. If the market breaks down through it, you want to <b>get short</b> straight away."},
+ {k:"SL",side:1,t:"You're <b>long</b> and want to <b>take profit</b> at <b>{p}</b>."},
+ {k:"BL",side:-1,t:"You're <b>short</b> and want to <b>take profit</b> by covering at <b>{p}</b>."},
+ {k:"BM",side:-1,t:"You want to <b>buy</b> as soon as the market touches <b>{p}</b>. Once it's touched you want a fill at any price, even slightly worse."},
+ {k:"SM",side:1,t:"You want to <b>sell</b> as soon as the market touches <b>{p}</b>. Once it's touched you want a fill at any price, even slightly worse."},
+ {k:"SSL",side:-1,t:"You're <b>long</b>. Get out if it falls to <b>{p}</b>, but you refuse to be filled more than a little below that."},
+ {k:"BSL",side:1,t:"You're <b>short</b>. Get out if it rises to <b>{p}</b>, but you refuse to be filled more than a little above that."}
+];
+const OT={BL:"Buy Limit",SL:"Sell Limit",BS:"Buy Stop",SS:"Sell Stop",BM:"Buy MIT",SM:"Sell MIT",BSL:"Buy Stop Limit",SSL:"Sell Stop Limit"};
+const OWHY={
+ BL:"Buy Limit sits BELOW the market and fills at the limit or lower. It's a better price you're waiting for.",
+ SL:"Sell Limit sits ABOVE the market and fills at the limit or higher.",
+ BS:"Buy Stop sits ABOVE the market. Once hit it becomes a market order, so it's used to protect a short or to buy a breakout.",
+ SS:"Sell Stop sits BELOW the market. Once hit it becomes a market order, so it's used to protect a long or to sell a breakdown.",
+ BM:"Buy MIT sits where a buy limit would (below the market), but once touched it becomes a MARKET order, so it fills at any price.",
+ SM:"Sell MIT sits where a sell limit would (above the market), but once touched it becomes a MARKET order.",
+ BSL:"Buy Stop Limit: the stop triggers above the market, then it becomes a LIMIT order, so you won't pay above your limit (but you might not get filled).",
+ SSL:"Sell Stop Limit: the stop triggers below the market, then it becomes a LIMIT order, so you won't sell below your limit (but you might not get filled)."
+};
+function fmtP(set,v){return set.unit==="¢"?v+"¢":"$"+(set.step<1?v.toFixed(2):v.toLocaleString("en-US"))}
+function makeOrderRound(){
+  const set=ORDER_SETS[Math.random()*ORDER_SETS.length|0],sc=SCEN[Math.random()*SCEN.length|0];
+  const span=(set.hi-set.lo);let mkt=set.lo+Math.round(Math.random()*span/set.step/2+span/set.step/4)*set.step;
+  const gap=set.step*(set.step<1?Math.round(4+Math.random()*12):set.step===5?Math.round(3+Math.random()*6):Math.round(5+Math.random()*15));
+  const p=+(mkt+sc.side*gap).toFixed(2);
+  // distractors: always the mirror-side order of same type, the opposite type on the same side, plus one more
+  const pool=Object.keys(OT).filter(k=>k!==sc.k);
+  const mirror={BL:"SL",SL:"BL",BS:"SS",SS:"BS",BM:"SM",SM:"BM",BSL:"SSL",SSL:"BSL"}[sc.k];
+  const swap={BL:"BS",BS:"BL",SL:"SS",SS:"SL",BM:"BS",SM:"SS",BSL:"BS",SSL:"SS"}[sc.k];
+  const extra={BM:"BL",SM:"SL",BSL:"BS",SSL:"SS"}[sc.k];
+  let ds=[mirror,swap];if(extra&&!ds.includes(extra))ds.push(extra);
+  shuffle(pool).forEach(k=>{if(ds.length<3&&!ds.includes(k)&&!(["BL","SL"].includes(sc.k)&&k===(sc.k==="BL"?"BM":"SM")))ds.push(k)});
+  const opts=shuffle([sc.k,...ds.slice(0,3)]);
+  return{set,sc,mkt,p,opts,ans:opts.indexOf(sc.k)};
+}
+function ladderSVG(o,placed){
+  const set=o.set,range=Math.max(Math.abs(o.p-o.mkt)*1.8,set.step*10);
+  const top=o.mkt+range,bot=o.mkt-range,H=230,W=320,y=v=>14+(top-v)/(top-bot)*(H-28);
+  let s=`<svg viewBox="0 0 ${W} ${H}" class="ladder"><rect x="0" y="0" width="${W}" height="${y(o.mkt)}" fill="#0f1a12"/><rect x="0" y="${y(o.mkt)}" width="${W}" height="${H-y(o.mkt)}" fill="#1a0f12"/>
+   <text x="${W-8}" y="22" text-anchor="end" class="zl" fill="#2f8f5c">ABOVE MARKET</text><text x="${W-8}" y="${H-10}" text-anchor="end" class="zl" fill="#a33a48">BELOW MARKET</text>`;
+  for(let i=0;i<=8;i++){const v=bot+(top-bot)*i/8;s+=`<line x1="54" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#1f2733"/><text x="48" y="${y(v)+4}" text-anchor="end" class="tk">${fmtP(set,+(Math.round(v/set.step)*set.step).toFixed(2))}</text>`}
+  s+=`<line x1="54" x2="${W}" y1="${y(o.mkt)}" y2="${y(o.mkt)}" stroke="#ffb000" stroke-width="2.5"/><rect x="60" y="${y(o.mkt)-11}" width="98" height="22" rx="4" fill="#ffb000"/><text x="109" y="${y(o.mkt)+4}" text-anchor="middle" class="mk">MKT ${fmtP(set,o.mkt)}</text>`;
+  s+=`<line x1="54" x2="${W}" y1="${y(o.p)}" y2="${y(o.p)}" stroke="#4da3ff" stroke-width="2" stroke-dasharray="6 5"/><circle cx="180" cy="${y(o.p)}" r="5" fill="#4da3ff"/><text x="62" y="${y(o.p)+(o.p>o.mkt?-8:18)}" class="tg">${fmtP(set,o.p)}</text>`;
+  if(placed!=null){const ok=placed===o.sc.k;s+=`<g class="pl"><rect x="200" y="${y(o.p)-12}" width="112" height="24" rx="5" fill="${ok?"#22d37a":"#ff4d5e"}"/><text x="256" y="${y(o.p)+4}" text-anchor="middle" class="mk">${OT[placed].toUpperCase()}</text></g>`}
+  return s+"</svg>";
+}
+function startOrders(){R={mode:"orders",rounds:Array.from({length:10},makeOrderRound),i:0,right:0,score:0,streak:0,misses:[]};playOrder()}
+function playOrder(){
+  window.scrollTo(0,0);const o=R.rounds[R.i];R.answered=null;R.t0=Date.now();
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${10*R.i}%"></i></div><div class="hudr">${R.i+1}/10</div></div>
+  <div class="chips"><span class="chip">ORDER DESK</span><span class="chip">SCORE <b>${R.score}</b></span><span class="chip">STREAK <b>${R.streak}</b></span></div>
+  <div class="qcard"><div class="qmeta"><span>${o.set.name.toUpperCase()}</span><span>PICK THE TICKET</span></div>
+  <div class="qtext" style="font-size:17px">${o.sc.t.replace("{p}",fmtP(o.set,o.p))}</div>
+  <div id="lad">${ladderSVG(o)}</div>
+  <div class="opts tfrow">${o.opts.map((k,i)=>`<button class="opt" onclick="answerOrder(${i})" style="font-size:15px">${OT[k]}</button>`).join("")}</div></div><div id="fbx"></div>`;
+}
+function answerOrder(i){
+  if(!R||R.answered!=null)return;const o=R.rounds[R.i],k=o.opts[i],ok=i===o.ans;R.answered=i;
+  const b=[...document.querySelectorAll(".opt")];b.forEach(x=>x.disabled=true);b[i].classList.add(ok?"ok":"bad");if(!ok)b[o.ans].classList.add("ok");
+  beep(ok);buzz(ok);cardFx(ok);$("#lad").innerHTML=ladderSVG(o,k);
+  let pts=0;if(ok){R.right++;R.streak++;pts=100+((Date.now()-R.t0)<8000?50:0)+(R.streak>=3?50:0);R.score+=pts}else{R.streak=0;R.misses.push({o,k})}
+  const where=o.p>o.mkt?"above":"below";
+  $("#fbx").innerHTML=`<div class="fb ${ok?"ok":"bad"}"><h5><span>${ok?"Ticket accepted.":"Ticket rejected."}</span><span class="delta ${ok?"pos":"neg"}">${ok?"+"+pts:"0"}</span></h5>
+   <p>${ok?"":`You picked <b>${OT[k]}</b>. `}Your price is <b>${where}</b> the market. ${OWHY[o.sc.k]}</p>
+   <p style="color:var(--amber);font:600 12px var(--mono)">BL/SS BELOW &middot; SL/BS ABOVE</p></div>
+   <button class="next" id="nextb" onclick="nextOrder()">${R.i>=9?"Close the desk":"Next ticket &rarr;"}</button>`;
+  setTimeout(()=>{const n=$("#nextb");n&&n.scrollIntoView({behavior:"smooth",block:"nearest"})},50);
+}
+function nextOrder(){if(R.i>=9)return finishOrders();R.i++;playOrder()}
+function finishOrders(){
+  R.answered=-1;window.scrollTo(0,0);const best=R.score>(S.orderBest||0);if(best){S.orderBest=R.score;save()}
+  $("#app").innerHTML=`<div class="res-head"><div class="lbl">Order Desk</div><div class="big">${R.score}</div>
+  <div class="verdict ${best?"pos":""}" style="font-size:18px;margin-top:8px">${best?"New personal best":"Best: "+S.orderBest}</div><div class="lbl" style="margin-top:6px">${R.right}/10 tickets right</div></div>
+  <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startOrders()">Again</button></div>
+  ${R.misses.length?`<div class="sect">Rejected tickets</div><div class="card">`+R.misses.map(m=>`<div class="miss"><q>${m.o.sc.t.replace(/<\/?b>/g,"").replace("{p}",fmtP(m.o.set,m.o.p))}</q><div class="y">✕ ${OT[m.k]}</div><div class="a">✓ ${OT[m.o.sc.k]}</div><div class="e">${OWHY[m.o.sc.k]}</div></div>`).join("")+`</div>`:""}`;
+}
+
+/* ---------- contract match game ---------- */
+const DECKS={
+ sizes:{name:"Contract sizes",items:[["Corn","5,000 bu"],["Coffee","37,500 lb"],["Sugar","112,000 lb"],["Orange juice","15,000 lb"],["Live cattle","40,000 lb"],["Feeder cattle","50,000 lb"],["Class III milk","200,000 lb"],["Gold","100 troy oz"],["Silver","5,000 troy oz"],["Copper","25,000 lb"],["Crude oil","1,000 bbl"],["Heating oil","42,000 gal"],["British pound","£62,500"],["Canadian dollar","C$100,000"],["Swiss franc","CHF 125,000"],["Japanese yen","¥12,500,000"],["T-bond","$100,000"],["3-month T-bill","$1,000,000"],["E-mini S&P 500","$50 × index"],["S&P 500 (full)","$250 × index"],["E-mini Dow","$5 × index"],["E-mini Nasdaq-100","$20 × index"]]},
+ ticks:{name:"Tick & point values",items:[["Grains: 1¢","$50"],["T-bond future: 1/32","$31.25"],["T-bond option: 1/64","$15.625"],["3-month T-bill / SOFR: 1 bp","$25"],["12-month T-bill: 1 bp","$100"],["T-bond future: 1 full point","$1,000"],["Gold: $1/oz move","$100"],["Crude: $1/bbl move","$1,000"],["Gold option: 1 point","$100 "],["Sugar option: 1 point","$1,120"],["E-mini S&P option: 1 point","$50 "],["Silver: $1/oz move","$5,000"]]}
+};
+function startMatch(deck){
+  const d=DECKS[deck];R={mode:"match",deck,round:0,rounds:3,errors:0,t0:Date.now(),missed:{},sel:null,done:0};
+  R.queue=shuffle(d.items);matchRound();
+  timerId=setInterval(()=>{const c=$("#clock");if(c)c.textContent=((Date.now()-R.t0)/1000+R.errors*5).toFixed(1)+"s"},100);
+}
+function matchRound(){
+  window.scrollTo(0,0);
+  let pool=R.queue.splice(0,6);if(pool.length<6){R.queue=shuffle(DECKS[R.deck].items);pool=pool.concat(R.queue.splice(0,6-pool.length))}
+  // avoid duplicate values in one round
+  const seen=new Set();pool=pool.filter(p=>!seen.has(p[1].trim())&&seen.add(p[1].trim()));
+  R.drawn=false;R.pairs=pool;R.left=shuffle(pool.map((p,i)=>i));R.right=shuffle(pool.map((p,i)=>i));R.matched=new Set();R.sel=null;
+  drawMatch();
+}
+function drawMatch(){
+  const grid=`<div>${R.left.map(i=>`<button class="mt l ${R.matched.has(i)?"done":""} ${R.sel===i?"sel":""}" ${R.matched.has(i)?"disabled":""} onclick="selL(${i})">${esc(R.pairs[i][0])}</button>`).join("")}</div>
+  <div>${R.right.map(i=>`<button class="mt r ${R.matched.has(i)?"done":""}" id="mr${i}" ${R.matched.has(i)?"disabled":""} onclick="selR(${i})">${esc(R.pairs[i][1])}</button>`).join("")}</div>`;
+  if(R.drawn&&$(".mgrid")){$(".mgrid").innerHTML=grid;const e=$("#errs");if(e)e.textContent=R.errors;return}
+  R.drawn=true;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.round/R.rounds}%"></i></div><div class="hudr">${R.round+1}/${R.rounds}</div></div>
+  <div class="chips"><span class="chip">${DECKS[R.deck].name.toUpperCase()}</span><span class="chip">&#9201; <b id="clock">0.0s</b></span><span class="chip">Misses <b id="errs">${R.errors}</b> (+5s each)</span></div>
+  <p style="color:var(--mute);font-size:13px;margin-bottom:10px">Tap a contract, then tap its match.</p>
+  <div class="mgrid"><div>${R.left.map(i=>`<button class="mt l ${R.matched.has(i)?"done":""} ${R.sel===i?"sel":""}" ${R.matched.has(i)?"disabled":""} onclick="selL(${i})">${esc(R.pairs[i][0])}</button>`).join("")}</div>
+  <div>${R.right.map(i=>`<button class="mt r ${R.matched.has(i)?"done":""}" id="mr${i}" ${R.matched.has(i)?"disabled":""} onclick="selR(${i})">${esc(R.pairs[i][1])}</button>`).join("")}</div></div>`;
+}
+function selL(i){R.sel=i;drawMatch()}
+function selR(j){
+  if(R.sel==null){const e=$("#mr"+j);e&&e.animate([{transform:"translateX(-4px)"},{transform:"translateX(4px)"},{transform:"none"}],{duration:200});return}
+  if(R.pairs[R.sel][1].trim()===R.pairs[j][1].trim()){R.matched.add(R.sel);if(R.sel!==j)R.matched.add(j);beep(true);R.sel=null;
+    if([...R.pairs.keys()].every(k=>R.matched.has(k))){R.round++;if(R.round>=R.rounds)return finishMatch();setTimeout(matchRound,300);drawMatch();return}
+    drawMatch();
+  }else{R.errors++;R.missed[R.pairs[R.sel][0]]=R.pairs[R.sel][1];beep(false);buzz(false);const e=$("#mr"+j);if(e){e.classList.add("bad");setTimeout(()=>{R.sel=null;drawMatch()},450)}}
+}
+function finishMatch(){
+  stopTimer();window.scrollTo(0,0);const t=+(((Date.now()-R.t0)/1000)+R.errors*5).toFixed(1);
+  S.matchBest=S.matchBest||{};const prev=S.matchBest[R.deck],best=!prev||t<prev;if(best){S.matchBest[R.deck]=t;save()}
+  const ms=Object.entries(R.missed);
+  $("#app").innerHTML=`<div class="res-head"><div class="lbl">${DECKS[R.deck].name}</div><div class="big">${t}s</div>
+  <div class="verdict ${best?"pos":""}" style="font-size:18px;margin-top:8px">${best?"New personal best":"Best: "+prev+"s"}</div><div class="lbl" style="margin-top:6px">${R.errors} miss${R.errors===1?"":"es"} (+5s each)</div></div>
+  <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startMatch('${R.deck}')">Again</button></div>
+  ${ms.length?`<div class="sect">Learn these</div><div class="card"><table class="cs-t">${ms.map(([a,b])=>`<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join("")}</table></div>`:""}`;
+}
+function matchIntro(){modal(`<div class="lbl">Memory game</div><h2>Contract Match</h2><p>3 rounds of 6 pairs. Every wrong match adds 5 seconds. Beat your best time.</p>
+  <button class="next" onclick="closeModal();startMatch('sizes')">Contract sizes${S.matchBest&&S.matchBest.sizes?" · best "+S.matchBest.sizes+"s":""}</button>
+  <button class="next ghost" onclick="closeModal();startMatch('ticks')">Tick &amp; point values${S.matchBest&&S.matchBest.ticks?" · best "+S.matchBest.ticks+"s":""}</button>
+  <button class="next ghost" onclick="closeModal()">Back</button>`)}
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown",e=>{
+  if(!R||$("#modal").classList.contains("show"))return;
+  if(!R.items)return;const it=R.items[R.i];if(!it)return;
+  if(R.answered==null){
+    let i=-1;
+    if(it.tf){if(/^[t1]$/i.test(e.key))i=0;if(/^[f2]$/i.test(e.key))i=1}
+    else if(/^[1-4]$/.test(e.key))i=+e.key-1;
+    else if(/^[a-d]$/i.test(e.key))i="abcd".indexOf(e.key.toLowerCase());
+    if(i>=0&&i<it.opts.length)answer(i);
+  }else if(e.key==="Enter"||e.key===" "){const n=$("#nextb");if(n){e.preventDefault();n.click()}}
+});
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+home();
+</script>
+</body>
+</html>
