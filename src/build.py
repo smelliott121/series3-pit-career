@@ -3,7 +3,7 @@ import re, os
 here=os.path.dirname(os.path.abspath(__file__))
 t=open(os.path.join(here,'template.html'),encoding='utf-8').read()
 qd=os.path.join(here,'questions')
-qs=''.join(open(os.path.join(qd,f'ch{i}.js'),encoding='utf-8').read() for i in range(1,11))+open(os.path.join(qd,'style.js'),encoding='utf-8').read()+open(os.path.join(qd,'official.js'),encoding='utf-8').read()
+qs=''.join(open(os.path.join(qd,f'ch{i}.js'),encoding='utf-8').read() for i in range(1,11))+open(os.path.join(qd,'style.js'),encoding='utf-8').read()+open(os.path.join(qd,'official.js'),encoding='utf-8').read()+open(os.path.join(qd,'hard.js'),encoding='utf-8').read()
 s=t.replace('/*QUESTIONS*/',qs)
 parts=re.split(r'(<script>|</script>|<style>|</style>)',s);out=[];mode='html'
 for p in parts:

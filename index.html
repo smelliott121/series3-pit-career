@@ -902,6 +902,75 @@ RN(2,"Which records must a registered CPO keep for five years?",["I. A daily pur
 {c:8,q:"A farmer short hedges 20,000 bu of wheat on Oct 1 (cash 4.10\u00bd, Jan futures 4.24) and lifts the hedge on Nov 15 (cash 4.02, Jan futures 4.12\u00bc). Income per bushel including the hedge?",o:["$4.13\u00be","$4.02","$3.90\u00bc","$4.24"],a:0,e:"Setup #2: futures +0.11\u00be (sold 4.24, bought 4.12\u00bc). Cash 4.02 + 0.11\u00be = $4.13\u00be."},
 {c:8,q:"A bank's investment manager holds Treasury bonds and fears rising interest rates will cut their value. To hedge he should:",o:["Sell T-bond futures","Buy T-bond futures","Buy T-bond call options","Buy T-bond futures because yields will rise"],a:0,e:"Rising rates = falling bond prices. A holder fearing falling prices sells futures. Always hedge the PRICE, not the rate."}
 );
+/* PRO DESK: harder, multi-step questions (d:3) */
+const H=o=>Object.assign({a:0,d:3},o);
+Q.push(
+/* ----- hedging ----- */
+H({c:8,q:"A grain elevator short hedges 20,000 bu of wheat with 4 March futures. It pays $30 per contract round turn. What's the net price received per bushel, after commissions?",l:["Open: cash 5.42, sells March futures at 5.68","Close: sells cash wheat at 5.21, buys back futures at 5.40"],o:["$5.484","$5.49","$5.42","$5.214"],e:"Futures +0.28. Cash 5.21 + 0.28 = 5.49. Commissions: 4 \u00d7 $30 = $120 \u00f7 20,000 bu = 0.6\u00a2, so 5.49 \u2212 0.006 = $5.484. Check with the basis: \u221226 \u2192 \u221219 = strengthened 7\u00a2 \u2192 5.42 + 0.07 = 5.49 before costs."}),
+H({c:8,q:"A processor puts on the hedge below. What's the net cost of the corn?",l:["Open: cash 4.52, buys Dec futures at 4.70","Close: buys cash corn at 4.95, sells futures at 5.08"],o:["$4.57","$4.47","$5.33","$4.52"],e:"Futures +0.38. Net cost = 4.95 \u2212 0.38 = 4.57. Basis \u221218 \u2192 \u221213 strengthened 5\u00a2, which costs a LONG hedger 5\u00a2: 4.52 + 0.05 = 4.57."}),
+H({c:8,q:"A short hedger opens when the basis is 8 over and closes when it's 3 under. What happened?",o:["Basis weakened 11\u00a2: the hedge lost 11\u00a2","Basis strengthened 11\u00a2: the hedge gained 11\u00a2","Basis weakened 5\u00a2: the hedge lost 5\u00a2","Basis strengthened 5\u00a2: the hedge gained 5\u00a2"],e:"+8 \u2192 \u22123: the number went DOWN 11, so the basis weakened 11. Short likes strong, so a weakening basis is a loss of 11\u00a2."}),
+H({c:8,rn:1,q:"Which basis moves would BENEFIT a long hedger?",l:["I. 10 under \u2192 15 under","II. 5 over \u2192 2 under","III. 3 under \u2192 6 over","IV. 20 under \u2192 12 under"],o:["I and II","III and IV","I and IV","II and III"],e:"A long hedger wants the basis to WEAKEN (the number goes down). \u221210\u2192\u221215 and +5\u2192\u22122 both go down. III and IV go up (strengthen)."}),
+H({c:8,q:"A farmer expects to harvest 52,000 bushels of corn. Hedging with FUTURES, how many contracts should he sell?",o:["10","11","52","5"],e:"With futures, be perfectly or slightly UNDER-hedged. 52,000 \u00f7 5,000 = 10.4 \u2192 10 contracts (11 would be over-hedged, and the excess is speculative)."}),
+H({c:10,q:"The same farmer (52,000 bu) hedges with PUT OPTIONS instead. How many puts?",o:["11","10","52","5"],e:"With options it's the opposite: perfectly or slightly OVER-hedged. 10.4 \u2192 11 puts."}),
+H({c:7,q:"A US exporter will receive \u20ac500,000 in three months. How should it hedge with euro FX futures (\u20ac125,000 each)?",o:["Sell 4 contracts","Buy 4 contracts","Sell 8 contracts","Buy 2 contracts"],e:"Receiving foreign currency \u2192 sell that currency's futures. \u20ac500,000 \u00f7 \u20ac125,000 = 4."}),
+H({c:7,q:"A manager hedges a $12,600,000 stock portfolio with FULL-SIZE S&P 500 futures at 5,600. How many contracts?",o:["9","45","2","18"],e:"Full-size = $250 \u00d7 5,600 = $1,400,000. $12,600,000 \u00f7 $1,400,000 = 9. (45 is the E-mini answer at $50 \u00d7 index.)"}),
+
+/* ----- options ----- */
+H({c:10,q:"What's the BREAKEVEN of this position at expiry?",l:["Buy 1 March crude 78 call at 3.10","Sell 1 March crude 82 call at 1.40"],o:["79.70","80.30","83.40","76.30"],e:"Net debit = 3.10 \u2212 1.40 = 1.70. Bull call spread breakeven = lower strike + net debit = 78 + 1.70 = 79.70."}),
+H({c:10,q:"What is the MAXIMUM PROFIT on this position?",l:["Buy 1 March crude 78 call at 3.10","Sell 1 March crude 82 call at 1.40"],o:["$2,300","$1,700","$4,000","$5,700"],e:"Max profit = strike difference \u2212 net debit = (82 \u2212 78) \u2212 1.70 = 2.30 \u00d7 1,000 bbl = $2,300. Max loss is the $1,700 debit."}),
+H({c:10,q:"Find the breakeven and maximum profit:",l:["Buy 1 Dec corn 460 put at 18","Sell 1 Dec corn 440 put at 9"],o:["Breakeven 451, max profit $550","Breakeven 449, max profit $450","Breakeven 451, max profit $1,000","Breakeven 469, max profit $550"],e:"Debit 9\u00a2. Bear put spread breakeven = higher strike \u2212 debit = 451. Max profit = (460 \u2212 440) \u2212 9 = 11\u00a2 \u00d7 $50 = $550."}),
+H({c:10,q:"An investor buys a June gold 2,400 straddle. Where are the breakevens?",l:["Buy 1 June gold 2,400 call at 42","Buy 1 June gold 2,400 put at 38"],o:["2,320 and 2,480","2,358 and 2,442","2,362 and 2,438","2,400 only"],e:"Total premium 80. Breakevens = strike \u00b1 total premium = 2,320 and 2,480."}),
+H({c:10,q:"Crude futures are at 88 at expiry. What's the result of the position below?",l:["Sell 1 crude 85 call at 1.20","Sell 1 crude 75 put at 1.00"],o:["\u2212$800","+$2,200","\u2212$3,000","+$800"],e:"The call is 3.00 in the money; the put expires. Premium received 2.20 \u2212 3.00 = \u22120.80 \u00d7 1,000 = \u2212$800."}),
+H({c:10,q:"What's the MAXIMUM PROFIT on this covered call?",l:["Long 1 August gold future at 2,380","Short 1 August gold 2,420 call at 25"],o:["$6,500","$2,500","$4,000","$1,500"],e:"Above 2,420 the call caps you. Futures gain 2,420 \u2212 2,380 = 40, plus 25 premium = 65 \u00d7 100 oz = $6,500."}),
+H({c:10,q:"Short futures + short put (same strike and expiry) creates a synthetic:",o:["Short call","Long call","Long put","Short future"],e:"Short future + short put = synthetic SHORT call. (Long future + long put = synthetic long call. Short future + long call = synthetic long put.)"}),
+H({c:10,q:"A T-bond futures call has a delta of 0.25. Futures move from 114-16 to 116-00. The premium should rise by about:",o:["24/64","12/64","48/64","12/32"],e:"114-16 \u2192 116-00 = +1.5 points. \u00d7 0.25 = 0.375 points. Options trade in 64ths: 0.375 \u00d7 64 = 24/64."}),
+H({c:10,q:"Dec soybean futures are 12.05\u00bd. A Dec 11.80 call trades at 34\u00bc\u00a2. What's the TIME value?",o:["8\u00be\u00a2","25\u00bd\u00a2","34\u00bc\u00a2","59\u00be\u00a2"],e:"Call intrinsic = 12.05\u00bd \u2212 11.80 = 25\u00bd\u00a2. Time value = 34\u00bc \u2212 25\u00bd = 8\u00be\u00a2."}),
+H({c:10,q:"A trader bought a Sep corn 450 call for 14\u00a2. She exercises with futures at 472 and immediately sells the futures. Net result?",o:["$400 profit","$1,100 profit","$700 loss","$400 loss"],e:"Exercise = long future at 450. Sell at 472 = +22\u00a2, less 14\u00a2 premium = 8\u00a2 \u00d7 $50 = $400."}),
+H({c:10,q:"A writer sold a Dec wheat 600 put for 15\u00a2. Futures fall to 570 and she's assigned, then offsets at 570. Result?",o:["\u2212$750","\u2212$1,500","+$750","\u2212$2,250"],e:"Assigned a LONG future at 600, sold at 570 = \u221230\u00a2, plus 15\u00a2 premium = \u221215\u00a2 \u00d7 $50 = \u2212$750."}),
+
+/* ----- spreads & carry ----- */
+H({c:9,q:"Result of the spread below?",l:["Buy 3 July soybeans at 12.40, sell 3 Nov soybeans at 12.10","Later: July 12.55, Nov 12.18"],o:["$1,050 gain","$1,050 loss","$3,450 gain","$350 gain"],e:"July +0.15, Nov \u22120.08 = +0.07 \u00d7 5,000 = $350 \u00d7 3 = $1,050 gain."}),
+H({c:9,q:"Cash corn is 4.20. Storage is 4\u00a2/month, insurance 0.4\u00a2/month and interest is 6% a year. 3-month futures trade at 4.52. What should an arbitrageur do?",o:["Buy cash corn, store it and sell the futures","Sell cash corn and buy the futures","Buy both cash and futures","Nothing: futures are below full carry"],e:"Interest = 4.20 \u00d7 6% \u00f7 12 = 2.1\u00a2/month. Full carry = (4 + 0.4 + 2.1) \u00d7 3 = 19.5\u00a2 \u2192 4.395. Futures at 4.52 are ABOVE full carry, so buy cash, carry it, sell futures and lock in the gap."}),
+H({c:9,q:"Result of the inter-market spread below?",l:["Buy 2 KC Dec wheat at 6.30, sell 2 CBOT Dec wheat at 6.05","Later: KC 6.18, CBOT 5.85"],o:["$800 gain","$800 loss","$3,200 gain","$400 gain"],e:"KC \u22120.12, CBOT +0.20 (sold 6.05, bought 5.85) = +0.08 \u00d7 5,000 = $400 \u00d7 2 = $800 gain."}),
+H({c:9,rn:1,q:"Which spreads are CORRECTLY described?",l:["I. Buy March corn / sell May corn: inter-delivery","II. Buy July wheat / sell July corn: inter-market","III. Buy CBOT Dec wheat / sell KC Dec wheat: inter-market","IV. Buy soybeans / sell soybean oil and meal: reverse crush"],o:["I and III","I and II","II and IV","I, III and IV"],e:"II is INTER-COMMODITY (different commodities). IV is a regular CRUSH; a reverse crush sells soybeans and buys the products."}),
+
+/* ----- margin & accounts ----- */
+H({c:5,q:"A customer deposits $6,000 initial margin for 2 contracts (maintenance $2,250 each). The position loses $1,800. What happens?",o:["A $1,800 margin call","A $300 margin call","A $4,500 margin call","No margin call"],e:"Equity = $4,200, below the $4,500 maintenance. The call restores the account to INITIAL ($6,000), so $1,800 is due."}),
+H({c:5,q:"Same account ($6,000 initial, $4,500 maintenance for 2 contracts) loses $1,200 instead. What happens?",o:["No margin call","A $1,200 margin call","A $300 margin call","The position is liquidated"],e:"Equity = $4,800, still ABOVE $4,500 maintenance, so there's no call yet."}),
+H({c:5,q:"At the CME, a customer posts $20,000 of stock plus $2,000 cash. The margin requirement is $15,000. What's the excess (or deficit)?",o:["$1,000 excess","$7,000 excess","$1,000 deficit","$6,000 deficit"],e:"Stock counts at 70% (30% haircut): $14,000 + $2,000 cash = $16,000 \u2212 $15,000 = $1,000 excess."}),
+H({c:5,q:"Account equity is $11,500. Open positions need $8,000 initial ($6,000 maintenance). A new trade needs $3,000 initial. Can it be margined from the account?",o:["Yes, leaving $500 above initial","No, it's $1,500 short","Yes, leaving $2,500 spare","No, equity must be double the requirement"],e:"Only equity above INITIAL counts toward new positions: $11,500 \u2212 $8,000 = $3,500 \u2265 $3,000, leaving $500. (Using maintenance gives the trap answer of $2,500.)"}),
+H({c:5,q:"Long 1 crude future at $78.40. Initial margin $6,000, maintenance $5,000. Below what price does a margin call come?",o:["$77.40","$72.40","$73.40","$79.40"],e:"Cushion = $1,000 \u00f7 1,000 bbl = $1.00. 78.40 \u2212 1.00 = $77.40."}),
+H({c:5,q:"Short 2 gold futures at 2,405.0. Initial $10,000 and maintenance $9,000 per contract. Above what price does a margin call come?",o:["2,415.0","2,395.0","2,505.0","2,495.0"],e:"Cushion per contract = $1,000 \u00f7 100 oz = $10. A SHORT loses as price rises: 2,405 + 10 = 2,415.0. (The number of contracts doesn't change the price.)"}),
+H({c:5,q:"A customer has $1,500,000 in securities and an FCM account open for 8 months with $250,000 in initial margin. Is the customer a QEP?",o:["Yes, under the FCM-account test","No, they need $2,000,000 in securities","No, the account must be open 12 months","Only if they're also an Accredited Investor"],e:"Two separate tests: $2m in securities, OR an FCM account for 6+ months with $200,000+ in margin/premiums. The second test is met."}),
+H({c:5,q:"An AP with 18 months' experience in good standing asks to manage a $10,000 discretionary account with signed authorisation. Is this allowed?",o:["No: 2 years' experience is required","Yes: the equity exceeds $5,000","Yes: written authorisation is enough","No: minimum equity is $25,000"],e:"All the conditions must be met: written authorisation, $5,000 minimum equity AND 2 years' experience. 18 months fails."}),
+
+/* ----- orders ----- */
+H({c:6,q:"Corn is at 452. A customer long from 440 wants out if it drops to 450, but refuses to sell below 448. Which order?",o:["Sell stop 450, limit 448","Buy stop 450, limit 448","Sell limit 448","Sell MIT 450"],e:"Protecting a long below the market = sell stop. Adding a floor on the fill price makes it a sell STOP LIMIT (stop 450, limit 448)."}),
+H({c:6,q:"The market is at 4.48 with a sell stop at 4.40. Trades print 4.46, 4.43, 4.39, 4.41. What happens?",o:["Triggered by the 4.39 trade, then filled as a market order (not guaranteed at 4.40)","Filled at exactly 4.40","Not triggered, because 4.40 never traded","Triggered at 4.43"],e:"A sell stop is elected by a trade at or BELOW the stop. 4.39 triggers it, and it becomes a market order: it fills at the next available price, which could be 4.39 or 4.41."}),
+H({c:6,q:"The market is 3.25 with a BUY LIMIT at 3.20. Trades print 3.22, 3.20, 3.21. Which statement is TRUE?",o:["It can only fill at 3.20 or lower, and may not fill at all","It will fill at 3.21","It's guaranteed a fill at 3.20","It fills at 3.22"],e:"A limit only fills at the limit or better. Even when 3.20 trades, there's no guarantee your order is filled (queue priority)."}),
+TF(6,"With the market at 3.25, a BUY MIT at 3.20 could be filled at 3.21 after the market touches 3.20.",1,"True. Once touched, an MIT becomes a MARKET order, so it fills at the next available price, which could be worse than 3.20. That's the difference from a limit."),
+
+/* ----- regulation (Part 2) ----- */
+H({c:2,q:"A customer files a $120,000 NFA arbitration claim. How many arbitrators hear it?",o:["One, unless a party asks in writing for three within 30 days after the last pleading","Always three","Always one","Three, because it's over $100,000"],e:"Up to $150,000 the NFA appoints ONE. For $50k\u2013$150k, three are possible if a party requests within 30 days after the last pleading, or if the sole arbitrator asks. Over $150,000 = three."}),
+H({c:2,q:"A $40,000 claim: the customer requests three arbitrators. Result?",o:["Still one arbitrator","Three, because it was requested","Two","The claim goes to court instead"],e:"The option of three only exists for claims over $50,000."}),
+H({c:2,q:"The NFA finds a member firm guilty of 3 separate rule violations. What's the maximum total NFA fine?",o:["$1,500,000","$500,000","$641,667","$213,889"],e:"$500,000 PER VIOLATION \u00d7 3 = $1.5m. ($213,889 is the CEA figure for each non-manipulative violation, a different regime.)"}),
+H({c:2,rn:1,q:"Which of the following are TRUE about promotional material?",l:["I. It must be approved in writing by a supervisor before first use","II. Copies are kept 5 years from the date of last use","III. Radio/TV ads with specific trade recommendations go to the NFA at least 10 days before use","IV. Voluntary NFA review gives the member a safe harbor"],o:["I, II and III","I and II only","II, III and IV","I, II, III and IV"],e:"There's no safe harbor from voluntary review. The member stays responsible."}),
+H({c:2,q:"A CTA has 8 months of actual trading and wants to show hypothetical results. Where must the hypothetical disclaimer go?",o:["Immediately BEFORE the hypothetical results","Immediately after them","In a footnote","Anywhere on the same page"],e:"With under 12 months of actual results, the disclaimer must immediately PRECEDE the hypothetical results."}),
+H({c:2,q:"A CBOT contract has a 30\u00a2 daily limit and settles limit up 3 days in a row. What's the new limit?",o:["45\u00a2","60\u00a2","30\u00a2","Unlimited"],e:"After 3 consecutive limit days, the limit rises to 150%: 30 \u00d7 1.5 = 45\u00a2. Minimum margins also rise by 150%."}),
+H({c:2,q:"Corn settled at 4.50 yesterday with a 30\u00a2 daily limit. What's today's HIGHEST permitted trade?",o:["4.80","4.50","5.10","There's no maximum"],e:"Limits are measured from the previous settlement: 4.50 \u00b1 0.30 = 4.20 to 4.80."}),
+H({c:1,rn:1,q:"An FCM falls below its minimum adjusted net capital. What must it do?",l:["I. Notify the CFTC immediately","II. Notify the NFA immediately","III. Notify every customer in writing","IV. Close all customer positions"],o:["I and II","II only","I, II and III","I, II, III and IV"],e:"FCM \u2192 notify the CFTC AND the NFA. (An undercapitalised IB notifies the NFA, and an independent IB must cease operations until the deficiency is fixed.)"}),
+H({c:1,q:"An independent IB's adjusted net capital drops to $40,000. What must happen?",o:["Notify the NFA and cease operations until it's remedied","Carry on and file Form 1-FR early","Convert to a guaranteed IB automatically","Nothing below $25,000"],e:"The minimum is $45,000. Below it, an independent IB must notify the NFA and cease operations until the deficiency is remedied."}),
+H({c:1,q:"A pool operator has 18 participants and $350,000 in total contributions. Must it register as a CPO?",o:["Yes: it has more than 15 participants","No: contributions are under $400,000","No: it needs both tests failed","Only if it uses a CTA"],e:"The exemption needs BOTH \u2264 $400,000 contributions AND \u2264 15 participants. 18 participants breaks it."}),
+TF(1,"A pool with net assets of $480,000 must send participants monthly account statements.",0,"False. Monthly statements are required for pools with net assets OVER $500,000."),
+TF(1,"A Disclosure Document dated 1 June can show performance data through 31 January.",0,"False. Performance data can't be more than 3 months older than the document's date (here that means 1 March or later)."),
+TF(1,"A guaranteed IB must file semiannual unaudited financial statements on Form 1-FR.",0,"False. A guaranteed IB has no minimum capital or financial reporting requirements; its FCM is responsible for it."),
+
+/* ----- financial & technical ----- */
+H({c:7,q:"A trader buys 5 three-month interest rate futures at 95.62 and sells at 95.48. Result, and what happened to the implied rate?",o:["\u2212$1,750; the implied rate rose","+$1,750; the implied rate fell","\u2212$7,000; the implied rate rose","\u2212$1,750; the implied rate fell"],e:"\u221214 bp \u00d7 $25 \u00d7 5 = \u2212$1,750. Price = 100 \u2212 rate, so a FALLING price means the implied rate ROSE (4.38% \u2192 4.52%)."}),
+H({c:7,q:"A speculator buys 4 yen futures (\u00a512,500,000) at 0.006720 and sells at 0.006805. Result?",o:["$4,250 gain","$1,062.50 gain","$4,250 loss","$425 gain"],e:"+0.000085 \u00d7 12,500,000 = $1,062.50 per contract \u00d7 4 = $4,250 gain."}),
+H({c:3,q:"Prices are falling while volume and open interest are both RISING. This most likely indicates:",o:["New short selling: a strong downtrend","Long liquidation: a weakening downtrend","Short covering","A bullish reversal"],e:"Rising OI + falling price = new shorts entering. Rising volume confirms strength, so it's a strong bearish move."}),
+H({c:3,q:"Prices are RISING but open interest is FALLING. This most likely indicates:",o:["Short covering: a technically weak rally","New buying: a strong uptrend","New short selling","A thin, illiquid market"],e:"Falling OI means positions are being closed. A rally driven by shorts buying back is weaker than one driven by new longs."})
+);
 
 
 /* ---------- data ---------- */
@@ -1092,6 +1161,7 @@ function home(){
    <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" to clear":"no misses yet"}</p></span></button>
    <button class="tile" onclick="startOrders()"><span class="ic">${I.ladder}</span><span><h3>Order Desk</h3><p>best ${S.orderBest||0}</p></span></button>
    <button class="tile" onclick="matchIntro()"><span class="ic">${I.cards}</span><span><h3>Contract Match</h3><p>${S.matchBest&&S.matchBest.sizes?"best "+S.matchBest.sizes+"s":"beat the clock"}</p></span></button>
+   <button class="tile boss" onclick="startPro()"><span class="ic">${I.bolt}</span><span><h3>Pro Desk</h3><p>${Q.filter(q=>q.d===3).length} harder multi-step questions${S.proBest!=null?" &middot; best "+S.proBest+"%":""}</p></span></button>
    <button class="tile" style="grid-column:1/-1" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>basis &middot; hedges &middot; spreads &middot; orders &middot; options</p></span></button>
   </div>`;
   h+=`<div class="foot">${Q.length} questions written from your Series 3 textbook.<br>Progress is saved in this browser only.</div>`;
@@ -1139,6 +1209,7 @@ function play(){
   R.t0=Date.now();R.answered=null;
   let chips="";
   if(R.mode==="desk")chips=`<div class="chips"><span class="chip">ACCT <b id="bal" class="${R.bal>=10000?"pos":"neg"}">${money(R.bal)}</b></span><span class="chip">STREAK <b>${R.streak}</b> &middot; x${mult()}</span><span class="chip lives">${"&#9679;".repeat(Math.max(R.lives,0))}${"&#9675;".repeat(3-Math.max(R.lives,0))}</span></div>`;
+  if(R.mode==="pro")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">PRO DESK</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="daily")chips=`<div class="chips"><span class="chip">DAILY DRILL</span><span class="chip">Streak <b>${S.daily.streak||0}</b></span></div>`;
   if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span><span class="chip">Cleared <b>${R.cleared}</b></span></div>`;
   if(R.mode==="mock")chips=`<div class="chips"><span class="chip">PART <b>${it.part}</b></span><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b>${R.i}</b>/${n}</span></div>`;
@@ -1146,7 +1217,7 @@ function play(){
   const keys=it.tf?["T","F"]:["a","b","c","d"];
   $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.i/n}%"></i></div><div class="hudr">${R.mode==="outcry"?"#"+(R.i+1):(R.i+1)+"/"+n}</div></div>
   ${chips}
-  <div class="qcard"><div class="qmeta"><span>CH ${q.c} &middot; ${d.name.toUpperCase()}</span><span>${it.tf?"TRUE / FALSE":"MULTIPLE CHOICE"}</span></div>
+  <div class="qcard"><div class="qmeta"><span>CH ${q.c} &middot; ${d.name.toUpperCase()}${q.d===3?` &middot; <b style="color:var(--amber)">PRO</b>`:""}</span><span>${it.tf?"TRUE / FALSE":"MULTIPLE CHOICE"}</span></div>
    <div class="qtext">${esc(it.proposal!=null?q.q.replace(/^TRUE or FALSE:\s*/,""):q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>
    ${q.l?`<div class="posbox">${q.l.map(x=>x?`<div class="${/^[IV]+\./.test(x)?"rnl":""}">${esc(x)}</div>`:`<div style="height:6px"></div>`).join("")}</div>`:""}
    ${it.proposal!=null?`<div class="proposal"><span class="lbl">True or false: the answer is\u2026</span>${esc(it.proposal)}</div>`:""}
@@ -1244,6 +1315,14 @@ function finishRun(){
     $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");
     if(promoted)setTimeout(()=>{beep(true);modal(`<div class="lbl">Promotion</div><div class="rankchip" style="margin:12px auto;width:70px;height:70px;font-size:24px">${RANKCODE[rankIdx()]}</div><h2>${RANKS[rankIdx()]}</h2><p>${rankIdx()>=10?"Every desk cleared. Now beat the Final Boss: a full mock exam with 70%+ in both parts.":"New desk unlocked: <b>"+DESKS[R.c].name+"</b>."}</p><button class="next" onclick="closeModal()">Back to work</button>`)},400);
     return;
+  }
+  if(m==="pro"){
+    const pct=Math.round(100*R.right/R.items.length);const best=S.proBest==null||pct>S.proBest;if(best){S.proBest=pct;save()}
+    h=`<div class="res-head"><div class="lbl">Pro Desk</div><div class="big" id="bigpct">0%</div>
+     <div class="verdict ${pct>=70?"pos":"neg"}" style="font-size:18px;margin-top:8px">${pct>=85?"Exam ready on the hard stuff":pct>=70?"Pass standard":"More work needed"}</div>
+     <div class="lbl" style="margin-top:6px">${R.right}/${R.items.length} right${best?" &middot; new best":""}</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startPro()">Another 12</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");return;
   }
   if(m==="daily"){
     const inc=markDaily();
@@ -1381,6 +1460,13 @@ function countdownCard(){
    <div class="row" style="margin-top:10px"><button class="next ${done?"ghost":""}" style="margin-top:0" onclick="startDaily()">${done?"Daily drill done: go again":"Today's 10-question drill"}</button>
    ${p.act&&p.act[1]?`<button class="next ghost" style="margin-top:0" onclick="${p.act[1]}">${p.act[0]}</button>`:""}</div>
    <div class="lbl" style="margin-top:10px">Readiness: ${mockStreak()}/2 full mocks passed in a row</div></div>`;
+}
+function startPro(){
+  const pool=Q.filter(q=>q.d===3),used=new Set();
+  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
+  const items=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,12).map(x=>makeItem(x[1],0));
+  R={mode:"pro",items:shuffle(items),i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
 }
 function startDaily(){
   const used=new Set(),items=[];

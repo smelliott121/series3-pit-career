@@ -452,6 +452,7 @@ function home(){
    <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" to clear":"no misses yet"}</p></span></button>
    <button class="tile" onclick="startOrders()"><span class="ic">${I.ladder}</span><span><h3>Order Desk</h3><p>best ${S.orderBest||0}</p></span></button>
    <button class="tile" onclick="matchIntro()"><span class="ic">${I.cards}</span><span><h3>Contract Match</h3><p>${S.matchBest&&S.matchBest.sizes?"best "+S.matchBest.sizes+"s":"beat the clock"}</p></span></button>
+   <button class="tile boss" onclick="startPro()"><span class="ic">${I.bolt}</span><span><h3>Pro Desk</h3><p>${Q.filter(q=>q.d===3).length} harder multi-step questions${S.proBest!=null?" &middot; best "+S.proBest+"%":""}</p></span></button>
    <button class="tile" style="grid-column:1/-1" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>basis &middot; hedges &middot; spreads &middot; orders &middot; options</p></span></button>
   </div>`;
   h+=`<div class="foot">${Q.length} questions written from your Series 3 textbook.<br>Progress is saved in this browser only.</div>`;
@@ -499,6 +500,7 @@ function play(){
   R.t0=Date.now();R.answered=null;
   let chips="";
   if(R.mode==="desk")chips=`<div class="chips"><span class="chip">ACCT <b id="bal" class="${R.bal>=10000?"pos":"neg"}">${money(R.bal)}</b></span><span class="chip">STREAK <b>${R.streak}</b> &middot; x${mult()}</span><span class="chip lives">${"&#9679;".repeat(Math.max(R.lives,0))}${"&#9675;".repeat(3-Math.max(R.lives,0))}</span></div>`;
+  if(R.mode==="pro")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">PRO DESK</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="daily")chips=`<div class="chips"><span class="chip">DAILY DRILL</span><span class="chip">Streak <b>${S.daily.streak||0}</b></span></div>`;
   if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span><span class="chip">Cleared <b>${R.cleared}</b></span></div>`;
   if(R.mode==="mock")chips=`<div class="chips"><span class="chip">PART <b>${it.part}</b></span><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b>${R.i}</b>/${n}</span></div>`;
@@ -506,7 +508,7 @@ function play(){
   const keys=it.tf?["T","F"]:["a","b","c","d"];
   $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.i/n}%"></i></div><div class="hudr">${R.mode==="outcry"?"#"+(R.i+1):(R.i+1)+"/"+n}</div></div>
   ${chips}
-  <div class="qcard"><div class="qmeta"><span>CH ${q.c} &middot; ${d.name.toUpperCase()}</span><span>${it.tf?"TRUE / FALSE":"MULTIPLE CHOICE"}</span></div>
+  <div class="qcard"><div class="qmeta"><span>CH ${q.c} &middot; ${d.name.toUpperCase()}${q.d===3?` &middot; <b style="color:var(--amber)">PRO</b>`:""}</span><span>${it.tf?"TRUE / FALSE":"MULTIPLE CHOICE"}</span></div>
    <div class="qtext">${esc(it.proposal!=null?q.q.replace(/^TRUE or FALSE:\s*/,""):q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>
    ${q.l?`<div class="posbox">${q.l.map(x=>x?`<div class="${/^[IV]+\./.test(x)?"rnl":""}">${esc(x)}</div>`:`<div style="height:6px"></div>`).join("")}</div>`:""}
    ${it.proposal!=null?`<div class="proposal"><span class="lbl">True or false: the answer is…</span>${esc(it.proposal)}</div>`:""}
@@ -604,6 +606,14 @@ function finishRun(){
     $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");
     if(promoted)setTimeout(()=>{beep(true);modal(`<div class="lbl">Promotion</div><div class="rankchip" style="margin:12px auto;width:70px;height:70px;font-size:24px">${RANKCODE[rankIdx()]}</div><h2>${RANKS[rankIdx()]}</h2><p>${rankIdx()>=10?"Every desk cleared. Now beat the Final Boss: a full mock exam with 70%+ in both parts.":"New desk unlocked: <b>"+DESKS[R.c].name+"</b>."}</p><button class="next" onclick="closeModal()">Back to work</button>`)},400);
     return;
+  }
+  if(m==="pro"){
+    const pct=Math.round(100*R.right/R.items.length);const best=S.proBest==null||pct>S.proBest;if(best){S.proBest=pct;save()}
+    h=`<div class="res-head"><div class="lbl">Pro Desk</div><div class="big" id="bigpct">0%</div>
+     <div class="verdict ${pct>=70?"pos":"neg"}" style="font-size:18px;margin-top:8px">${pct>=85?"Exam ready on the hard stuff":pct>=70?"Pass standard":"More work needed"}</div>
+     <div class="lbl" style="margin-top:6px">${R.right}/${R.items.length} right${best?" &middot; new best":""}</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startPro()">Another 12</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");return;
   }
   if(m==="daily"){
     const inc=markDaily();
@@ -741,6 +751,13 @@ function countdownCard(){
    <div class="row" style="margin-top:10px"><button class="next ${done?"ghost":""}" style="margin-top:0" onclick="startDaily()">${done?"Daily drill done: go again":"Today's 10-question drill"}</button>
    ${p.act&&p.act[1]?`<button class="next ghost" style="margin-top:0" onclick="${p.act[1]}">${p.act[0]}</button>`:""}</div>
    <div class="lbl" style="margin-top:10px">Readiness: ${mockStreak()}/2 full mocks passed in a row</div></div>`;
+}
+function startPro(){
+  const pool=Q.filter(q=>q.d===3),used=new Set();
+  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
+  const items=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,12).map(x=>makeItem(x[1],0));
+  R={mode:"pro",items:shuffle(items),i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
 }
 function startDaily(){
   const used=new Set(),items=[];
