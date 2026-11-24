@@ -1884,12 +1884,13 @@ fin:{h:`<ul><li><b>Interest rates and bond prices move in opposite directions.</
  ["Stock index hedge: number of contracts","Portfolio value \u00f7 (index level \u00d7 multiplier)."]]},
 spread:{h:`<ul><li>A spread is long one contract and short a related one. You profit from the <b>change in the price difference</b>.</li>
  <li><b>Bull spread</b> = buy the nearby, sell the deferred. <b>Bear spread</b> = sell the nearby, buy the deferred.</li>
- <li>Intramarket (same commodity, different months), intermarket (e.g. wheat vs corn), intercommodity / processing (crush: soybeans vs meal and oil).</li>
+ <li><b>Spread types (book's definitions):</b> <b>Inter-delivery</b> = same commodity, different delivery month, same exchange. <b>Inter-market</b> (inter-exchange) = same commodity and month, different exchange. <b>Inter-commodity</b> = different but related commodity, same month. <b>Intra-market</b> = same or different commodity on the same exchange.</li>
+ <li><b>Crush spread</b> = buy soybean futures, sell soybean oil and soybean meal futures.</li>
  <li><b>Full carry</b> limits how far deferred can sit above nearby in a normal market. There's no limit in an inverted market.</li>
  <li>Spreads have lower margins but are <b>not</b> necessarily less risky, and they <b>are</b> subject to position limits.</li></ul>
  <div class="nt-k"><b>Don't trust the words, do the sums:</b> P&amp;L on each leg (sell \u2212 buy), add them, \u00d7 contract size \u00d7 number of contracts.</div>`,
  c:[["Bull spread","Long the nearby month, short the deferred."],["Bear spread","Short the nearby month, long the deferred."],
- ["Are spreads subject to position limits?","Yes."],["Crush spread","Soybeans against soybean meal and soybean oil."],
+ ["Are spreads subject to position limits?","Yes."],["Crush spread","Buy soybean futures; sell soybean oil and soybean meal futures."],["Inter-delivery spread","Same commodity, different delivery month, same exchange."],["Inter-market spread","Same commodity and month, different exchange."],["Inter-commodity spread","Different but related commodity, same month."],
  ["What limits a normal-market spread?","Full carrying charges."],["Spread P&L method","Each leg sell \u2212 buy, add the legs, \u00d7 size \u00d7 contracts."]]},
 spec:{h:`<ul><li><b>Leverage:</b> a small margin controls a large contract value, so small price moves make big percentage gains or losses on margin.</li>
  <li><b>Return on margin</b> = P&amp;L \u00f7 margin deposited.</li>
