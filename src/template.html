@@ -252,6 +252,43 @@ body{background:
 .st-more{background:#250d12;border-color:#7a2230}.st-more b{color:var(--red)}
 .foot{font:500 10px var(--mono);color:#4b5668;text-align:center;margin-top:30px;line-height:1.6}
 .hidden{display:none!important}
+/* exam-conditions mock */
+.flagb{font:700 11px var(--mono);color:var(--mute);border:1px solid var(--line);border-radius:6px;padding:4px 9px;letter-spacing:.06em}
+.flagb.on{color:#000;background:var(--amber);border-color:var(--amber)}
+.mnav{margin-top:12px}.mnav .next{margin-top:0}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+.qn{display:inline-grid;place-items:center;height:38px;border-radius:7px;border:1px solid var(--line);background:var(--bg);font:700 12px var(--mono);color:var(--mute);position:relative}
+.qn.a{background:#1b2a3d;border-color:#2e4a6b;color:var(--text)}
+.qn.f::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.qn.cur{outline:2px solid var(--amber);outline-offset:1px}
+.legend{display:flex;gap:14px;font:500 11px var(--mono);color:var(--mute)}.legend span{display:flex;align-items:center;gap:6px}
+.legend i.qn{width:16px;height:16px;border-radius:4px}
+/* recap */
+.arow{display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}.arow:last-child{border:0}
+.arow-t{display:flex;justify-content:space-between;gap:8px;font:700 14px var(--sans)}.arow-n{font:700 13px var(--mono);flex:none}
+.arow-s{display:flex;gap:10px;flex-wrap:wrap;font:500 11px var(--mono);color:var(--mute);margin-top:6px}
+.abar{position:relative;height:8px;background:#000;border-radius:4px;margin-top:8px;overflow:visible}.abar i{display:block;height:100%;border-radius:4px}
+.abar b{position:absolute;top:-3px;width:2px;height:14px;background:#cfd7e1;opacity:.6}
+.tagp{display:inline-block;font:700 9px var(--mono);letter-spacing:.1em;color:#000;background:var(--red);border-radius:4px;padding:2px 5px;margin-right:6px;vertical-align:2px}
+.tagp.p2{background:var(--blue)}
+.chip.on{border-color:var(--amber);color:var(--amber)}
+.rv{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:12px;padding:14px;margin-bottom:10px}
+.rv.bad{border-left-color:var(--red)}.rv q{display:block;quotes:none;font:600 15px/1.4 var(--sans)}
+.rvopts{margin-top:10px;display:grid;gap:4px;font-size:14px;line-height:1.4;color:var(--mute)}
+.rvopts .rc{color:var(--green);font-weight:700}.rvopts .rw{color:var(--red);text-decoration:line-through}.rvopts .lbl{text-decoration:none;display:inline}
+.expl{font-size:14px;line-height:1.5;margin-top:10px;color:#d3dae4}
+.work{margin-top:10px;background:#000;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.work ol{padding-left:20px;margin-top:6px}.work li{font:500 13px/1.55 var(--mono);color:#e8d9b0;margin-bottom:3px}
+.fb .work li{font-size:12px}
+.mynotes{margin-top:12px;background:#1c0a0e;border:1px solid #6b1a24;border-radius:8px;padding:10px 12px}
+.mynotes ul{padding-left:18px;margin-top:6px}.mynotes li{font-size:13px;line-height:1.45;margin-bottom:6px;color:#e6d2d5}
+/* flashcards */
+.fcard{display:block;width:100%;min-height:260px;text-align:left;background:linear-gradient(160deg,#1a2230,#11161e);border:1px solid var(--line);border-radius:16px;padding:20px 18px;box-shadow:0 14px 34px -20px #000}
+.fcard.back{border-color:var(--amberD);animation:flipin .35s ease-out}
+@keyframes flipin{from{transform:rotateY(80deg);opacity:.2}to{transform:none;opacity:1}}
+.fq{font:700 19px/1.4 var(--sans);margin-top:10px}.fo{font-size:13px;color:var(--mute);margin-top:10px;line-height:1.6}
+.fdiv{height:1px;background:var(--line);margin:14px 0}.fa{font:800 18px/1.4 var(--sans);color:var(--green)}.fe{font-size:14px;line-height:1.5;color:#d3dae4;margin-top:8px}
+.cs .nt-k{background:var(--panel2);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -365,8 +402,11 @@ function cheatFor(c){const x=CHEAT.find(k=>k.ch.includes(c));return x?x.id:null}
 
 /* ---------- storage ---------- */
 const KEY="s3pitcareer.v1";
-let S={cleared:{},best:{},seen:{},missed:{},pnl:0,outcry:0,mockBest:null,unlockAll:false,sound:true,tf:true,examDate:"2026-12-08",daily:{last:null,streak:0},mocks:[],orderBest:0,matchBest:{}};
+let S={cleared:{},best:{},seen:{},missed:{},pnl:0,outcry:0,mockBest:null,unlockAll:false,sound:true,tf:true,examDate:"2026-12-08",daily:{last:null,streak:0},mocks:[],orderBest:0,matchBest:{},srs:null,last:{},mockHist:[],curMock:null};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+// move the old Damage Control list into spaced repetition (all due now)
+if(!S.srs){S.srs={};Object.keys(S.missed||{}).forEach(id=>S.srs[id]={b:0,due:0,x:1});S.missed={}}
+S.last=S.last||{};S.mockHist=S.mockHist||[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ---------- helpers ---------- */
@@ -382,8 +422,23 @@ function clearedCount(){return DESKS.filter(d=>S.cleared[d.c]).length}
 function rankIdx(){return Math.min(clearedCount(),RANKS.length-1)}
 function unlocked(c){return S.unlockAll||c===1||S.cleared[c-1]}
 function mastery(c){const qs=Q.filter(q=>q.c===c);const m=qs.filter(q=>S.seen[q.id]&&S.seen[q.id].r>0).length;return Math.round(100*m/qs.length)}
-function record(q,ok){const s=S.seen[q.id]||{r:0,w:0};ok?s.r++:s.w++;S.seen[q.id]=s;
-  if(!ok)S.missed[q.id]=0}
+function record(q,ok){const s=S.seen[q.id]||{r:0,w:0};ok?s.r++:s.w++;S.seen[q.id]=s;S.last[q.id]=Date.now();
+  if(!ok){srsMiss(q.id);return 0}return srsHit(q.id)}
+
+/* ---------- spaced repetition ----------
+   Leitner boxes squeezed to fit before the exam. A miss goes to box 0 (due now).
+   Each right answer when it's due moves it up: back tomorrow, then in 3 days, then 6, then it's learned.
+   Intervals are capped so everything still in review comes back before exam day. */
+const DAY=86400000,SRS_IVL=[0,1,3,6];
+function dayStart(t){const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()}
+function srsMiss(id){const o=S.srs[id]||{};S.srs[id]={b:0,due:Date.now(),x:(o.x||0)+1}}
+function srsHit(id){const s=S.srs[id];if(!s||s.due>Date.now())return 0;
+  s.b++;if(s.b>=SRS_IVL.length){delete S.srs[id];return 2}
+  let due=dayStart(Date.now())+SRS_IVL[s.b]*DAY;
+  const cap=parseD(S.examDate).getTime()-DAY;if(cap>Date.now())due=Math.min(due,Math.max(cap,dayStart(Date.now())+DAY));
+  s.due=due;return 1}
+function dueIds(){const n=Date.now();return Object.keys(S.srs).filter(id=>byId[id]&&S.srs[id].due<=n)}
+function reviewIds(){return Object.keys(S.srs).filter(id=>byId[id])}
 
 /* ---------- audio ---------- */
 let AC=null;
@@ -396,21 +451,31 @@ function beep(ok){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window
 /* ---------- item building ---------- */
 // Turns a bank question into a playable item; may convert MCQ to true/false like the real exam
 function makeItem(q,tfChance){
-  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a};
+  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a,ord:[0,1]};
   if(false){
     const showRight=Math.random()<.5;
     const wrongs=q.o.filter((_,i)=>i!==q.a);
     const shown=showRight?q.o[q.a]:wrongs[Math.random()*wrongs.length|0];
     return{q,tf:true,chk:true,proposal:shown,opts:["True","False"],ans:showRight?0:1};
   }
-  const order=shuffle(q.o.map((t,i)=>i));
-  return{q,tf:false,opts:order.map(i=>q.o[i]),ans:order.indexOf(q.a)};
+  return itemFromOrd(q,shuffle(q.o.map((t,i)=>i)));
+}
+function itemFromOrd(q,ord){
+  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a,ord:[0,1]};
+  return{q,tf:false,opts:ord.map(i=>q.o[i]),ans:ord.indexOf(q.a),ord};
+}
+// Cycle order: questions you've never seen, then reviews that are due, then whatever you saw longest ago.
+// Anything seen in the last 36 hours goes to the back of the queue, so a shift rarely repeats until the chapter is used up.
+function rankPool(pool){
+  const now=Date.now();
+  const key=q=>{const seen=S.seen[q.id],l=S.last[q.id]||0,sr=S.srs[q.id];
+    const tier=!seen?0:(sr&&sr.due<=now)?1:(now-l>36*3600000)?2:3;
+    const ageH=Math.min((now-l)/3600000,900);
+    return tier*1000+(tier>=2?-ageH:0)+Math.random()*3};
+  return pool.map(q=>[key(q),q]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
 }
 function pickFor(chs,n,used){
-  const pool=Q.filter(q=>chs.includes(q.c)&&!used.has(q.id));
-  // weight: unseen and previously-missed questions come up first
-  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
-  const out=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,n).map(x=>x[1]);
+  const out=rankPool(Q.filter(q=>chs.includes(q.c)&&!used.has(q.id))).slice(0,n);
   out.forEach(q=>used.add(q.id));return shuffle(out);
 }
 
@@ -425,7 +490,7 @@ function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
 function home(){
   stopTimer();R=null;window.scrollTo(0,0);
   const ri=rankIdx(),cc=clearedCount();
-  const missN=Object.keys(S.missed).filter(id=>byId[id]).length;
+  const missN=dueIds().length,revN=reviewIds().length;
   const seenN=Object.keys(S.seen).length;
   const curDesk=(DESKS.find(d=>unlocked(d.c)&&!S.cleared[d.c])||{}).c;
   const I=ICONS;
@@ -447,13 +512,17 @@ function home(){
   h+=`</div>
   <div class="sect">Trading modes</div>
   <div class="tiles">
+   ${S.curMock?`<button class="tile boss" style="border-color:var(--green)" onclick="resumeMock()"><span class="ic" style="background:var(--green);border-color:var(--green)">${I.exam}</span><span><h3 style="color:var(--green)">Resume your mock</h3><p>Q ${S.curMock.i+1}/${S.curMock.items.length} &middot; ${fmtLeft(S.curMock.left)} left on the clock</p></span></button>`:""}
    <button class="tile boss" onclick="mockIntro()"><span class="ic">${I.exam}</span><span><h3>The Real Exam</h3><p>120 Qs &middot; 2h30 &middot; 70% in both parts${S.mockBest?" &middot; best "+S.mockBest+"%":""}</p></span></button>
+   ${S.mockHist.length?`<button class="tile" style="grid-column:1/-1" onclick="mockRecap(S.mockHist.length-1)"><span class="ic">${I.exam}</span><span><h3>Last mock recap</h3><p>${(()=>{const m=mockStats(S.mockHist[S.mockHist.length-1]);return "P1 "+m.p1.pct+"% &middot; P2 "+m.p2.pct+"% &middot; notes, flashcards, answers"})()}</p></span></button>`:""}
    <button class="tile" onclick="startOutcry()"><span class="ic">${I.bolt}</span><span><h3>Open Outcry</h3><p>60s &middot; best ${S.outcry}</p></span></button>
-   <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" to clear":"no misses yet"}</p></span></button>
+   <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" due now":revN?"nothing due &middot; "+revN+" in review":"no misses yet"}</p></span></button>
    <button class="tile" onclick="startOrders()"><span class="ic">${I.ladder}</span><span><h3>Order Desk</h3><p>best ${S.orderBest||0}</p></span></button>
    <button class="tile" onclick="matchIntro()"><span class="ic">${I.cards}</span><span><h3>Contract Match</h3><p>${S.matchBest&&S.matchBest.sizes?"best "+S.matchBest.sizes+"s":"beat the clock"}</p></span></button>
    <button class="tile boss" onclick="startPro()"><span class="ic">${I.bolt}</span><span><h3>Pro Desk</h3><p>${Q.filter(q=>q.d===3).length} harder multi-step questions${S.proBest!=null?" &middot; best "+S.proBest+"%":""}</p></span></button>
-   <button class="tile" style="grid-column:1/-1" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>basis &middot; hedges &middot; spreads &middot; orders &middot; options</p></span></button>
+   <button class="tile" onclick="flashMenu()"><span class="ic">${I.cards}</span><span><h3>Flashcards</h3><p>by exam area</p></span></button>
+   <button class="tile" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>the tricky bits</p></span></button>
+   <button class="tile" style="grid-column:1/-1" onclick="notesMenu()"><span class="ic">${I.book}</span><span><h3>Revision Notes</h3><p>all 9 exam areas &middot; key rules and worked methods</p></span></button>
   </div>`;
   h+=`<div class="foot">${Q.length} questions written from your Series 3 textbook.<br>Progress is saved in this browser only.</div>`;
   $("#app").innerHTML=h;
@@ -469,7 +538,7 @@ function settings(){
   <label class="toggle"><span>Exam date<br><span style="color:var(--mute);font-size:12px">Drives the countdown and daily plan</span></span><input type="date" value="${S.examDate}" onchange="if(this.value){S.examDate=this.value;save()}" class="din"></label>
   <button class="next" style="margin-top:16px" onclick="closeModal();home()">Done</button>
   <button class="next ghost" onclick="resetAsk()">Reset all progress</button>`)}
-function resetAsk(){modal(`<h2>Reset career?</h2><p>This wipes your rank, stars, P&amp;L and Damage Control list. It can't be undone.</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="settings()">Cancel</button><button class="next" style="background:var(--red);color:#fff" onclick="localStorage.removeItem(KEY);location.reload()">Reset</button></div>`)}
+function resetAsk(){modal(`<h2>Reset career?</h2><p>This wipes your rank, stars, P&amp;L, mock history and review list. It can't be undone.</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="settings()">Cancel</button><button class="next" style="background:var(--red);color:#fff" onclick="localStorage.removeItem(KEY);location.reload()">Reset</button></div>`)}
 
 /* ---------- desk shift ---------- */
 function deskIntro(c){
@@ -485,10 +554,17 @@ function startDesk(c){
   R={mode:"desk",c,items,i:0,right:0,wrong:0,bal:10000,streak:0,lives:3,misses:[],t0:0,done:false,liq:false,hist:[10000]};
   play();
 }
-function startDamage(){
-  const ids=Object.keys(S.missed).filter(id=>byId[id]);
-  if(!ids.length){modal(`<h2>Clean book</h2><p>Nothing to review yet. Questions you miss anywhere in the game land here until you've answered them right twice in a row.</p><button class="next" onclick="closeModal()">OK</button>`);return}
-  const items=shuffle(ids).slice(0,15).map(id=>makeItem(byId[id],.2));
+function startDamage(force){
+  let ids=dueIds();const all=reviewIds();
+  if(!ids.length&&!force){
+    if(!all.length){modal(`<h2>Clean book</h2><p>Nothing to review yet. Every question you miss lands here, then comes back tomorrow, in 3 days and in 6 days. Get it right each time and it's learned.</p><button class="next" onclick="closeModal()">OK</button>`);return}
+    const nx=Math.min(...all.map(id=>S.srs[id].due)),d=Math.max(1,Math.round((dayStart(nx)-dayStart(Date.now()))/DAY));
+    modal(`<div class="lbl">Spaced repetition</div><h2>Nothing due</h2><p>${all.length} question${all.length>1?"s are":" is"} in review. The next ones come back ${d===1?"tomorrow":"in "+d+" days"}. Waiting is what makes them stick, but you can drill them early if you want.</p>
+     <button class="next" onclick="closeModal()">OK</button><button class="next ghost" onclick="closeModal();startDamage(1)">Drill them early anyway</button>`);return}
+  if(!ids.length)ids=all;
+  // lowest step and most-missed first
+  ids=ids.sort((a,b)=>(S.srs[a].b-S.srs[b].b)||((S.srs[b].x||0)-(S.srs[a].x||0))||(Math.random()-.5));
+  const items=shuffle(ids.slice(0,15)).map(id=>makeItem(byId[id],.2));
   R={mode:"damage",items,i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
   play();
 }
@@ -502,7 +578,8 @@ function play(){
   if(R.mode==="desk")chips=`<div class="chips"><span class="chip">ACCT <b id="bal" class="${R.bal>=10000?"pos":"neg"}">${money(R.bal)}</b></span><span class="chip">STREAK <b>${R.streak}</b> &middot; x${mult()}</span><span class="chip lives">${"&#9679;".repeat(Math.max(R.lives,0))}${"&#9675;".repeat(3-Math.max(R.lives,0))}</span></div>`;
   if(R.mode==="pro")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">PRO DESK</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="daily")chips=`<div class="chips"><span class="chip">DAILY DRILL</span><span class="chip">Streak <b>${S.daily.streak||0}</b></span></div>`;
-  if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span><span class="chip">Cleared <b>${R.cleared}</b></span></div>`;
+  if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span>${q.id in S.srs?`<span class="chip">Step <b>${S.srs[q.id].b+1}</b>/4</span>`:""}<span class="chip">Moved up <b>${R.cleared||0}</b></span></div>`;
+  if(R.mode==="drill")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">DRILL</span><span class="chip">${esc(R.label)}</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="mock")chips=`<div class="chips"><span class="chip">PART <b>${it.part}</b></span><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b>${R.i}</b>/${n}</span></div>`;
   if(R.mode==="outcry")chips=`<div class="chips"><span class="chip">&#9201; <b id="clock">${Math.max(0,Math.ceil((R.end-Date.now())/1000))}s</b></span><span class="chip">SCORE <b id="score">${R.score}</b></span><span class="chip">COMBO <b>x${Math.min(1+R.streak,5)}</b></span></div>`;
   const keys=it.tf?["T","F"]:["a","b","c","d"];
@@ -520,8 +597,7 @@ function fmtClock(){const s=Math.max(0,Math.round((R.end-Date.now())/1000));cons
 function answer(i){
   if(!R||R.answered!=null)return;
   const it=R.items[R.i],ok=i===it.ans;R.answered=i;
-  record(it.q,ok);
-  if(R.mode==="mock"){it.chosen=i;it.ok=ok;R.i++;save();R.i>=R.items.length?finishMock():play();return}
+  const up=record(it.q,ok);if(up)R.cleared=(R.cleared||0)+1;
   const btns=[...document.querySelectorAll(".opt")];btns.forEach(b=>b.disabled=true);
   btns[i].classList.add(ok?"ok":"bad");if(!ok)btns[it.ans].classList.add("ok");
   beep(ok);buzz(ok);cardFx(ok);
@@ -535,7 +611,6 @@ function answer(i){
   let delta=0,title;
   if(ok){R.right++;
     if(R.mode==="desk"){R.streak++;const sec=(Date.now()-R.t0)/1000;delta=Math.round(400*mult()+(sec<12?100:0));R.bal+=delta}
-    if(S.missed[it.q.id]!=null&&R.mode!=="desk"){S.missed[it.q.id]++;if(S.missed[it.q.id]>=2){delete S.missed[it.q.id];R.cleared++}}
     title=["Filled.","Nice trade.","Correct.","On the money.","Locked in."][Math.random()*5|0];
   }else{R.wrong++;
     if(R.mode==="desk"){R.streak=0;delta=-1500;R.bal+=delta;R.lives--;
@@ -544,7 +619,7 @@ function answer(i){
   }
   save();
   const correct=it.q.o[it.q.a];
-  const ex=(it.proposal!=null?`Correct answer: <b>${esc(correct)}</b>. `:"")+esc(it.q.e);
+  const ex=(it.proposal!=null?`Correct answer: <b>${esc(correct)}</b>. `:"")+esc(it.q.e)+workHTML(it.q);
   const last=R.i>=R.items.length-1||R.liq;
   $("#fbx").innerHTML=`<div class="fb ${ok?"ok":"bad"}"><h5><span>${title}</span>${R.mode==="desk"?`<span class="delta ${delta>=0?"pos":"neg"}">${smoney(delta)}</span>`:""}</h5><p>${ex}</p></div>
    <button class="next" id="nextb" onclick="nextQ()">${R.liq?"See the damage":last?"Close the shift":"Next &rarr;"}</button>`;
@@ -559,7 +634,11 @@ function tickNum(el,from,to,fmt){if(!el)return;const t0=performance.now(),d=550;
   (function f(n){const k=Math.min(1,(n-t0)/d),e=1-Math.pow(1-k,3);el.textContent=fmt(from+(to-from)*e);if(k<1)requestAnimationFrame(f)})(t0)}
 function countUp(el,to,suf){if(!el)return;const t0=performance.now();(function f(n){const k=Math.min(1,(n-t0)/700),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e)+suf;if(k<1)requestAnimationFrame(f)})(t0)}
 function floatTxt(t,c){const e=document.createElement("div");e.className="float";e.textContent=t;e.style.color=c;document.body.appendChild(e);setTimeout(()=>e.remove(),1000)}
-function quitAsk(){modal(`<h2>Leave the floor?</h2><p>${R&&R.mode==="mock"?"Your mock exam will be abandoned.":"This run won't count, but anything you got wrong is still saved to Damage Control."}</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="closeModal()">Stay</button><button class="next" onclick="closeModal();home()">Leave</button></div>`)}
+function quitAsk(){
+  if(R&&R.mode==="mock")return modal(`<h2>Leave the exam?</h2><p><b>Pause</b> saves your answers and stops the clock. You can resume from the floor, even after closing the browser.</p>
+   <button class="next" onclick="closeModal();pauseMock()">Pause and leave</button><button class="next ghost" onclick="closeModal()">Keep going</button>
+   <button class="next ghost" style="color:var(--red)" onclick="closeModal();abandonMock()">Abandon this mock</button>`);
+  modal(`<h2>Leave the floor?</h2><p>${R&&R.mode==="flash"?"Cards you've already rated are saved.":"This run won't count, but anything you got wrong is still saved to Damage Control."}</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="closeModal()">Stay</button><button class="next" onclick="closeModal();home()">Leave</button></div>`)}
 
 function pnlChart(hs){
   const W=330,H=130,L=44,Rr=8,T=10,B=20,n=hs.length;
@@ -579,8 +658,9 @@ function missList(ms){
   if(!ms.length)return "";
   return `<div class="sect">Your misses <span class="lbl">sent to Damage Control</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
     const your=m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
-    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">✕ ${esc(your)}</div><div class="a">✓ ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">✕ ${esc(your)}</div><div class="a">✓ ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div>${workHTML(q)}</div>`}).join("")+`</div>`;
 }
+function workHTML(q){return q.w?`<div class="work"><div class="lbl">Worked calculation</div><ol>${q.w.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:""}
 
 function finishRun(){
   stopTimer();R.answered=-1;window.scrollTo(0,0);
@@ -607,6 +687,14 @@ function finishRun(){
     if(promoted)setTimeout(()=>{beep(true);modal(`<div class="lbl">Promotion</div><div class="rankchip" style="margin:12px auto;width:70px;height:70px;font-size:24px">${RANKCODE[rankIdx()]}</div><h2>${RANKS[rankIdx()]}</h2><p>${rankIdx()>=10?"Every desk cleared. Now beat the Final Boss: a full mock exam with 70%+ in both parts.":"New desk unlocked: <b>"+DESKS[R.c].name+"</b>."}</p><button class="next" onclick="closeModal()">Back to work</button>`)},400);
     return;
   }
+  if(m==="drill"){
+    const pct=Math.round(100*R.right/R.items.length),ar=R.areas;
+    h=`<div class="res-head"><div class="lbl">Targeted drill &middot; ${esc(R.label)}</div><div class="big" id="bigpct">0%</div>
+     <div class="verdict ${pct>=70?"pos":"neg"}" style="font-size:18px;margin-top:8px">${pct>=80?"Getting there":pct>=70?"Pass standard":"Keep going"}</div>
+     <div class="lbl" style="margin-top:6px">${R.right}/${R.items.length} right</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDrill(['${ar.join("','")}'])">Another drill</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");return;
+  }
   if(m==="pro"){
     const pct=Math.round(100*R.right/R.items.length);const best=S.proBest==null||pct>S.proBest;if(best){S.proBest=pct;save()}
     h=`<div class="res-head"><div class="lbl">Pro Desk</div><div class="big" id="bigpct">0%</div>
@@ -624,9 +712,10 @@ function finishRun(){
     $("#app").innerHTML=h;return;
   }
   if(m==="damage"){
-    const left=Object.keys(S.missed).filter(id=>byId[id]).length;
+    const left=dueIds().length,rv=reviewIds().length;
     h=`<div class="res-head"><div class="lbl">Damage Control</div><div class="big">${R.right}/${R.items.length}</div>
-     <div class="lbl" style="margin-top:6px">${R.cleared} cleared &middot; ${left} still on the list</div></div>
+     <div class="lbl" style="margin-top:6px">${R.cleared||0} moved up a step &middot; ${left} still due &middot; ${rv} in review</div></div>
+     <p style="color:var(--mute);font-size:13px;text-align:center;margin-bottom:12px">Right answers come back tomorrow, then in 3 days, then 6. Misses stay due.</p>
      <div class="row"><button class="next ghost" onclick="home()">Floor</button>${left?`<button class="next" onclick="startDamage()">Another round</button>`:""}</div>${missList(R.misses)}`;
     $("#app").innerHTML=h;return;
   }
@@ -650,54 +739,257 @@ function startOutcry(){
     if(s<=0){R.done=true;finishRun()}},250);
 }
 
-/* ---------- mock exam ---------- */
+/* ---------- mock exam (exam conditions) ---------- */
+function fmtLeft(ms){const s=Math.max(0,Math.round(ms/1000)),h=s/3600|0,m=(s%3600)/60|0,x=s%60;return (h?h+":":"")+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0")}
 function mockIntro(){
+  const hist=S.mockHist.slice().reverse().slice(0,5);
   modal(`<div class="lbl">Final Boss</div><h2>The Real Exam</h2>
-  <p style="text-align:left">Built to the Series 3 outline: <b>Part 1</b> has 85 questions across 8 areas and <b>Part 2</b> has 35 on CFTC/NFA rules. You need <b>70% in each part</b>. There's no feedback until the end, and the first answer you pick is the one that counts, so go with your gut.</p>
-  <button class="next" onclick="closeModal();startMock(1)">Full exam: 120 Qs, 2h30</button>
-  <button class="next ghost" onclick="closeModal();startMock(.334)">Mini mock: 40 Qs, 50 min</button>
+  <p style="text-align:left">Built to the Series 3 outline: <b>Part 1</b> has 85 questions across 8 areas and <b>Part 2</b> has 35 on CFTC/NFA rules. You need <b>70% in each part</b>.</p>
+  <p style="text-align:left;margin-top:8px">Exam conditions: <b>no answers shown</b> until you submit. Go back to any question, change your answer, and <b>flag</b> ones to come back to. You can pause and resume later.</p>
+  ${S.curMock?`<button class="next" style="background:var(--green)" onclick="closeModal();resumeMock()">Resume mock: Q ${S.curMock.i+1}/${S.curMock.items.length}, ${fmtLeft(S.curMock.left)} left</button>`:""}
+  <button class="next ${S.curMock?"ghost":""}" onclick="closeModal();newMockAsk(1)">Full exam: 120 Qs, 2h30</button>
+  <button class="next ghost" onclick="closeModal();newMockAsk(.334)">Mini mock: 40 Qs, 50 min</button>
+  ${hist.length?`<div class="lbl" style="margin:16px 0 6px;text-align:left">Past mocks</div>`+hist.map(h=>{const m=mockStats(h),k=S.mockHist.indexOf(h);
+    return `<button class="toggle" onclick="closeModal();mockRecap(${k})"><span>${new Date(h.t).toLocaleDateString("en-GB",{day:"numeric",month:"short"})} &middot; ${h.scale===1?"Full":"Mini"}</span><span style="font-family:var(--mono);font-size:13px"><span class="${m.p1.pct>=70?"pos":"neg"}">P1 ${m.p1.pct}%</span> &middot; <span class="${m.p2.pct>=70?"pos":"neg"}">P2 ${m.p2.pct}%</span> &rsaquo;</span></button>`}).join(""):""}
   <button class="next ghost" onclick="closeModal()">Not today</button>`)}
+function newMockAsk(scale){
+  if(S.curMock)return modal(`<h2>Start a new mock?</h2><p>Your paused mock will be thrown away.</p><button class="next" onclick="closeModal();S.curMock=null;save();startMock(${scale})">Start new</button><button class="next ghost" onclick="closeModal();resumeMock()">Resume the paused one</button>`);
+  startMock(scale)}
 function startMock(scale){
   const used=new Set();let items=[];
   let counts=AREAS.map(a=>Math.max(1,Math.round(a.n*scale)));
   if(scale<1){const t1=Math.round(85*scale),t2=Math.round(35*scale);
     let s1=counts.slice(0,8).reduce((a,b)=>a+b,0);counts[6]+=t1-s1;counts[8]=t2}
-  AREAS.forEach((a,k)=>{pickFor(a.ch,counts[k],used).forEach(q=>{const it=makeItem(q,.2);it.area=a.id;it.part=a.p;items.push(it)})});
-  // real exam mixes topics; keep Part 1 first then Part 2
+  AREAS.forEach((a,k)=>{pickFor(a.ch,counts[k],used).forEach(q=>{const it=makeItem(q,.2);it.area=a.id;it.part=a.p;it.chosen=null;it.flag=false;items.push(it)})});
   items=shuffle(items.filter(x=>x.part===1)).concat(shuffle(items.filter(x=>x.part===2)));
   const mins=scale<1?50:150;
-  R={mode:"mock",items,i:0,end:Date.now()+mins*60000,misses:[],scale};
-  play();
-  timerId=setInterval(()=>{const c=$("#clock");if(c)c.textContent=fmtClock();if(Date.now()>=R.end)finishMock()},1000);
+  R={mode:"mock",items,i:0,end:Date.now()+mins*60000,scale};
+  mockSave();mockRun();
+}
+function mockSave(paused){
+  if(!R||R.mode!=="mock")return;
+  S.curMock={left:Math.max(0,R.end-Date.now()),scale:R.scale,i:R.i,items:R.items.map(x=>({id:x.q.id,ord:x.ord,area:x.area,part:x.part,c:x.chosen,f:x.flag?1:0}))};save()}
+function resumeMock(){
+  const m=S.curMock;if(!m)return home();
+  const items=m.items.filter(x=>byId[x.id]).map(x=>{const it=itemFromOrd(byId[x.id],x.ord);it.area=x.area;it.part=x.part;it.chosen=x.c;it.flag=!!x.f;return it});
+  R={mode:"mock",items,i:Math.min(m.i,items.length-1),end:Date.now()+m.left,scale:m.scale};
+  if(m.left<=0)return finishMock();
+  mockRun()}
+function pauseMock(){mockSave();stopTimer();R=null;home()}
+function abandonMock(){stopTimer();S.curMock=null;save();R=null;home()}
+function mockRun(){
+  stopTimer();playMock();
+  timerId=setInterval(()=>{if(!R||R.mode!=="mock")return stopTimer();const c=$("#clock");if(c)c.textContent=fmtClock();
+    const left=R.end-Date.now();if(c&&left<300000)c.style.color="var(--red)";
+    if(left<=0){finishMock();return}
+    if((Date.now()/1000|0)%15===0)mockSave()},1000);
+}
+function mockChips(){const n=R.items.length,done=R.items.filter(x=>x.chosen!=null).length,fl=R.items.filter(x=>x.flag).length;
+  return `<div class="chips"><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b id="ansd">${done}</b>/${n}</span><span class="chip">&#9873; <b id="flg">${fl}</b></span></div>`}
+function playMock(){
+  window.scrollTo(0,0);R.answered=null;
+  const it=R.items[R.i],n=R.items.length,q=it.q,keys=it.tf?["T","F"]:["a","b","c","d"];
+  const done=R.items.filter(x=>x.chosen!=null).length;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*done/n}%"></i></div><div class="hudr">${R.i+1}/${n}</div></div>
+  ${mockChips()}
+  <div class="qcard"><div class="qmeta"><span>PART ${it.part} &middot; Q${R.i+1}</span><button class="flagb ${it.flag?"on":""}" id="flagb" onclick="toggleFlag()">&#9873; ${it.flag?"Flagged":"Flag"}</button></div>
+   <div class="qtext">${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>
+   ${q.l?`<div class="posbox">${q.l.map(x=>x?`<div class="${/^[IV]+\./.test(x)?"rnl":""}">${esc(x)}</div>`:`<div style="height:6px"></div>`).join("")}</div>`:""}
+   <div class="opts ${it.tf?"tfrow":""}">${it.opts.map((o,i)=>`<button class="opt ${it.chosen===i?"sel":""}" data-i="${i}" onclick="pickMock(${i})">${it.tf?"":`<span class="key">${keys[i]}</span>`}<span>${esc(o)}</span></button>`).join("")}</div>
+  </div>
+  <div class="row mnav"><button class="next ghost" ${R.i?"":"disabled style='opacity:.35'"} onclick="mockGo(${R.i-1})">&larr; Back</button>
+   <button class="next" onclick="${R.i<n-1?`mockGo(${R.i+1})`:"mockReview()"}">${R.i<n-1?"Next &rarr;":"Review &amp; submit"}</button></div>
+  <button class="next ghost" onclick="mockReview()">Question map &middot; submit</button>`;
+}
+function pickMock(i){const it=R.items[R.i];it.chosen=i;
+  document.querySelectorAll(".opt").forEach((b,k)=>b.classList.toggle("sel",k===i));
+  const a=$("#ansd");if(a)a.textContent=R.items.filter(x=>x.chosen!=null).length;
+  const pr=$(".prog i");if(pr)pr.style.width=(100*R.items.filter(x=>x.chosen!=null).length/R.items.length)+"%";
+  mockSave()}
+function toggleFlag(){const it=R.items[R.i];it.flag=!it.flag;const b=$("#flagb");if(b){b.classList.toggle("on",it.flag);b.innerHTML="&#9873; "+(it.flag?"Flagged":"Flag")}
+  const f=$("#flg");if(f)f.textContent=R.items.filter(x=>x.flag).length;mockSave()}
+function mockGo(k){if(k<0||k>=R.items.length)return;R.i=k;mockSave();playMock()}
+function mockReview(){
+  window.scrollTo(0,0);R.answered=-1;
+  const it=R.items,un=it.filter(x=>x.chosen==null).length,fl=it.filter(x=>x.flag).length;
+  const grid=p=>`<div class="lbl" style="margin:14px 0 8px">Part ${p} ${p===2?"&middot; rules":"&middot; markets"}</div><div class="qgrid">${it.map((x,k)=>x.part===p?`<button class="qn ${x.chosen!=null?"a":""} ${x.flag?"f":""} ${k===R.i?"cur":""}" onclick="mockGo(${k})">${k+1}</button>`:"").join("")}</div>`;
+  const firstOf=f=>it.findIndex(f);
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="brand" style="font-size:20px">Question<em>Map</em></div><div></div></div>
+  ${mockChips()}
+  <div class="card"><div class="legend"><span><i class="qn a"></i>answered</span><span><i class="qn"></i>blank</span><span><i class="qn f"></i>flagged</span></div>
+  ${grid(1)}${grid(2)}</div>
+  <div class="row" style="margin-top:12px">
+   <button class="next ghost" ${fl?"":"disabled style='opacity:.35'"} onclick="mockGo(${firstOf(x=>x.flag)})">First flagged</button>
+   <button class="next ghost" ${un?"":"disabled style='opacity:.35'"} onclick="mockGo(${firstOf(x=>x.chosen==null)})">First blank</button></div>
+  <div class="row"><button class="next ghost" onclick="mockGo(${R.i})">Back to Q${R.i+1}</button><button class="next" onclick="submitAsk()">Submit exam</button></div>`;
+}
+function submitAsk(){const it=R.items,un=it.filter(x=>x.chosen==null).length,fl=it.filter(x=>x.flag).length;
+  modal(`<div class="lbl">Final answer?</div><h2>Submit exam</h2><p>${un?`<b style="color:var(--red)">${un} unanswered.</b> Blanks score zero, so guess them first. `:"Every question answered. "}${fl?`<b>${fl} flagged</b> for review.`:""}</p>
+  <button class="next" onclick="closeModal();finishMock()">Submit and see results</button><button class="next ghost" onclick="closeModal()">Keep working</button>`)}
+
+/* ---------- results ---------- */
+function mockStats(res){
+  const items=res.items.filter(x=>byId[x.id]).map(x=>{const it=itemFromOrd(byId[x.id],x.ord);it.area=x.area;it.part=x.part;it.chosen=x.c;it.flag=!!x.f;it.ok=x.c===it.ans;return it});
+  const part=p=>{const all=items.filter(x=>x.part===p),ok=all.filter(x=>x.ok).length;return{ok,n:all.length,pct:all.length?Math.round(100*ok/all.length):0,need:Math.max(0,Math.ceil(.7*all.length-1e-9)-ok)}};
+  const areas=AREAS.map(a=>{const xs=items.filter(x=>x.area===a.id),ok=xs.filter(x=>x.ok).length;return{a,ok,n:xs.length,pc:xs.length?Math.round(100*ok/xs.length):0,drop:xs.length-ok}});
+  return{items,p1:part(1),p2:part(2),total:items.length?Math.round(100*items.filter(x=>x.ok).length/items.length):0,areas};
 }
 function finishMock(){
-  stopTimer();R.answered=-1;window.scrollTo(0,0);
-  const it=R.items,ans=it.filter(x=>x.chosen!=null);
-  const part=p=>{const all=it.filter(x=>x.part===p);const ok=all.filter(x=>x.ok).length;return{ok,n:all.length,pct:all.length?Math.round(100*ok/all.length):0}};
-  const p1=part(1),p2=part(2),pass=p1.pct>=70&&p2.pct>=70;
-  const total=Math.round(100*it.filter(x=>x.ok).length/it.length);
-  S.lastMock={p1:p1.pct,p2:p2.pct,full:R.scale===1};if(R.scale===1){S.mockBest=Math.max(S.mockBest||0,total);S.mocks.push(pass)}
-  it.filter(x=>x.chosen==null).forEach(x=>record(x.q,false));
-  save();
-  const rows=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);const ok=xs.filter(x=>x.ok).length;const pc=xs.length?Math.round(100*ok/xs.length):0;
-    return `<tr><td>${a.p===2?"<b>P2</b> ":""}${a.name}</td><td class="n">${ok}/${xs.length}</td><td class="n ${pc>=70?"pos":"neg"}">${pc}%</td></tr>`}).join("");
-  const ms=it.filter(x=>!x.ok).map(x=>({it:x,chosen:x.chosen==null?null:x.chosen}));
-  const weakest=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);return{a,pc:xs.length?xs.filter(x=>x.ok).length/xs.length:1}}).sort((x,y)=>x.pc-y.pc)[0];
-  $("#app").innerHTML=`<div class="res-head"><div class="lbl">${R.scale===1?"Full mock exam":"Mini mock"} &middot; ${ans.length}/${it.length} answered</div>
-   <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${pass?"Passed":"Not yet"}</div><div class="big" style="margin-top:8px">${total}%</div></div>
-   <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="lbl">Part 1 &middot; need 70%</div><div class="v ${p1.pct>=70?"pos":"neg"}">${p1.pct}% <span style="color:var(--mute);font-size:12px">${p1.ok}/${p1.n}</span></div></div>
-   <div class="stat"><div class="lbl">Part 2 rules &middot; need 70%</div><div class="v ${p2.pct>=70?"pos":"neg"}">${p2.pct}% <span style="color:var(--mute);font-size:12px">${p2.ok}/${p2.n}</span></div></div></div>
-   <div class="sect">By exam area</div><div class="card" style="padding:6px 12px"><table><tr><th>Area</th><th style="text-align:right">Score</th><th style="text-align:right">%</th></tr>${rows}</table></div>
-   <div class="card" style="margin-top:10px;border-color:var(--amberD)"><div class="lbl" style="color:var(--amber)">Damage control plan</div><p style="font-size:14px;margin-top:6px;line-height:1.45">Weakest area: <b>${weakest.a.name}</b>. Re-read chapter ${weakest.a.ch.join(" & ")} in the book, then run ${weakest.a.ch.map(c=>"Desk "+c).join(" / ")} and clear your Damage Control list before your next mock.</p></div>
-   <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDamage()">Damage Control</button></div>
-   ${missListMock(ms)}`;
+  stopTimer();
+  const it=R.items;it.forEach(x=>{x.ok=x.chosen===x.ans;record(x.q,x.ok)});
+  S.mockHist.push({t:Date.now(),scale:R.scale,items:it.map(x=>({id:x.q.id,ord:x.ord,area:x.area,part:x.part,c:x.chosen,f:x.flag?1:0}))});
+  if(S.mockHist.length>12)S.mockHist.shift();
+  const m=mockStats(S.mockHist[S.mockHist.length-1]),pass=m.p1.pct>=70&&m.p2.pct>=70;
+  S.lastMock={p1:m.p1.pct,p2:m.p2.pct,full:R.scale===1};
+  if(R.scale===1){S.mockBest=Math.max(S.mockBest||0,m.total);S.mocks.push(pass)}
+  S.curMock=null;save();R=null;closeModal();
+  mockRecap(S.mockHist.length-1);
 }
-function missListMock(ms){
-  if(!ms.length)return "";
-  return `<div class="sect">Review <span class="lbl">${ms.length} missed</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
-    const your=m.chosen==null?"Not answered":m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
-    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">✕ ${esc(your)}</div><div class="a">✓ ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+// weak areas: below 80%, ordered by marks dropped
+function weakAreas(m){let w=m.areas.filter(x=>x.n&&x.pc<80).sort((a,b)=>b.drop-a.drop||a.pc-b.pc);
+  if(!w.length)w=m.areas.filter(x=>x.drop).sort((a,b)=>b.drop-a.drop).slice(0,2);return w}
+function mockRecap(k){
+  stopTimer();R=null;window.scrollTo(0,0);
+  const res=S.mockHist[k];if(!res)return home();
+  const m=mockStats(res),prev=k>0?mockStats(S.mockHist[k-1]):null,pass=m.p1.pct>=70&&m.p2.pct>=70;
+  const weak=weakAreas(m),pri=new Set(weak.slice(0,3).map(x=>x.a.id));
+  const totalDrop=m.areas.reduce((s,x)=>s+x.drop,0);
+  const rows=m.areas.filter(x=>x.n).slice().sort((a,b)=>b.drop-a.drop||a.pc-b.pc).map(x=>{
+    const pv=prev&&prev.areas.find(y=>y.a.id===x.a.id),tr=pv&&pv.n?x.pc-pv.pc:null;
+    const col=x.pc>=80?"var(--green)":x.pc>=70?"var(--amber)":"var(--red)";
+    return `<button class="arow" onclick="mockAnswers(${k},'${x.a.id}')">
+      <div class="arow-t"><span>${pri.has(x.a.id)?`<span class="tagp">PRIORITY</span>`:""}${x.a.p===2?`<span class="tagp p2">PART 2</span>`:""}${esc(x.a.name)}</span><span class="arow-n">${x.ok}/${x.n}</span></div>
+      <div class="abar"><i style="width:${x.pc}%;background:${col}"></i><b style="left:70%"></b></div>
+      <div class="arow-s"><span style="color:${col}">${x.pc}%</span>${tr!=null?`<span class="${tr>=0?"pos":"neg"}">${tr>=0?"&#9650;":"&#9660;"} ${Math.abs(tr)} vs last</span>`:""}<span>${x.drop?`<b class="neg">&minus;${x.drop} mark${x.drop>1?"s":""}</b>`:"no marks lost"} &middot; ${Math.round(100*x.a.n/120)}% of exam</span></div></button>`}).join("");
+  const top=weak.slice(0,3).filter(x=>x.drop);
+  const p2line=m.p2.need?`Part 2 needed <b>${m.p2.need} more right</b> to reach 70%.`:"";
+  const p1line=m.p1.need?`Part 1 needed <b>${m.p1.need} more right</b> to reach 70%.`:"";
+  const missN=m.items.filter(x=>!x.ok).length,flN=m.items.filter(x=>x.flag).length,flWrong=m.items.filter(x=>x.flag&&!x.ok).length;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="home()">&#10005;</button><div class="brand" style="font-size:20px">Mock<em>Recap</em></div><div></div></div>
+   <div class="res-head" style="padding-top:8px"><div class="lbl">${res.scale===1?"Full mock":"Mini mock"} &middot; ${new Date(res.t).toLocaleString("en-GB",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</div>
+   <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${pass?"Passed":"Not yet"}</div><div class="big" style="margin-top:8px">${m.total}%</div></div>
+   <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="lbl">Part 1 &middot; need 70%</div><div class="v ${m.p1.pct>=70?"pos":"neg"}">${m.p1.pct}% <span style="color:var(--mute);font-size:12px">${m.p1.ok}/${m.p1.n}</span></div></div>
+   <div class="stat"><div class="lbl">Part 2 rules &middot; need 70%</div><div class="v ${m.p2.pct>=70?"pos":"neg"}">${m.p2.pct}% <span style="color:var(--mute);font-size:12px">${m.p2.ok}/${m.p2.n}</span></div></div></div>
+   ${p1line||p2line?`<div class="card" style="margin-top:10px;border-color:#7a2230;background:#1c0a0e"><p style="font-size:14px;line-height:1.5">${[p1line,p2line].filter(Boolean).join(" ")}</p></div>`:""}
+   ${top.length?`<div class="card" style="margin-top:10px;border-color:var(--amberD)"><div class="lbl" style="color:var(--amber)">Where the marks went</div>
+     <p style="font-size:14px;margin-top:6px;line-height:1.5">You dropped <b>${totalDrop}</b> marks. <b>${top.reduce((s,x)=>s+x.drop,0)}</b> of them came from ${top.map(x=>`<b>${esc(x.a.name)}</b> (&minus;${x.drop})`).join(", ").replace(/, ([^,]*)$/," and $1")}. Fix those first.</p>
+     ${flN?`<p style="font-size:13px;margin-top:6px;color:var(--mute)">You flagged ${flN}; ${flWrong} of those were wrong.</p>`:""}</div>`:""}
+   <div class="sect">Your next steps</div>
+   <div class="tiles">
+    <button class="tile" style="grid-column:1/-1" onclick="mockNotes(${k})"><span class="ic">${ICONS.book}</span><span><h3>Revision notes for your weak areas</h3><p>${weak.slice(0,3).map(x=>esc(x.a.name.split(/[ ,&]/)[0])).join(" &middot; ")||"all areas"} &middot; plus what you got wrong</p></span></button>
+    <button class="tile" onclick="flashStart('mock',${k})"><span class="ic">${ICONS.cards}</span><span><h3>Flashcards</h3><p>${missN} from misses</p></span></button>
+    <button class="tile" onclick="startDrill([${weak.slice(0,3).map(x=>`'${x.a.id}'`).join(",")}])"><span class="ic">${ICONS.bolt}</span><span><h3>Targeted drill</h3><p>15 Qs, weak areas</p></span></button>
+    <button class="tile" style="grid-column:1/-1" onclick="mockAnswers(${k},'wrong')"><span class="ic">${ICONS.exam}</span><span><h3>Full answer review</h3><p>every question &middot; your answer, the right one and why</p></span></button>
+   </div>
+   <div class="sect">By exam area <span class="lbl">tap to see the questions</span></div>
+   <div class="card" style="padding:4px 12px">${rows}</div>
+   <p style="color:var(--mute);font-size:12px;margin-top:8px;text-align:center">The marker on each bar is the 70% pass line.</p>
+   <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDamage()">Damage Control</button></div>`;
 }
+function mockAnswers(k,filter){
+  window.scrollTo(0,0);const m=mockStats(S.mockHist[k]);
+  const pick=x=>filter==="all"?true:filter==="wrong"?!x.ok:filter==="flag"?x.flag:x.area===filter;
+  const list=m.items.map((x,i)=>[x,i]).filter(([x])=>pick(x));
+  const area=AREAS.find(a=>a.id===filter);
+  const chip=(f,l,n)=>`<button class="chip ${filter===f?"on":""}" onclick="mockAnswers(${k},'${f}')">${l}${n!=null?" "+n:""}</button>`;
+  const card=([x,i])=>{const q=x.q,a=AREAS.find(z=>z.id===x.area);
+    return `<div class="rv ${x.ok?"ok":"bad"}"><div class="qmeta"><span>Q${i+1} &middot; ${esc(a?a.name:"")}</span><span class="${x.ok?"pos":"neg"}">${x.ok?"&#10003; Right":x.chosen==null?"&ndash; Blank":"&#10005; Wrong"}${x.flag?" &middot; &#9873;":""}</span></div>
+     <q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>
+     ${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px;margin-top:6px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}
+     <div class="rvopts">${x.opts.map((o,j)=>`<div class="${j===x.ans?"rc":j===x.chosen?"rw":""}">${j===x.ans?"&#10003;":j===x.chosen?"&#10005;":"&middot;"} ${esc(o)}${j===x.chosen?` <span class="lbl">your answer</span>`:""}</div>`).join("")}</div>
+     <div class="expl"><b>Why:</b> ${esc(q.e)}</div>${workHTML(q)}</div>`};
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="mockRecap(${k})">&larr;</button><div class="brand" style="font-size:20px">Answer<em>Review</em></div><div></div></div>
+   <div class="chips">${chip("wrong","Wrong",m.items.filter(x=>!x.ok).length)}${chip("flag","Flagged",m.items.filter(x=>x.flag).length)}${chip("all","All",m.items.length)}</div>
+   <div class="chips">${m.areas.filter(x=>x.n).map(x=>chip(x.a.id,x.a.name.split(/[ ,&]/)[0]+(x.a.p===2?" (P2)":""),x.drop?"−"+x.drop:"✓")).join("")}</div>
+   ${area?`<div class="card" style="margin-bottom:10px"><div class="lbl">${esc(area.name)}</div><div class="row" style="margin-top:8px"><button class="next ghost" style="margin:0" onclick="notesArea('${area.id}',${k})">Revision notes</button><button class="next" style="margin:0" onclick="startDrill(['${area.id}'])">Drill this area</button></div></div>`:""}
+   ${list.length?list.map(card).join(""):`<div class="card"><p style="color:var(--mute)">Nothing here.</p></div>`}
+   <button class="next ghost" onclick="mockRecap(${k})">Back to recap</button>`;
+}
+
+/* ---------- revision notes ---------- */
+function notesBody(id){const n=NOTES[id];return n?n.h:""}
+function mockNotes(k){
+  window.scrollTo(0,0);const m=mockStats(S.mockHist[k]),weak=weakAreas(m);
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="mockRecap(${k})">&larr;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+   <p style="color:var(--mute);font-size:13px;margin-bottom:12px">Your weakest areas from this mock, biggest mark losses first. Each has the core notes, then the exact points you got wrong.</p>
+   ${weak.map(x=>notesCard(x.a.id,m.items.filter(y=>y.area===x.a.id&&!y.ok),x)).join("")}
+   <div class="row"><button class="next ghost" onclick="mockRecap(${k})">Back to recap</button><button class="next" onclick="flashStart('mock',${k})">Flashcards</button></div>`;
+}
+function notesCard(id,misses,stat){
+  const a=AREAS.find(z=>z.id===id),n=NOTES[id];
+  return `<div class="card cs" id="nt-${id}"><div class="lbl">${a.p===2?"Part 2":"Part 1"} &middot; ${Math.round(100*a.n/120)}% of the exam${stat?` &middot; you scored ${stat.ok}/${stat.n}`:""}</div><h3>${esc(a.name)}</h3>
+   ${n?n.h:""}
+   ${misses&&misses.length?`<div class="mynotes"><div class="lbl" style="color:var(--red)">What you got wrong (${misses.length})</div><ul>${misses.map(x=>`<li><span style="color:var(--mute)">${esc(x.q.q.replace(/^TRUE or FALSE:\s*/,""))}</span><br><b style="color:var(--green)">&rarr; ${esc(x.q.o[x.q.a])}</b>. ${esc(x.q.e)}</li>`).join("")}</ul></div>`:""}
+   <div class="row" style="margin-top:10px"><button class="next ghost" style="margin:0" onclick="flashStart('area',0,'${id}')">Flashcards</button><button class="next" style="margin:0" onclick="startDrill(['${id}'])">Drill 15 Qs</button></div></div>`}
+function notesMenu(){
+  stopTimer();R=null;window.scrollTo(0,0);
+  const last=S.mockHist.length?mockStats(S.mockHist[S.mockHist.length-1]):null;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="home()">&#10005;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+   <div class="chips">${AREAS.map(a=>{const st=last&&last.areas.find(x=>x.a.id===a.id);return `<button class="chip" style="${st&&st.n&&st.pc<70?"border-color:var(--red)":""}" onclick="document.getElementById('nt-${a.id}').scrollIntoView({behavior:'smooth'})">${a.name.split(/[ ,&]/)[0]}${a.p===2?" (P2)":""}</button>`}).join("")}</div>
+   ${AREAS.map(a=>notesCard(a.id,null,last&&last.areas.find(x=>x.a.id===a.id&&x.n))).join("")}
+   <button class="next" onclick="home()">Back to the floor</button>`;
+}
+function notesArea(id,k){window.scrollTo(0,0);const m=k!=null&&S.mockHist[k]?mockStats(S.mockHist[k]):null;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="${k!=null?`mockRecap(${k})`:"home()"}">&larr;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+  ${notesCard(id,m?m.items.filter(y=>y.area===id&&!y.ok):null,m&&m.areas.find(x=>x.a.id===id))}
+  <button class="next ghost" onclick="${k!=null?`mockRecap(${k})`:"home()"}">Back</button>`}
+
+/* ---------- targeted drill ---------- */
+function startDrill(ids){
+  const as=AREAS.filter(a=>ids.includes(a.id));if(!as.length)return home();
+  const chs=[...new Set(as.flatMap(a=>a.ch))],used=new Set();
+  // missed questions in these chapters first, then the usual unseen/oldest order
+  const due=rankPool(Q.filter(q=>chs.includes(q.c)&&S.srs[q.id])).slice(0,6);due.forEach(q=>used.add(q.id));
+  const items=shuffle(due.concat(pickFor(chs,15-due.length,used))).map(q=>makeItem(q,.2));
+  R={mode:"drill",areas:ids,label:as.map(a=>a.name.split(/[ ,&]/)[0]).join(" + "),items,i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
+}
+
+/* ---------- flashcards ---------- */
+function flashMenu(){
+  const last=S.mockHist.length?mockStats(S.mockHist[S.mockHist.length-1]):null,due=dueIds().length;
+  modal(`<div class="lbl">Flashcards</div><h2>Pick a deck</h2><p>Tap a card to flip it, then say whether you knew it. Question cards you don't know go into Damage Control.</p>
+  ${last?`<button class="next" onclick="closeModal();flashStart('mock',${S.mockHist.length-1})">Last mock: ${last.items.filter(x=>!x.ok).length} misses</button>`:""}
+  ${due?`<button class="next ${last?"ghost":""}" onclick="closeModal();flashStart('due')">Due reviews: ${due}</button>`:""}
+  <div style="max-height:46vh;overflow:auto;margin-top:8px">${AREAS.map(a=>{const st=last&&last.areas.find(x=>x.a.id===a.id);
+    return `<button class="toggle" onclick="closeModal();flashStart('area',0,'${a.id}')"><span>${a.p===2?"<b>P2</b> ":""}${esc(a.name)}</span><span style="font:500 12px var(--mono);color:${st&&st.n?(st.pc>=70?"var(--green)":"var(--red)"):"var(--mute)"}">${st&&st.n?st.pc+"%":""} &rsaquo;</span></button>`}).join("")}</div>
+  <button class="next ghost" onclick="closeModal()">Back</button>`)}
+function qCard(q){return{id:q.id,f:`<div class="fq">${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>${q.l?`<div class="posbox" style="font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}${q.tf?"":`<div class="fo">${shuffle(q.o).map(o=>"&middot; "+esc(o)).join("<br>")}</div>`}`,
+  b:`<div class="fa">${esc(q.o[q.a])}</div><div class="fe">${esc(q.e)}</div>${workHTML(q)}`}}
+function noteCards(id){return (NOTES[id]&&NOTES[id].c||[]).map(([f,b])=>({id:null,f:`<div class="fq">${f}</div>`,b:`<div class="fa">${b}</div>`}))}
+function flashStart(src,k,areaId){
+  let cards=[],label="";
+  if(src==="mock"){const m=mockStats(S.mockHist[k]),weak=weakAreas(m).slice(0,3);
+    cards=m.items.filter(x=>!x.ok).map(x=>qCard(x.q)).concat(...weak.map(x=>noteCards(x.a.id)));label="Mock misses + weak-area facts"}
+  if(src==="area"){const a=AREAS.find(z=>z.id===areaId);
+    const qs=rankPool(Q.filter(q=>a.ch.includes(q.c)&&S.srs[q.id])).slice(0,10);
+    cards=noteCards(areaId).concat(qs.map(qCard));label=a.name}
+  if(src==="due"){cards=dueIds().slice(0,30).map(id=>qCard(byId[id]));label="Due reviews"}
+  if(!cards.length)return modal(`<h2>No cards</h2><p>Nothing in this deck yet.</p><button class="next" onclick="closeModal()">OK</button>`);
+  R={mode:"flash",cards:shuffle(cards),i:0,flip:false,knew:0,again:[],label,src,k};playFlash();
+}
+function playFlash(){
+  window.scrollTo(0,0);const c=R.cards[R.i],n=R.cards.length;R.flip=false;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.i/n}%"></i></div><div class="hudr">${R.i+1}/${n}</div></div>
+  <div class="chips"><span class="chip">FLASHCARDS</span><span class="chip">${esc(R.label)}</span><span class="chip">Knew <b>${R.knew}</b></span></div>
+  <button class="fcard" id="fcard" onclick="flipFlash()"><div class="lbl">${c.id?"Question":"Key fact"} &middot; tap to flip</div><div id="fside">${c.f}</div></button>
+  <div id="fbtn"></div>`;
+}
+function flipFlash(){if(R.flip)return;R.flip=true;const c=R.cards[R.i];
+  $("#fcard").classList.add("back");$("#fside").innerHTML=c.f+`<div class="fdiv"></div>`+c.b;
+  $("#fbtn").innerHTML=`<div class="row"><button class="next" style="background:var(--red);color:#fff" onclick="rateFlash(0)">Didn't know</button><button class="next" style="background:var(--green)" onclick="rateFlash(1)">Knew it</button></div>`;
+  setTimeout(()=>{const b=$("#fbtn");b&&b.scrollIntoView({behavior:"smooth",block:"nearest"})},50)}
+function rateFlash(ok){const c=R.cards[R.i];
+  if(c.id){if(ok)srsHit(c.id);else srsMiss(c.id);S.last[c.id]=Date.now();save()}
+  if(ok)R.knew++;else R.again.push(c);
+  R.i++;if(R.i<R.cards.length)return playFlash();
+  window.scrollTo(0,0);const ag=R.again.length;
+  $("#app").innerHTML=`<div class="res-head"><div class="lbl">Flashcards &middot; ${esc(R.label)}</div><div class="big">${R.knew}/${R.cards.length}</div>
+   <div class="verdict ${ag?"":"pos"}" style="font-size:18px;margin-top:8px">${ag?ag+" to go again":"Deck cleared"}</div></div>
+   <div class="row"><button class="next ghost" onclick="home()">Floor</button>${ag?`<button class="next" onclick="R={mode:'flash',cards:shuffle(R.again),i:0,knew:0,again:[],label:R.label};playFlash()">Go again on ${ag}</button>`:""}</div>`;
+}
+
+/*NOTES*/
 
 /* ---------- exam countdown + daily drill ---------- */
 function todayStr(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -753,15 +1045,13 @@ function countdownCard(){
    <div class="lbl" style="margin-top:10px">Readiness: ${mockStreak()}/2 full mocks passed in a row</div></div>`;
 }
 function startPro(){
-  const pool=Q.filter(q=>q.d===3),used=new Set();
-  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
-  const items=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,12).map(x=>makeItem(x[1],0));
+  const items=rankPool(Q.filter(q=>q.d===3)).slice(0,12).map(q=>makeItem(q,0));
   R={mode:"pro",items:shuffle(items),i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
   play();
 }
 function startDaily(){
   const used=new Set(),items=[];
-  const due=shuffle(Object.keys(S.missed).filter(id=>byId[id])).slice(0,4);
+  const due=shuffle(dueIds()).slice(0,4);
   due.forEach(id=>{used.add(id);items.push(makeItem(byId[id],.2))});
   const chs=DESKS.filter(d=>unlocked(d.c)).map(d=>d.c);
   pickFor(chs,10-items.length,used).forEach(q=>items.push(makeItem(q,.25)));
@@ -917,6 +1207,13 @@ function matchIntro(){modal(`<div class="lbl">Memory game</div><h2>Contract Matc
 /* ---------- keyboard ---------- */
 document.addEventListener("keydown",e=>{
   if(!R||$("#modal").classList.contains("show"))return;
+  if(R.mode==="flash"){if(e.key===" "||e.key==="Enter"){e.preventDefault();R.flip?rateFlash(1):flipFlash()}else if(R.flip&&/^[1-2]$/.test(e.key))rateFlash(e.key==="2"?1:0);return}
+  if(R.mode==="mock"){if(R.answered===-1)return;const it=R.items[R.i];let i=-1;
+    if(it.tf){if(/^[t1]$/i.test(e.key))i=0;if(/^[f2]$/i.test(e.key))i=1}else if(/^[1-4]$/.test(e.key))i=+e.key-1;else if(/^[a-d]$/i.test(e.key))i="abcd".indexOf(e.key.toLowerCase());
+    if(i>=0&&i<it.opts.length)return pickMock(i);
+    if(e.key==="ArrowRight"||e.key==="Enter"){e.preventDefault();R.i<R.items.length-1?mockGo(R.i+1):mockReview()}
+    if(e.key==="ArrowLeft")mockGo(R.i-1);
+    if(/^[gG]$/.test(e.key))toggleFlag();return}
   if(!R.items)return;const it=R.items[R.i];if(!it)return;
   if(R.answered==null){
     let i=-1;

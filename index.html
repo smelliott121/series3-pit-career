@@ -252,6 +252,43 @@ body{background:
 .st-more{background:#250d12;border-color:#7a2230}.st-more b{color:var(--red)}
 .foot{font:500 10px var(--mono);color:#4b5668;text-align:center;margin-top:30px;line-height:1.6}
 .hidden{display:none!important}
+/* exam-conditions mock */
+.flagb{font:700 11px var(--mono);color:var(--mute);border:1px solid var(--line);border-radius:6px;padding:4px 9px;letter-spacing:.06em}
+.flagb.on{color:#000;background:var(--amber);border-color:var(--amber)}
+.mnav{margin-top:12px}.mnav .next{margin-top:0}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+.qn{display:inline-grid;place-items:center;height:38px;border-radius:7px;border:1px solid var(--line);background:var(--bg);font:700 12px var(--mono);color:var(--mute);position:relative}
+.qn.a{background:#1b2a3d;border-color:#2e4a6b;color:var(--text)}
+.qn.f::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.qn.cur{outline:2px solid var(--amber);outline-offset:1px}
+.legend{display:flex;gap:14px;font:500 11px var(--mono);color:var(--mute)}.legend span{display:flex;align-items:center;gap:6px}
+.legend i.qn{width:16px;height:16px;border-radius:4px}
+/* recap */
+.arow{display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}.arow:last-child{border:0}
+.arow-t{display:flex;justify-content:space-between;gap:8px;font:700 14px var(--sans)}.arow-n{font:700 13px var(--mono);flex:none}
+.arow-s{display:flex;gap:10px;flex-wrap:wrap;font:500 11px var(--mono);color:var(--mute);margin-top:6px}
+.abar{position:relative;height:8px;background:#000;border-radius:4px;margin-top:8px;overflow:visible}.abar i{display:block;height:100%;border-radius:4px}
+.abar b{position:absolute;top:-3px;width:2px;height:14px;background:#cfd7e1;opacity:.6}
+.tagp{display:inline-block;font:700 9px var(--mono);letter-spacing:.1em;color:#000;background:var(--red);border-radius:4px;padding:2px 5px;margin-right:6px;vertical-align:2px}
+.tagp.p2{background:var(--blue)}
+.chip.on{border-color:var(--amber);color:var(--amber)}
+.rv{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:12px;padding:14px;margin-bottom:10px}
+.rv.bad{border-left-color:var(--red)}.rv q{display:block;quotes:none;font:600 15px/1.4 var(--sans)}
+.rvopts{margin-top:10px;display:grid;gap:4px;font-size:14px;line-height:1.4;color:var(--mute)}
+.rvopts .rc{color:var(--green);font-weight:700}.rvopts .rw{color:var(--red);text-decoration:line-through}.rvopts .lbl{text-decoration:none;display:inline}
+.expl{font-size:14px;line-height:1.5;margin-top:10px;color:#d3dae4}
+.work{margin-top:10px;background:#000;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.work ol{padding-left:20px;margin-top:6px}.work li{font:500 13px/1.55 var(--mono);color:#e8d9b0;margin-bottom:3px}
+.fb .work li{font-size:12px}
+.mynotes{margin-top:12px;background:#1c0a0e;border:1px solid #6b1a24;border-radius:8px;padding:10px 12px}
+.mynotes ul{padding-left:18px;margin-top:6px}.mynotes li{font-size:13px;line-height:1.45;margin-bottom:6px;color:#e6d2d5}
+/* flashcards */
+.fcard{display:block;width:100%;min-height:260px;text-align:left;background:linear-gradient(160deg,#1a2230,#11161e);border:1px solid var(--line);border-radius:16px;padding:20px 18px;box-shadow:0 14px 34px -20px #000}
+.fcard.back{border-color:var(--amberD);animation:flipin .35s ease-out}
+@keyframes flipin{from{transform:rotateY(80deg);opacity:.2}to{transform:none;opacity:1}}
+.fq{font:700 19px/1.4 var(--sans);margin-top:10px}.fo{font-size:13px;color:var(--mute);margin-top:10px;line-height:1.6}
+.fdiv{height:1px;background:var(--line);margin:14px 0}.fa{font:800 18px/1.4 var(--sans);color:var(--green)}.fe{font-size:14px;line-height:1.5;color:#d3dae4;margin-top:8px}
+.cs .nt-k{background:var(--panel2);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -673,7 +710,7 @@ Q.push(
 {c:10,q:"Who must post margin in options on futures?",o:["The option seller","The option buyer","Both the buyer and the seller","Neither the buyer nor the seller"],a:0,e:"Sellers carry obligation risk and must post margin; buyers pay the premium."},
 {c:10,q:"A call has intrinsic value when the futures price is\u2026",o:["Above the strike","Below the strike","Equal to the strike","Zero"],a:0,e:"Call in the money: market above strike. Put in the money: market below strike."},
 {c:10,q:"Time value equals\u2026",o:["Premium \u2212 intrinsic value","Intrinsic \u2212 premium","Strike \u2212 market","Premium + intrinsic"],a:0,e:"Time value is any premium exceeding intrinsic value."},
-{c:10,q:"Nov 6.40 corn put, premium 14\u00be\u00a2, futures at $6.26\u00be. Time value?",o:["1\u00a2","13\u00be\u00a2","14\u00be\u00a2","0"],a:0,e:"Intrinsic 6.40 \u2212 6.2675 = 13\u00be\u00a2. Time value 14\u00be \u2212 13\u00be = 1\u00a2."},
+{c:10,q:"Nov 6.40 corn put, premium 14\u00be\u00a2, futures at $6.26\u00bc. Time value?",o:["1\u00a2","13\u00be\u00a2","14\u00be\u00a2","0"],a:0,e:"Put intrinsic = strike \u2212 futures = 6.40 \u2212 6.26\u00bc = 13\u00be\u00a2. Time value = premium \u2212 intrinsic = 14\u00be \u2212 13\u00be = 1\u00a2."},
 {c:10,q:"Dec 112 T-note CALL with futures at 114 is\u2026",o:["In the money","At the money","Out of the money","Expired"],a:0,e:"Call: market above strike = in the money. (A 112 put at 114 would be out of the money.)"},
 {c:10,q:"Dec 112 T-note PUT with futures at 110 is\u2026",o:["In the money","Out of the money","At the money","Worthless"],a:0,e:"Put: market below strike = in the money."},
 {c:10,q:"A futures move of 0.50 moves the option 0.25. Delta?",o:["50%","25%","200%","0%"],a:0,e:"0.25 \u00f7 0.50 = 50% delta."},
@@ -971,6 +1008,129 @@ H({c:7,q:"A speculator buys 4 yen futures (\u00a512,500,000) at 0.006720 and sel
 H({c:3,q:"Prices are falling while volume and open interest are both RISING. This most likely indicates:",o:["New short selling: a strong downtrend","Long liquidation: a weakening downtrend","Short covering","A bullish reversal"],e:"Rising OI + falling price = new shorts entering. Rising volume confirms strength, so it's a strong bearish move."}),
 H({c:3,q:"Prices are RISING but open interest is FALLING. This most likely indicates:",o:["Short covering: a technically weak rally","New buying: a strong uptrend","New short selling","A thin, illiquid market"],e:"Falling OI means positions are being closed. A rally driven by shorts buying back is weaker than one driven by new longs."})
 );
+/* Part 2 gap-fill: rules topics that the bank barely covered (prohibited practices, registration, customer protection, disclosure delivery) */
+Q.push(
+{c:2,q:"Buying and selling the same contract at the same time, with no real change in ownership, to create the appearance of trading is called\u2026",o:["A wash trade, and it's prohibited","An accommodation spread, and it's allowed","A give-up, and it's allowed","Scalping, and it's allowed"],a:0,e:"Wash trading creates fake volume with no change in ownership or market risk. It's prohibited under the Commodity Exchange Act."},
+{c:2,q:"Two floor traders agree in advance to trade with each other at a set price instead of trading in the open market. This is\u2026",o:["Prearranged trading, a prohibited practice","Price discovery","A legitimate EFP","An omnibus trade"],a:0,e:"Futures must be traded openly and competitively. Prearranged (non-competitive) trading is prohibited."},
+{c:2,q:"A broker buys for his own account just before executing a large customer buy order he's holding. This is\u2026",o:["Front running, a prohibited practice","Pyramiding","Scalping","Allowed if he discloses it afterwards"],a:0,e:"Trading ahead of a customer order using knowledge of that order is front running. It puts the broker's interest ahead of the customer's and is prohibited."},
+{c:2,q:"An account manager places one bunched order for several client accounts. How must the fills be allocated?",o:["Fairly and equitably, with no account consistently favoured","Best fills to the largest account","Best fills to the manager's own account","However the FCM chooses"],a:0,e:"Bunched orders must be allocated fairly and equitably under a systematic method, so no account (above all a proprietary one) is consistently favoured."},
+{c:2,q:"An FCM may require a customer to sign a pre-dispute arbitration agreement as a condition of opening an account.",o:["True","False"],a:1,tf:1,e:"False. Signing an arbitration agreement can't be made a condition of opening an account. Arbitration is voluntary for customers."},
+{c:2,q:"In NFA arbitration, a customer may ask for a 'mixed panel'. What is it?",o:["A panel where most arbitrators aren't connected to NFA members","A panel of CFTC staff","A panel chosen by the member firm","A panel of exchange floor members only"],a:0,e:"A customer can ask for a mixed panel, where a majority of the arbitrators aren't associated with NFA members. It protects the customer from an industry-only panel."},
+{c:2,q:"Through which programme can a customer bring a claim against a CFTC registrant directly with the CFTC?",o:["Reparations","Member Responsibility Actions","Business continuity","The QEP programme"],a:0,e:"The CFTC reparations programme lets customers seek damages from registrants for violations of the CEA or CFTC rules. Claims must be filed within 2 years."},
+{c:2,q:"What must an FCM do with customer funds?",o:["Segregate them from its own funds, and not use one customer's funds for another","Invest them in its own trading","Pool them with house funds","Lend them to IBs"],a:0,e:"Customer funds must be segregated from the FCM's own money. One customer's funds can't be used to margin or guarantee another customer's trades."},
+{c:2,q:"By when must an FCM send a customer written confirmation of a futures trade?",o:["No later than the next business day","Within 5 business days","Only on the monthly statement","Only if the customer asks"],a:0,e:"A written confirmation of each trade must go out no later than the next business day. Monthly statements show open positions, P&L and account balances."},
+{c:2,q:"Which form registers an INDIVIDUAL (an AP or principal) with the NFA?",o:["Form 8-R","Form 7-R","Form 3-R","Form 1-FR"],a:0,e:"8-R = individual. 7-R = firm. 3-R = updates to registration info (e.g. a second sponsor). 1-FR = financial report."},
+{c:2,q:"Which form registers a FIRM (FCM, IB, CPO or CTA)?",o:["Form 7-R","Form 8-R","Form 40","Form 1-FR"],a:0,e:"Form 7-R is the firm application. Form 8-R is for individuals. Form 40 is filed by a reportable trader."},
+{c:2,q:"An AP applicant's fingerprint background check is still being processed and nothing disqualifying has been disclosed. What can happen?",o:["The applicant may get a temporary license and start working","Nothing until full registration","The firm can let them trade unregistered","They must retake the Series 3"],a:0,e:"A temporary license lets an applicant act as an AP while the background check is completed, as long as the application shows no disqualifying history."},
+{c:2,q:"An AP applicant passed the Series 3 four years ago and hasn't been registered since. What's required?",o:["Retake and pass the Series 3","Nothing: a pass never expires","Pass the Series 30 instead","A CFTC interview"],a:0,e:"The Series 3 must have been passed within the 2 years before applying (unless the person has been registered in that period). After that it must be retaken."},
+{c:2,q:"Which could lead the NFA to deny or revoke registration under the statutory disqualification provisions?",o:["A felony conviction within the past 10 years","A parking fine","A customer who lost money","Holding a stock portfolio"],a:0,e:"Statutory disqualifications include felony convictions within the past 10 years and serious violations of financial rules. The NFA can deny, condition or revoke registration."},
+{c:2,q:"A branch office manager of an NFA member must generally pass which exam?",o:["Series 30","Series 3 only","Series 7","Series 65"],a:0,e:"Branch office managers must pass the Series 30 (NFA Branch Manager exam) in addition to being registered as an AP."},
+{c:2,q:"Which NFA rule requires members to diligently supervise their employees and agents?",o:["Rule 2-9","Rule 2-29","Rule 2-30","Rule 2-38"],a:0,e:"Rule 2-9 is supervision. 2-29 promotional material, 2-30 KYC, 2-38 business continuity."},
+{c:2,q:"Before opening a customer's OPTIONS account, the FCM must\u2026",o:["Give the options risk disclosure statement and get a signed acknowledgment","Get CFTC approval","Wait 30 days","Get the exchange's consent"],a:0,e:"A separate options risk disclosure statement must be given, and acknowledged in writing, before an options account is opened."},
+{c:2,q:"When may a CPO accept a prospective participant's money?",o:["Only after receiving the participant's signed acknowledgment of the Disclosure Document","As soon as the participant asks to invest","Once the NFA approves each investor","After the first monthly statement"],a:0,e:"The CPO must deliver the Disclosure Document and receive a signed and dated acknowledgment of receipt before accepting or receiving funds."},
+{c:2,q:"A CTA must deliver its Disclosure Document and receive a signed acknowledgment before\u2026",o:["Entering an agreement to direct the client's account","Its first year-end","The client's first profitable trade","Filing Form 7-R"],a:0,e:"The CTA can't direct or guide a client's account until it has delivered the Disclosure Document and received a signed acknowledgment."},
+{c:2,q:"Promotional material may state that a trading programme carries 'limited risk' or 'guaranteed' profits.",o:["True","False"],a:1,tf:1,e:"False. Rule 2-29 bans any claim that profits are guaranteed or that losses can be limited. Futures involve risk of loss."},
+{c:2,q:"Promotional material showing past performance must also state\u2026",o:["Past results are not necessarily indicative of future results","Profits are likely to continue","The NFA has approved the results","Nothing more"],a:0,e:"Any mention of past performance must carry the warning that past results are not necessarily indicative of future results."},
+{c:2,q:"An FCM spots a suspicious transaction involving $8,000 that may be money laundering. What must it do?",o:["File a Suspicious Activity Report (SAR) with FinCEN","Tell the customer first","Nothing: it's under $10,000","Close the account and say nothing"],a:0,e:"FCMs and IBs must file a SAR for suspicious transactions of $5,000 or more. They must NOT tip off the customer that a SAR was filed."},
+{c:2,q:"Once a trader's position reaches the reportable level, which form does the TRADER file with the CFTC?",o:["Form 40","Form 7-R","Form 1-FR","Form 8-R"],a:0,e:"Form 40 (Statement of Reporting Trader) identifies the trader. The FCM reports the large positions; everyone, hedgers included, is reportable once over the level."},
+{c:2,q:"Which of the following are prohibited trading practices?",l:["I. Wash trading","II. Front running","III. Bucketing","IV. Using a stop order to protect a long position"],o:["I, II and III","I and II only","II, III and IV","I, II, III and IV"],a:0,rn:1,e:"Wash trades, front running and bucketing (trading against a customer's order) are all prohibited. A sell stop protecting a long is normal risk management."}
+);
+/* Worked calculations: step-by-step breakdowns attached to calculation questions (matched by the start of the question text) */
+[
+["Initial margin on corn is $0.15/bu",["Cushion = initial \u2212 maintenance = 0.15 \u2212 0.13 = $0.02 per bushel.","A LONG loses money as the price falls, so subtract the cushion.","2.55 \u2212 0.02 = $2.53. Below that, equity is under maintenance and a call goes out."]],
+["A customer deposits $10,000 of stock as margin",["US equities used as margin take a 30% haircut.","Value counted = 70% \u00d7 $10,000 = $7,000."]],
+["A T-bond future moves from 98-08 to 99-20",["Convert both prices to 32nds: 98-08 = 98\u00d732 + 8 = 3,144/32. 99-20 = 99\u00d732 + 20 = 3,188/32.","Change = 3,188 \u2212 3,144 = 44/32.","Each 32nd on a T-bond future = $31.25. 44 \u00d7 $31.25 = $1,375."]],
+["A corn quote of 195.08 cents",["Grain prices are cents per bushel. 195.08\u00a2 = $1.9508.","Contract value = price \u00d7 5,000 bu = 1.9508 \u00d7 5,000 = $9,754."]],
+["Soybeans at a transaction price of $8.75",["Contract value = price \u00d7 5,000 bu.","8.75 \u00d7 5,000 = $43,750."]],
+["Live cattle quoted at 51.25",["Livestock is quoted in cents per lb: 51.25\u00a2 = $0.5125.","\u00d7 40,000 lb = $20,500."]],
+["Gold rises $12.30 per oz",["Gold = 100 troy oz.","$12.30 \u00d7 100 = $1,230 per contract."]],
+["Crude rises from $71.40 to $73.15",["Move = 73.15 \u2212 71.40 = $1.75 per barrel.","Crude = 1,000 bbl, so $1.75 \u00d7 1,000 = $1,750 per contract.","2 contracts: $3,500 gain (long, and the price rose)."]],
+["Cash wheat $2.00, December futures $2.20",["Basis = cash \u2212 futures.","2.00 \u2212 2.20 = \u22120.20, i.e. 20 under."]],
+["Customer is short 3 three-month T-bill futures at 96.33",["Short: P&L = sold \u2212 bought = 96.33 \u2212 95.57 = +0.76 = +76 basis points.","3-month contract: 1 bp = $25.","76 \u00d7 $25 = $1,900 per contract \u00d7 3 = $5,700 profit."]],
+["A gasoline distributor buys Sep futures at $2.80",["Long hedge (the distributor must buy gasoline later).","Futures P&L = sold \u2212 bought = 3.30 \u2212 2.80 = +0.50.","Net price paid = cash price paid \u2212 futures gain = 3.20 \u2212 0.50 = $2.70.","Check: original futures + closing basis = 2.80 + (3.20 \u2212 3.30) = 2.80 \u2212 0.10 = $2.70."]],
+["Farmer short hedges hogs",["Opening basis = 45.50 \u2212 47.60 = \u22122.10.","Closing basis = 42.75 \u2212 44.40 = \u22121.65.","\u22122.10 \u2192 \u22121.65: the number went UP by 0.45, so the basis strengthened.","Short likes Strong: the hedge improved by $0.45/cwt."]],
+["A farmer sells corn futures at $4.60",["Short hedge. Futures P&L = sold \u2212 bought = 4.60 \u2212 4.25 = +0.35.","Net received = cash sale + futures gain = 4.10 + 0.35 = $4.45.","Check: original futures + closing basis = 4.60 + (4.10 \u2212 4.25) = 4.60 \u2212 0.15 = $4.45."]],
+["An importer goes long a hedge with basis at \u221215",["\u221215 \u2192 \u221225: the number went DOWN 10, so the basis weakened 10.","A long hedge gains when the basis weakens: gain of 10."]],
+["An exporter's short hedge: basis moves from +5",["+5 \u2192 \u22125: the number went DOWN 10, so the basis weakened 10.","Short likes Strong, so a weakening basis is a loss of 10."]],
+["Hedging a $6,000,000 portfolio with S&P futures",["One contract = multiplier \u00d7 index = $250 \u00d7 4,800 = $1,200,000.","Contracts = portfolio \u00f7 contract value = 6,000,000 \u00f7 1,200,000 = 5.","Worried about a fall, so SELL 5 contracts."]],
+["Margin $3,000 on gold at $2,000/oz",["Contract value = $2,000 \u00d7 100 oz = $200,000.","Margin % = 3,000 \u00f7 200,000 = 0.015 = 1.5%."]],
+["Margin $1,500 and a profit of $600",["Return on margin = profit \u00f7 margin deposited.","600 \u00f7 1,500 = 0.40 = 40%."]],
+["Long spread: buy Sep soybeans $8.67",["Sep leg (bought 8.67, now 8.72): +0.05.","Nov leg (sold 8.84, now 8.85): sold \u2212 bought = 8.84 \u2212 8.85 = \u22120.01.","Net = +0.04 per bushel \u00d7 5,000 = $200 per spread.","\u00d7 3 = $600 gain."]],
+["NQ at 21,000 ($20) vs ES at 6,000 ($50)",["NQ notional = 21,000 \u00d7 $20 = $420,000.","ES notional = 6,000 \u00d7 $50 = $300,000.","Ratio = 420,000 \u00f7 300,000 = 1.4 ES per NQ."]],
+["July corn $2.65, financing 9.8%/yr",["Finance per month = 9.8% \u00f7 12 = 0.817% \u00d7 $2.65 \u2248 2.2\u00a2.","Storage = 3.2\u00a2 a month. Carry \u2248 2.2 + 3.2 = 5.4\u00a2 a month.","July \u2192 September = 2 months \u2248 10.8\u00a2, call it 11\u00a2.","Full-carry September \u2248 2.65 + 0.11 = $2.76."]],
+["Gold short spread: sell Feb $2,010",["Feb leg (sold 2,010, now 2,000): sold \u2212 bought = +10.","Jun leg (bought 2,040, now 2,045): +5.","Net = +15 per oz \u00d7 100 oz = $1,500 gain."]],
+["Corn bull spread: buy Mar 4.50",["Mar leg (bought 4.50, now 4.45): \u22120.05.","May leg (sold 4.62, now 4.64): sold \u2212 bought = \u22120.02.","Net = \u22120.07 \u00d7 5,000 = \u2212$350 per spread \u00d7 2 = $700 loss."]],
+["Nov 6.40 corn put, premium 14\u00be\u00a2",["Put intrinsic = strike \u2212 futures = 6.40 \u2212 6.26\u00bc = 13\u00be\u00a2.","Time value = premium \u2212 intrinsic = 14\u00be \u2212 13\u00be = 1\u00a2."]],
+["A futures move of 0.50 moves the option 0.25",["Delta = change in premium \u00f7 change in futures.","0.25 \u00f7 0.50 = 0.50 = 50%."]],
+["Future up 2.00, delta 0.5",["Premium change \u2248 futures change \u00d7 delta.","2.00 \u00d7 0.5 = +1.00."]],
+["An E-mini S&P option premium of 2.65",["E-mini S&P option: 1 point = $50.","2.65 \u00d7 $50 = $132.50."]],
+["A T-bond futures option premium of 2-55",["T-bond OPTIONS are quoted in 64ths, and each 64th = $15.625.","2 points = 2 \u00d7 $1,000 = $2,000.","55/64 = 55 \u00d7 $15.625 = $859.375.","Total = $2,859.38. (Reading it as 32nds would be the trap.)"]],
+["A gold option premium of 21.55",["Gold option: 1 point = $100 (100 oz).","21.55 \u00d7 $100 = $2,155."]],
+["A sugar option premium of 0.18",["Sugar: 112,000 lb, so 1 point (1\u00a2/lb) = $1,120.","0.18 \u00d7 $1,120 = $201.60."]],
+["Buy 1 crude Mar 75 call at 2.40",["Call breakeven = strike + premium.","75 + 2.40 = $77.40."]],
+["Buy 1 gold Jun 2,100 put at 35",["Put breakeven = strike \u2212 premium.","2,100 \u2212 35 = $2,065."]],
+["Buy a 4.50 corn call for 12\u00a2",["At expiry the call is worth its intrinsic value: 4.80 \u2212 4.50 = 30\u00a2.","Profit = intrinsic \u2212 premium = 30 \u2212 12 = 18\u00a2.","18\u00a2 \u00d7 $50 per cent = $900."]],
+["With silver futures trading at 24.60",["Call breakeven = strike + premium = 24 + 1.15 = 25.15.","The current price (24.60) and the number of contracts don't change the breakeven."]],
+["An investor buys the following with March feeder cattle",["Premium 4.00\u00a2/lb = $0.04 per lb.","\u00d7 50,000 lb = $2,000 per contract.","\u00d7 3 contracts = $6,000."]],
+["July wheat futures are 6.24 and cash wheat is 6.20",["Options on futures are valued against the FUTURES price (6.24), not cash.","Call intrinsic = 6.24 \u2212 6.10 = 14\u00a2.","Time value = 18 \u2212 14 = 4\u00a2."]],
+["A trader holds the position below. December corn futures are at 430",["Long put intrinsic at expiry = 450 \u2212 430 = 20\u00a2.","Profit = 20 \u2212 12 premium = 8\u00a2.","8\u00a2 \u00d7 $50 = $400 profit."]],
+["A trader holds the position below. March crude futures are at 84",["Short calls: you received 2.50 each.","At 84 the 80 call is worth 4.00, which you owe.","Result = 2.50 \u2212 4.00 = \u22121.50 \u00d7 1,000 bbl = \u2212$1,500 per contract.","\u00d7 2 = $3,000 loss."]],
+["What is the total premium for the following position?",["Gold option: 1 point = $100.","32.40 \u00d7 $100 = $3,240 per contract \u00d7 2 = $6,480."]],
+["An option on T-bond futures is quoted at 1-48",["Options on T-bond futures are in 64ths.","1 point = $1,000. 48/64 = 0.75 \u00d7 $1,000 = $750.","Total = $1,750. (Reading 48 as 32nds gives the trap answer, $2,500.)"]],
+["Futures rise by 3.00 and an option has a delta of 0.40",["Premium change \u2248 futures change \u00d7 delta.","3.00 \u00d7 0.40 = +1.20."]],
+["A farmer puts on the hedge below. What is the net price received",["Short hedge. Futures: sold 4.55, bought 4.15 = +0.40.","Net = cash sale + futures gain = 3.95 + 0.40 = 4.35.","Basis check: \u221225 (4.30 \u2212 4.55) \u2192 \u221220 (3.95 \u2212 4.15) = strengthened 5\u00a2.","Original cash 4.30 + 0.05 = 4.35. Short likes Strong."]],
+["A processor puts on the hedge below. What is the net cost of the soybeans",["Long hedge. Futures: bought 12.10, sold 12.60 = +0.50.","Net cost = cash paid \u2212 futures gain = 12.40 \u2212 0.50 = 11.90.","Basis check: \u221230 \u2192 \u221220 = strengthened 10\u00a2, which HURTS a long hedger: 11.80 + 0.10 = 11.90."]],
+["A grain elevator holding inventory puts on the hedge below",["Opening basis = 2.50 \u2212 2.70 = \u221220.","Closing basis = 2.30 \u2212 2.45 = \u221215.","\u221220 \u2192 \u221215 = up 5, so strengthened 5\u00a2.","The elevator is a short hedger, and Short likes Strong: +5\u00a2."]],
+["A customer has $2,500 margin on deposit",["Return on margin = profit \u00f7 margin.","1,000 \u00f7 2,500 = 40%."]],
+["A trader puts on the spread below. What's the result? [Buy 2 May wheat",["May leg (bought 6.10, now 6.32): +0.22.","July leg (sold 6.30, now 6.40): sold \u2212 bought = \u22120.10.","Net +0.12 \u00d7 5,000 = $600 per spread \u00d7 2 = $1,200 gain."]],
+["A trader puts on the spread below. What's the result? [Sell 1 June gold",["June leg (sold 2,350, now 2,380): sold \u2212 bought = \u221230.","December leg (bought 2,395, now 2,440): +45.","Net +15 \u00d7 100 oz = $1,500 gain."]],
+["A customer buys 3 September T-bond futures at 115-12",["115-12 \u2192 113-28. Difference = 115-12 \u2212 113-28.","Borrow a point: 115-12 = 114-44. 114-44 \u2212 113-28 = 1-16 = 48/32.","48 \u00d7 $31.25 = $1,500 per contract. Long and the price fell, so it's a loss.","\u00d7 3 = $4,500 loss."]],
+["A customer is short 4 three-month T-bill futures at 96.10",["Short: sold \u2212 bought = 96.10 \u2212 96.35 = \u22120.25 = \u221225 bp.","3-month contract: 1 bp = $25.","\u221225 \u00d7 $25 \u00d7 4 = \u2212$2,500. (Using $100 per bp, the 12-month value, gives the trap answer of $10,000.)"]],
+["A manager wants to hedge a $9,000,000 stock portfolio with E-mini",["E-mini contract value = $50 \u00d7 6,000 = $300,000.","9,000,000 \u00f7 300,000 = 30 contracts (sell to hedge).","Trap: the full-size $250 multiplier gives 6."]],
+["A customer is long the position below. Below what price will a margin call",["Cushion = initial \u2212 maintenance = 0.40 \u2212 0.30 = 0.10 per bushel.","Long loses as the price falls: 11.40 \u2212 0.10 = 11.30.","The number of contracts doesn't change the trigger price."]],
+["An investor buys the position below. Each contract covers 50,000 pounds",["Per the book, .05 = $0.05 per pound.","$0.05 \u00d7 50,000 = $2,500 per contract \u00d7 2 = $5,000."]],
+["A speculator buys 4 stock index futures at 18,250.25",["Sold \u2212 bought = 18,262.75 \u2212 18,250.25 = +12.50 points.","\u00d7 $100 multiplier = $1,250 per contract.","The question asks PER CONTRACT, so don't multiply by 4."]],
+["A corporate treasurer plans to issue $3,000,000",["Short hedge: sold 98-20, bought back 97-08.","98-20 \u2212 97-08 = 1-12 = 44/32 \u00d7 $31.25 = $1,375 per contract.","\u00d7 30 contracts = $41,250 gain.","Proceeds = $3,000,000 + $41,250 = $3,041,250."]],
+["A speculator buys 6 oats contracts",["Gain = 3.86\u00bd \u2212 3.80\u00bc = 6\u00bc\u00a2 = $0.0625 \u00d7 5,000 = $312.50 per contract.","Less $40 commission = $272.50 net per contract.","\u00d7 6 = $1,635 total.","Return on margin = 272.50 \u00f7 1,000 = 27.25%."]],
+["A livestock speculator buys 3 lean hog futures",["Gain = 76.15 \u2212 72.40 = 3.75\u00a2 = $0.0375 \u00d7 40,000 = $1,500 per contract.","\u00d7 3 = $4,500 gross.","Commissions are $90 TOTAL (not per contract): 4,500 \u2212 90 = $4,410."]],
+["A client buys 5 frozen orange juice futures",["Gain = 131.30 \u2212 120.50 = 10.80\u00a2 = $0.108 \u00d7 15,000 = $1,620 per contract.","\u00d7 5 = $8,100 gross.","Commission 5 \u00d7 $35 = $175. Net = $7,925."]],
+["A wheat hedger is long 50 futures",["Anything above the margin requirement can be withdrawn.","95,000 \u2212 60,000 = $35,000."]],
+["A speculator buys 10 corn futures at $4.50",["6 contracts: 4.62 \u2212 4.50 = +0.12 \u00d7 5,000 = $600 each = $3,600.","4 contracts: 4.58 \u2212 4.50 = +0.08 \u00d7 5,000 = $400 each = $1,600.","Gross = $5,200. Commission 10 \u00d7 $25 = $250.","Net = +$4,950."]],
+["A T-bond futures call has a delta of 0.5",["Futures move 110-08 \u2192 112-08 = +2 full points.","Premium change \u2248 2 \u00d7 0.5 = 1 point.","Options on T-bond futures are in 64ths, so 1 point = 64/64 ($1,000)."]],
+["A packer holding beef sells 3 live cattle futures",["Short hedge: sold 1.8250, bought 1.7700 = +0.0550.","Net = cash 1.7900 + 0.0550 = $1.8450 per lb."]],
+["A speculator sells 2 T-bond futures at 112-06",["Short: sold 112-06, bought 109-22.","112-06 = 111-38. 111-38 \u2212 109-22 = 2-16 = 80/32.","80 \u00d7 $31.25 = $2,500 per contract \u00d7 2 = $5,000 gain."]],
+["A trader sells 1 T-bond future at 105-24",["Short: sold 105-24, bought 105-02 = 22/32.","22 \u00d7 $31.25 = $687.50 gain.","Return on margin = 687.50 \u00f7 2,000 = 34.38%."]],
+["A speculator sells 6 Swiss franc futures",["Short: sold 1.1480, bought 1.1325 = +0.0155.","\u00d7 CHF 125,000 = $1,937.50 per contract (each 0.0001 = $12.50, \u00d7 155).","\u00d7 6 = $11,625 gain."]],
+["A trader buys 4 Dec oats at $3.40",["Oats leg (bought 3.40, now 3.52): +0.12.","Wheat leg (sold 5.90, now 5.75): +0.15.","Net = +0.27 \u00d7 5,000 = $1,350 \u00d7 4 = $5,400 gain."]],
+["Corn futures are $4.18\u00bc. A July 4.30 put",["Put intrinsic = 4.30 \u2212 4.18\u00bc = 11\u00be\u00a2.","Time value = 12\u215e \u2212 11\u00be = 1\u215b\u00a2."]],
+["A farmer short hedges 20,000 bu of wheat on Oct 1",["Futures: sold 4.24, bought 4.12\u00bc = +0.11\u00be.","Net = cash 4.02 + 0.11\u00be = $4.13\u00be per bushel.","Basis check: \u221213\u00bd \u2192 \u221210\u00bc = strengthened 3\u00bc. 4.10\u00bd + 0.03\u00bc = 4.13\u00be."]],
+["A grain elevator short hedges 20,000 bu of wheat with 4 March",["Futures: sold 5.68, bought 5.40 = +0.28.","Cash 5.21 + 0.28 = 5.49 before costs.","Commission 4 \u00d7 $30 = $120 \u00f7 20,000 bu = $0.006.","Net = 5.49 \u2212 0.006 = $5.484."]],
+["A processor puts on the hedge below. What's the net cost of the corn",["Long hedge. Futures: bought 4.70, sold 5.08 = +0.38.","Net cost = 4.95 \u2212 0.38 = $4.57.","Basis check: \u221218 \u2192 \u221213 strengthened 5\u00a2, which costs a long hedger: 4.52 + 0.05 = 4.57."]],
+["A short hedger opens when the basis is 8 over",["8 over = +8. 3 under = \u22123.","+8 \u2192 \u22123: down 11, so the basis weakened 11.","Short likes Strong, so the hedge lost 11\u00a2."]],
+["A farmer expects to harvest 52,000 bushels of corn",["52,000 \u00f7 5,000 = 10.4 contracts.","With FUTURES, be perfectly or slightly UNDER-hedged: round down to 10.","The 11th contract would be speculative."]],
+["The same farmer (52,000 bu) hedges with PUT OPTIONS",["52,000 \u00f7 5,000 = 10.4.","With OPTIONS, be perfectly or slightly OVER-hedged: round up to 11."]],
+["A US exporter will receive \u20ac500,000",["Receiving euros \u2192 worried the euro falls \u2192 SELL euro futures.","500,000 \u00f7 125,000 = 4 contracts."]],
+["A manager hedges a $12,600,000 stock portfolio with FULL-SIZE",["Full-size contract = $250 \u00d7 5,600 = $1,400,000.","12,600,000 \u00f7 1,400,000 = 9 contracts.","Trap: the E-mini ($50) gives 45."]],
+["What's the BREAKEVEN of this position at expiry?",["Net debit = 3.10 paid \u2212 1.40 received = 1.70.","Bull call spread breakeven = lower strike + net debit.","78 + 1.70 = 79.70."]],
+["What is the MAXIMUM PROFIT on this position?",["Net debit = 3.10 \u2212 1.40 = 1.70.","Max profit = strike gap \u2212 debit = (82 \u2212 78) \u2212 1.70 = 2.30.","\u00d7 1,000 bbl = $2,300. Max loss = the $1,700 debit."]],
+["Find the breakeven and maximum profit",["Net debit = 18 \u2212 9 = 9\u00a2.","Bear put spread breakeven = higher strike \u2212 debit = 460 \u2212 9 = 451.","Max profit = (460 \u2212 440) \u2212 9 = 11\u00a2 \u00d7 $50 = $550."]],
+["An investor buys a June gold 2,400 straddle",["Total premium = 42 + 38 = 80.","Breakevens = strike \u00b1 total premium.","2,400 \u2212 80 = 2,320 and 2,400 + 80 = 2,480."]],
+["Crude futures are at 88 at expiry",["Premium received = 1.20 + 1.00 = 2.20.","85 call is 3.00 in the money, which you owe. The 75 put expires worthless.","Result = 2.20 \u2212 3.00 = \u22120.80 \u00d7 1,000 bbl = \u2212$800."]],
+["What's the MAXIMUM PROFIT on this covered call?",["Above 2,420 you're called away, so the future can only gain up to 2,420.","Futures gain = 2,420 \u2212 2,380 = 40. Plus 25 premium = 65.","65 \u00d7 100 oz = $6,500."]],
+["A T-bond futures call has a delta of 0.25",["114-16 \u2192 116-00 = +1-16 = +1.5 points.","Premium change \u2248 1.5 \u00d7 0.25 = 0.375 points.","In 64ths: 0.375 \u00d7 64 = 24/64."]],
+["Dec soybean futures are 12.05\u00bd",["Call intrinsic = 12.05\u00bd \u2212 11.80 = 25\u00bd\u00a2.","Time value = 34\u00bc \u2212 25\u00bd = 8\u00be\u00a2."]],
+["A trader bought a Sep corn 450 call for 14\u00a2",["Exercise gives a long future at 450. Selling at 472 = +22\u00a2.","Less the 14\u00a2 premium = +8\u00a2.","8\u00a2 \u00d7 $50 = $400 profit."]],
+["A writer sold a Dec wheat 600 put for 15\u00a2",["Assignment on a put gives the writer a LONG future at 600.","Sold at 570 = \u221230\u00a2. Plus the 15\u00a2 premium kept = \u221215\u00a2.","\u221215\u00a2 \u00d7 $50 = \u2212$750."]],
+["Result of the spread below? [Buy 3 July soybeans",["July leg (bought 12.40, now 12.55): +0.15.","Nov leg (sold 12.10, now 12.18): \u22120.08.","Net +0.07 \u00d7 5,000 = $350 \u00d7 3 = $1,050 gain."]],
+["Result of the inter-market spread below?",["KC leg (bought 6.30, now 6.18): \u22120.12.","CBOT leg (sold 6.05, now 5.85): +0.20.","Net +0.08 \u00d7 5,000 = $400 \u00d7 2 = $800 gain."]],
+["A customer deposits $6,000 initial margin for 2 contracts",["Maintenance = 2 \u00d7 $2,250 = $4,500.","Equity = 6,000 \u2212 1,800 = $4,200, which is below $4,500, so a call is issued.","The call restores INITIAL margin: 6,000 \u2212 4,200 = $1,800."]],
+["At the CME, a customer posts $20,000 of stock",["Stock counts at 70%: 20,000 \u00d7 0.70 = $14,000.","Plus cash $2,000 = $16,000 of margin value.","16,000 \u2212 15,000 requirement = $1,000 excess."]],
+["Account equity is $11,500",["Only equity above INITIAL margin is free for new trades.","11,500 \u2212 8,000 = $3,500 excess.","3,500 \u2265 3,000, so yes, with $500 left over. (Using maintenance gives the trap.)"]],
+["Long 1 crude future at $78.40",["Cushion = 6,000 \u2212 5,000 = $1,000.","Per barrel = 1,000 \u00f7 1,000 bbl = $1.00.","Long loses as the price falls: 78.40 \u2212 1.00 = $77.40."]],
+["Short 2 gold futures at 2,405.0",["Cushion per contract = 10,000 \u2212 9,000 = $1,000 \u00f7 100 oz = $10.","A short loses as the price RISES: 2,405 + 10 = 2,415.0.","The number of contracts doesn't change the trigger price."]],
+["A trader buys 5 three-month interest rate futures at 95.62",["Long: sold \u2212 bought = 95.48 \u2212 95.62 = \u221214 bp.","\u221214 \u00d7 $25 \u00d7 5 = \u2212$1,750.","Price = 100 \u2212 rate: 100 \u2212 95.62 = 4.38% \u2192 100 \u2212 95.48 = 4.52%. The rate rose."]],
+["A speculator buys 4 yen futures",["Move = 0.006805 \u2212 0.006720 = +0.000085.","\u00d7 \u00a512,500,000 = $1,062.50 per contract.","\u00d7 4 = $4,250 gain."]]
+].forEach(([k,w])=>{Q.filter(q=>k.includes(" [")?(q.q+" ["+(q.l||[]).filter(Boolean).join(" / ")+"]").startsWith(k):q.q.startsWith(k)).forEach(q=>q.w=w)});
 
 
 /* ---------- data ---------- */
@@ -1074,8 +1234,11 @@ function cheatFor(c){const x=CHEAT.find(k=>k.ch.includes(c));return x?x.id:null}
 
 /* ---------- storage ---------- */
 const KEY="s3pitcareer.v1";
-let S={cleared:{},best:{},seen:{},missed:{},pnl:0,outcry:0,mockBest:null,unlockAll:false,sound:true,tf:true,examDate:"2026-12-08",daily:{last:null,streak:0},mocks:[],orderBest:0,matchBest:{}};
+let S={cleared:{},best:{},seen:{},missed:{},pnl:0,outcry:0,mockBest:null,unlockAll:false,sound:true,tf:true,examDate:"2026-12-08",daily:{last:null,streak:0},mocks:[],orderBest:0,matchBest:{},srs:null,last:{},mockHist:[],curMock:null};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+// move the old Damage Control list into spaced repetition (all due now)
+if(!S.srs){S.srs={};Object.keys(S.missed||{}).forEach(id=>S.srs[id]={b:0,due:0,x:1});S.missed={}}
+S.last=S.last||{};S.mockHist=S.mockHist||[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ---------- helpers ---------- */
@@ -1091,8 +1254,23 @@ function clearedCount(){return DESKS.filter(d=>S.cleared[d.c]).length}
 function rankIdx(){return Math.min(clearedCount(),RANKS.length-1)}
 function unlocked(c){return S.unlockAll||c===1||S.cleared[c-1]}
 function mastery(c){const qs=Q.filter(q=>q.c===c);const m=qs.filter(q=>S.seen[q.id]&&S.seen[q.id].r>0).length;return Math.round(100*m/qs.length)}
-function record(q,ok){const s=S.seen[q.id]||{r:0,w:0};ok?s.r++:s.w++;S.seen[q.id]=s;
-  if(!ok)S.missed[q.id]=0}
+function record(q,ok){const s=S.seen[q.id]||{r:0,w:0};ok?s.r++:s.w++;S.seen[q.id]=s;S.last[q.id]=Date.now();
+  if(!ok){srsMiss(q.id);return 0}return srsHit(q.id)}
+
+/* ---------- spaced repetition ----------
+   Leitner boxes squeezed to fit before the exam. A miss goes to box 0 (due now).
+   Each right answer when it's due moves it up: back tomorrow, then in 3 days, then 6, then it's learned.
+   Intervals are capped so everything still in review comes back before exam day. */
+const DAY=86400000,SRS_IVL=[0,1,3,6];
+function dayStart(t){const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()}
+function srsMiss(id){const o=S.srs[id]||{};S.srs[id]={b:0,due:Date.now(),x:(o.x||0)+1}}
+function srsHit(id){const s=S.srs[id];if(!s||s.due>Date.now())return 0;
+  s.b++;if(s.b>=SRS_IVL.length){delete S.srs[id];return 2}
+  let due=dayStart(Date.now())+SRS_IVL[s.b]*DAY;
+  const cap=parseD(S.examDate).getTime()-DAY;if(cap>Date.now())due=Math.min(due,Math.max(cap,dayStart(Date.now())+DAY));
+  s.due=due;return 1}
+function dueIds(){const n=Date.now();return Object.keys(S.srs).filter(id=>byId[id]&&S.srs[id].due<=n)}
+function reviewIds(){return Object.keys(S.srs).filter(id=>byId[id])}
 
 /* ---------- audio ---------- */
 let AC=null;
@@ -1105,21 +1283,31 @@ function beep(ok){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window
 /* ---------- item building ---------- */
 // Turns a bank question into a playable item; may convert MCQ to true/false like the real exam
 function makeItem(q,tfChance){
-  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a};
+  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a,ord:[0,1]};
   if(false){
     const showRight=Math.random()<.5;
     const wrongs=q.o.filter((_,i)=>i!==q.a);
     const shown=showRight?q.o[q.a]:wrongs[Math.random()*wrongs.length|0];
     return{q,tf:true,chk:true,proposal:shown,opts:["True","False"],ans:showRight?0:1};
   }
-  const order=shuffle(q.o.map((t,i)=>i));
-  return{q,tf:false,opts:order.map(i=>q.o[i]),ans:order.indexOf(q.a)};
+  return itemFromOrd(q,shuffle(q.o.map((t,i)=>i)));
+}
+function itemFromOrd(q,ord){
+  if(q.tf)return{q,tf:true,proposal:null,opts:["True","False"],ans:q.a,ord:[0,1]};
+  return{q,tf:false,opts:ord.map(i=>q.o[i]),ans:ord.indexOf(q.a),ord};
+}
+// Cycle order: questions you've never seen, then reviews that are due, then whatever you saw longest ago.
+// Anything seen in the last 36 hours goes to the back of the queue, so a shift rarely repeats until the chapter is used up.
+function rankPool(pool){
+  const now=Date.now();
+  const key=q=>{const seen=S.seen[q.id],l=S.last[q.id]||0,sr=S.srs[q.id];
+    const tier=!seen?0:(sr&&sr.due<=now)?1:(now-l>36*3600000)?2:3;
+    const ageH=Math.min((now-l)/3600000,900);
+    return tier*1000+(tier>=2?-ageH:0)+Math.random()*3};
+  return pool.map(q=>[key(q),q]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
 }
 function pickFor(chs,n,used){
-  const pool=Q.filter(q=>chs.includes(q.c)&&!used.has(q.id));
-  // weight: unseen and previously-missed questions come up first
-  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
-  const out=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,n).map(x=>x[1]);
+  const out=rankPool(Q.filter(q=>chs.includes(q.c)&&!used.has(q.id))).slice(0,n);
   out.forEach(q=>used.add(q.id));return shuffle(out);
 }
 
@@ -1134,7 +1322,7 @@ function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
 function home(){
   stopTimer();R=null;window.scrollTo(0,0);
   const ri=rankIdx(),cc=clearedCount();
-  const missN=Object.keys(S.missed).filter(id=>byId[id]).length;
+  const missN=dueIds().length,revN=reviewIds().length;
   const seenN=Object.keys(S.seen).length;
   const curDesk=(DESKS.find(d=>unlocked(d.c)&&!S.cleared[d.c])||{}).c;
   const I=ICONS;
@@ -1156,13 +1344,17 @@ function home(){
   h+=`</div>
   <div class="sect">Trading modes</div>
   <div class="tiles">
+   ${S.curMock?`<button class="tile boss" style="border-color:var(--green)" onclick="resumeMock()"><span class="ic" style="background:var(--green);border-color:var(--green)">${I.exam}</span><span><h3 style="color:var(--green)">Resume your mock</h3><p>Q ${S.curMock.i+1}/${S.curMock.items.length} &middot; ${fmtLeft(S.curMock.left)} left on the clock</p></span></button>`:""}
    <button class="tile boss" onclick="mockIntro()"><span class="ic">${I.exam}</span><span><h3>The Real Exam</h3><p>120 Qs &middot; 2h30 &middot; 70% in both parts${S.mockBest?" &middot; best "+S.mockBest+"%":""}</p></span></button>
+   ${S.mockHist.length?`<button class="tile" style="grid-column:1/-1" onclick="mockRecap(S.mockHist.length-1)"><span class="ic">${I.exam}</span><span><h3>Last mock recap</h3><p>${(()=>{const m=mockStats(S.mockHist[S.mockHist.length-1]);return "P1 "+m.p1.pct+"% &middot; P2 "+m.p2.pct+"% &middot; notes, flashcards, answers"})()}</p></span></button>`:""}
    <button class="tile" onclick="startOutcry()"><span class="ic">${I.bolt}</span><span><h3>Open Outcry</h3><p>60s &middot; best ${S.outcry}</p></span></button>
-   <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" to clear":"no misses yet"}</p></span></button>
+   <button class="tile" onclick="startDamage()">${missN?`<span class="cnt">${missN}</span>`:""}<span class="ic">${I.fix}</span><span><h3>Damage Control</h3><p>${missN?missN+" due now":revN?"nothing due &middot; "+revN+" in review":"no misses yet"}</p></span></button>
    <button class="tile" onclick="startOrders()"><span class="ic">${I.ladder}</span><span><h3>Order Desk</h3><p>best ${S.orderBest||0}</p></span></button>
    <button class="tile" onclick="matchIntro()"><span class="ic">${I.cards}</span><span><h3>Contract Match</h3><p>${S.matchBest&&S.matchBest.sizes?"best "+S.matchBest.sizes+"s":"beat the clock"}</p></span></button>
    <button class="tile boss" onclick="startPro()"><span class="ic">${I.bolt}</span><span><h3>Pro Desk</h3><p>${Q.filter(q=>q.d===3).length} harder multi-step questions${S.proBest!=null?" &middot; best "+S.proBest+"%":""}</p></span></button>
-   <button class="tile" style="grid-column:1/-1" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>basis &middot; hedges &middot; spreads &middot; orders &middot; options</p></span></button>
+   <button class="tile" onclick="flashMenu()"><span class="ic">${I.cards}</span><span><h3>Flashcards</h3><p>by exam area</p></span></button>
+   <button class="tile" onclick="cheat()"><span class="ic">${I.book}</span><span><h3>Cheat Sheet</h3><p>the tricky bits</p></span></button>
+   <button class="tile" style="grid-column:1/-1" onclick="notesMenu()"><span class="ic">${I.book}</span><span><h3>Revision Notes</h3><p>all 9 exam areas &middot; key rules and worked methods</p></span></button>
   </div>`;
   h+=`<div class="foot">${Q.length} questions written from your Series 3 textbook.<br>Progress is saved in this browser only.</div>`;
   $("#app").innerHTML=h;
@@ -1178,7 +1370,7 @@ function settings(){
   <label class="toggle"><span>Exam date<br><span style="color:var(--mute);font-size:12px">Drives the countdown and daily plan</span></span><input type="date" value="${S.examDate}" onchange="if(this.value){S.examDate=this.value;save()}" class="din"></label>
   <button class="next" style="margin-top:16px" onclick="closeModal();home()">Done</button>
   <button class="next ghost" onclick="resetAsk()">Reset all progress</button>`)}
-function resetAsk(){modal(`<h2>Reset career?</h2><p>This wipes your rank, stars, P&amp;L and Damage Control list. It can't be undone.</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="settings()">Cancel</button><button class="next" style="background:var(--red);color:#fff" onclick="localStorage.removeItem(KEY);location.reload()">Reset</button></div>`)}
+function resetAsk(){modal(`<h2>Reset career?</h2><p>This wipes your rank, stars, P&amp;L, mock history and review list. It can't be undone.</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="settings()">Cancel</button><button class="next" style="background:var(--red);color:#fff" onclick="localStorage.removeItem(KEY);location.reload()">Reset</button></div>`)}
 
 /* ---------- desk shift ---------- */
 function deskIntro(c){
@@ -1194,10 +1386,17 @@ function startDesk(c){
   R={mode:"desk",c,items,i:0,right:0,wrong:0,bal:10000,streak:0,lives:3,misses:[],t0:0,done:false,liq:false,hist:[10000]};
   play();
 }
-function startDamage(){
-  const ids=Object.keys(S.missed).filter(id=>byId[id]);
-  if(!ids.length){modal(`<h2>Clean book</h2><p>Nothing to review yet. Questions you miss anywhere in the game land here until you've answered them right twice in a row.</p><button class="next" onclick="closeModal()">OK</button>`);return}
-  const items=shuffle(ids).slice(0,15).map(id=>makeItem(byId[id],.2));
+function startDamage(force){
+  let ids=dueIds();const all=reviewIds();
+  if(!ids.length&&!force){
+    if(!all.length){modal(`<h2>Clean book</h2><p>Nothing to review yet. Every question you miss lands here, then comes back tomorrow, in 3 days and in 6 days. Get it right each time and it's learned.</p><button class="next" onclick="closeModal()">OK</button>`);return}
+    const nx=Math.min(...all.map(id=>S.srs[id].due)),d=Math.max(1,Math.round((dayStart(nx)-dayStart(Date.now()))/DAY));
+    modal(`<div class="lbl">Spaced repetition</div><h2>Nothing due</h2><p>${all.length} question${all.length>1?"s are":" is"} in review. The next ones come back ${d===1?"tomorrow":"in "+d+" days"}. Waiting is what makes them stick, but you can drill them early if you want.</p>
+     <button class="next" onclick="closeModal()">OK</button><button class="next ghost" onclick="closeModal();startDamage(1)">Drill them early anyway</button>`);return}
+  if(!ids.length)ids=all;
+  // lowest step and most-missed first
+  ids=ids.sort((a,b)=>(S.srs[a].b-S.srs[b].b)||((S.srs[b].x||0)-(S.srs[a].x||0))||(Math.random()-.5));
+  const items=shuffle(ids.slice(0,15)).map(id=>makeItem(byId[id],.2));
   R={mode:"damage",items,i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
   play();
 }
@@ -1211,7 +1410,8 @@ function play(){
   if(R.mode==="desk")chips=`<div class="chips"><span class="chip">ACCT <b id="bal" class="${R.bal>=10000?"pos":"neg"}">${money(R.bal)}</b></span><span class="chip">STREAK <b>${R.streak}</b> &middot; x${mult()}</span><span class="chip lives">${"&#9679;".repeat(Math.max(R.lives,0))}${"&#9675;".repeat(3-Math.max(R.lives,0))}</span></div>`;
   if(R.mode==="pro")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">PRO DESK</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="daily")chips=`<div class="chips"><span class="chip">DAILY DRILL</span><span class="chip">Streak <b>${S.daily.streak||0}</b></span></div>`;
-  if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span><span class="chip">Cleared <b>${R.cleared}</b></span></div>`;
+  if(R.mode==="damage")chips=`<div class="chips"><span class="chip">DAMAGE CONTROL</span>${q.id in S.srs?`<span class="chip">Step <b>${S.srs[q.id].b+1}</b>/4</span>`:""}<span class="chip">Moved up <b>${R.cleared||0}</b></span></div>`;
+  if(R.mode==="drill")chips=`<div class="chips"><span class="chip" style="color:var(--amber);border-color:var(--amberD)">DRILL</span><span class="chip">${esc(R.label)}</span><span class="chip">Right <b>${R.right}</b>/${R.i}</span></div>`;
   if(R.mode==="mock")chips=`<div class="chips"><span class="chip">PART <b>${it.part}</b></span><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b>${R.i}</b>/${n}</span></div>`;
   if(R.mode==="outcry")chips=`<div class="chips"><span class="chip">&#9201; <b id="clock">${Math.max(0,Math.ceil((R.end-Date.now())/1000))}s</b></span><span class="chip">SCORE <b id="score">${R.score}</b></span><span class="chip">COMBO <b>x${Math.min(1+R.streak,5)}</b></span></div>`;
   const keys=it.tf?["T","F"]:["a","b","c","d"];
@@ -1229,8 +1429,7 @@ function fmtClock(){const s=Math.max(0,Math.round((R.end-Date.now())/1000));cons
 function answer(i){
   if(!R||R.answered!=null)return;
   const it=R.items[R.i],ok=i===it.ans;R.answered=i;
-  record(it.q,ok);
-  if(R.mode==="mock"){it.chosen=i;it.ok=ok;R.i++;save();R.i>=R.items.length?finishMock():play();return}
+  const up=record(it.q,ok);if(up)R.cleared=(R.cleared||0)+1;
   const btns=[...document.querySelectorAll(".opt")];btns.forEach(b=>b.disabled=true);
   btns[i].classList.add(ok?"ok":"bad");if(!ok)btns[it.ans].classList.add("ok");
   beep(ok);buzz(ok);cardFx(ok);
@@ -1244,7 +1443,6 @@ function answer(i){
   let delta=0,title;
   if(ok){R.right++;
     if(R.mode==="desk"){R.streak++;const sec=(Date.now()-R.t0)/1000;delta=Math.round(400*mult()+(sec<12?100:0));R.bal+=delta}
-    if(S.missed[it.q.id]!=null&&R.mode!=="desk"){S.missed[it.q.id]++;if(S.missed[it.q.id]>=2){delete S.missed[it.q.id];R.cleared++}}
     title=["Filled.","Nice trade.","Correct.","On the money.","Locked in."][Math.random()*5|0];
   }else{R.wrong++;
     if(R.mode==="desk"){R.streak=0;delta=-1500;R.bal+=delta;R.lives--;
@@ -1253,7 +1451,7 @@ function answer(i){
   }
   save();
   const correct=it.q.o[it.q.a];
-  const ex=(it.proposal!=null?`Correct answer: <b>${esc(correct)}</b>. `:"")+esc(it.q.e);
+  const ex=(it.proposal!=null?`Correct answer: <b>${esc(correct)}</b>. `:"")+esc(it.q.e)+workHTML(it.q);
   const last=R.i>=R.items.length-1||R.liq;
   $("#fbx").innerHTML=`<div class="fb ${ok?"ok":"bad"}"><h5><span>${title}</span>${R.mode==="desk"?`<span class="delta ${delta>=0?"pos":"neg"}">${smoney(delta)}</span>`:""}</h5><p>${ex}</p></div>
    <button class="next" id="nextb" onclick="nextQ()">${R.liq?"See the damage":last?"Close the shift":"Next &rarr;"}</button>`;
@@ -1268,7 +1466,11 @@ function tickNum(el,from,to,fmt){if(!el)return;const t0=performance.now(),d=550;
   (function f(n){const k=Math.min(1,(n-t0)/d),e=1-Math.pow(1-k,3);el.textContent=fmt(from+(to-from)*e);if(k<1)requestAnimationFrame(f)})(t0)}
 function countUp(el,to,suf){if(!el)return;const t0=performance.now();(function f(n){const k=Math.min(1,(n-t0)/700),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e)+suf;if(k<1)requestAnimationFrame(f)})(t0)}
 function floatTxt(t,c){const e=document.createElement("div");e.className="float";e.textContent=t;e.style.color=c;document.body.appendChild(e);setTimeout(()=>e.remove(),1000)}
-function quitAsk(){modal(`<h2>Leave the floor?</h2><p>${R&&R.mode==="mock"?"Your mock exam will be abandoned.":"This run won't count, but anything you got wrong is still saved to Damage Control."}</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="closeModal()">Stay</button><button class="next" onclick="closeModal();home()">Leave</button></div>`)}
+function quitAsk(){
+  if(R&&R.mode==="mock")return modal(`<h2>Leave the exam?</h2><p><b>Pause</b> saves your answers and stops the clock. You can resume from the floor, even after closing the browser.</p>
+   <button class="next" onclick="closeModal();pauseMock()">Pause and leave</button><button class="next ghost" onclick="closeModal()">Keep going</button>
+   <button class="next ghost" style="color:var(--red)" onclick="closeModal();abandonMock()">Abandon this mock</button>`);
+  modal(`<h2>Leave the floor?</h2><p>${R&&R.mode==="flash"?"Cards you've already rated are saved.":"This run won't count, but anything you got wrong is still saved to Damage Control."}</p><div class="row" style="margin-top:16px"><button class="next ghost" onclick="closeModal()">Stay</button><button class="next" onclick="closeModal();home()">Leave</button></div>`)}
 
 function pnlChart(hs){
   const W=330,H=130,L=44,Rr=8,T=10,B=20,n=hs.length;
@@ -1288,8 +1490,9 @@ function missList(ms){
   if(!ms.length)return "";
   return `<div class="sect">Your misses <span class="lbl">sent to Damage Control</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
     const your=m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
-    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">\u2715 ${esc(your)}</div><div class="a">\u2713 ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">\u2715 ${esc(your)}</div><div class="a">\u2713 ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div>${workHTML(q)}</div>`}).join("")+`</div>`;
 }
+function workHTML(q){return q.w?`<div class="work"><div class="lbl">Worked calculation</div><ol>${q.w.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:""}
 
 function finishRun(){
   stopTimer();R.answered=-1;window.scrollTo(0,0);
@@ -1316,6 +1519,14 @@ function finishRun(){
     if(promoted)setTimeout(()=>{beep(true);modal(`<div class="lbl">Promotion</div><div class="rankchip" style="margin:12px auto;width:70px;height:70px;font-size:24px">${RANKCODE[rankIdx()]}</div><h2>${RANKS[rankIdx()]}</h2><p>${rankIdx()>=10?"Every desk cleared. Now beat the Final Boss: a full mock exam with 70%+ in both parts.":"New desk unlocked: <b>"+DESKS[R.c].name+"</b>."}</p><button class="next" onclick="closeModal()">Back to work</button>`)},400);
     return;
   }
+  if(m==="drill"){
+    const pct=Math.round(100*R.right/R.items.length),ar=R.areas;
+    h=`<div class="res-head"><div class="lbl">Targeted drill &middot; ${esc(R.label)}</div><div class="big" id="bigpct">0%</div>
+     <div class="verdict ${pct>=70?"pos":"neg"}" style="font-size:18px;margin-top:8px">${pct>=80?"Getting there":pct>=70?"Pass standard":"Keep going"}</div>
+     <div class="lbl" style="margin-top:6px">${R.right}/${R.items.length} right</div></div>
+     <div class="row"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDrill(['${ar.join("','")}'])">Another drill</button></div>${missList(R.misses)}`;
+    $("#app").innerHTML=h;countUp($("#bigpct"),pct,"%");return;
+  }
   if(m==="pro"){
     const pct=Math.round(100*R.right/R.items.length);const best=S.proBest==null||pct>S.proBest;if(best){S.proBest=pct;save()}
     h=`<div class="res-head"><div class="lbl">Pro Desk</div><div class="big" id="bigpct">0%</div>
@@ -1333,9 +1544,10 @@ function finishRun(){
     $("#app").innerHTML=h;return;
   }
   if(m==="damage"){
-    const left=Object.keys(S.missed).filter(id=>byId[id]).length;
+    const left=dueIds().length,rv=reviewIds().length;
     h=`<div class="res-head"><div class="lbl">Damage Control</div><div class="big">${R.right}/${R.items.length}</div>
-     <div class="lbl" style="margin-top:6px">${R.cleared} cleared &middot; ${left} still on the list</div></div>
+     <div class="lbl" style="margin-top:6px">${R.cleared||0} moved up a step &middot; ${left} still due &middot; ${rv} in review</div></div>
+     <p style="color:var(--mute);font-size:13px;text-align:center;margin-bottom:12px">Right answers come back tomorrow, then in 3 days, then 6. Misses stay due.</p>
      <div class="row"><button class="next ghost" onclick="home()">Floor</button>${left?`<button class="next" onclick="startDamage()">Another round</button>`:""}</div>${missList(R.misses)}`;
     $("#app").innerHTML=h;return;
   }
@@ -1359,54 +1571,386 @@ function startOutcry(){
     if(s<=0){R.done=true;finishRun()}},250);
 }
 
-/* ---------- mock exam ---------- */
+/* ---------- mock exam (exam conditions) ---------- */
+function fmtLeft(ms){const s=Math.max(0,Math.round(ms/1000)),h=s/3600|0,m=(s%3600)/60|0,x=s%60;return (h?h+":":"")+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0")}
 function mockIntro(){
+  const hist=S.mockHist.slice().reverse().slice(0,5);
   modal(`<div class="lbl">Final Boss</div><h2>The Real Exam</h2>
-  <p style="text-align:left">Built to the Series 3 outline: <b>Part 1</b> has 85 questions across 8 areas and <b>Part 2</b> has 35 on CFTC/NFA rules. You need <b>70% in each part</b>. There's no feedback until the end, and the first answer you pick is the one that counts, so go with your gut.</p>
-  <button class="next" onclick="closeModal();startMock(1)">Full exam: 120 Qs, 2h30</button>
-  <button class="next ghost" onclick="closeModal();startMock(.334)">Mini mock: 40 Qs, 50 min</button>
+  <p style="text-align:left">Built to the Series 3 outline: <b>Part 1</b> has 85 questions across 8 areas and <b>Part 2</b> has 35 on CFTC/NFA rules. You need <b>70% in each part</b>.</p>
+  <p style="text-align:left;margin-top:8px">Exam conditions: <b>no answers shown</b> until you submit. Go back to any question, change your answer, and <b>flag</b> ones to come back to. You can pause and resume later.</p>
+  ${S.curMock?`<button class="next" style="background:var(--green)" onclick="closeModal();resumeMock()">Resume mock: Q ${S.curMock.i+1}/${S.curMock.items.length}, ${fmtLeft(S.curMock.left)} left</button>`:""}
+  <button class="next ${S.curMock?"ghost":""}" onclick="closeModal();newMockAsk(1)">Full exam: 120 Qs, 2h30</button>
+  <button class="next ghost" onclick="closeModal();newMockAsk(.334)">Mini mock: 40 Qs, 50 min</button>
+  ${hist.length?`<div class="lbl" style="margin:16px 0 6px;text-align:left">Past mocks</div>`+hist.map(h=>{const m=mockStats(h),k=S.mockHist.indexOf(h);
+    return `<button class="toggle" onclick="closeModal();mockRecap(${k})"><span>${new Date(h.t).toLocaleDateString("en-GB",{day:"numeric",month:"short"})} &middot; ${h.scale===1?"Full":"Mini"}</span><span style="font-family:var(--mono);font-size:13px"><span class="${m.p1.pct>=70?"pos":"neg"}">P1 ${m.p1.pct}%</span> &middot; <span class="${m.p2.pct>=70?"pos":"neg"}">P2 ${m.p2.pct}%</span> &rsaquo;</span></button>`}).join(""):""}
   <button class="next ghost" onclick="closeModal()">Not today</button>`)}
+function newMockAsk(scale){
+  if(S.curMock)return modal(`<h2>Start a new mock?</h2><p>Your paused mock will be thrown away.</p><button class="next" onclick="closeModal();S.curMock=null;save();startMock(${scale})">Start new</button><button class="next ghost" onclick="closeModal();resumeMock()">Resume the paused one</button>`);
+  startMock(scale)}
 function startMock(scale){
   const used=new Set();let items=[];
   let counts=AREAS.map(a=>Math.max(1,Math.round(a.n*scale)));
   if(scale<1){const t1=Math.round(85*scale),t2=Math.round(35*scale);
     let s1=counts.slice(0,8).reduce((a,b)=>a+b,0);counts[6]+=t1-s1;counts[8]=t2}
-  AREAS.forEach((a,k)=>{pickFor(a.ch,counts[k],used).forEach(q=>{const it=makeItem(q,.2);it.area=a.id;it.part=a.p;items.push(it)})});
-  // real exam mixes topics; keep Part 1 first then Part 2
+  AREAS.forEach((a,k)=>{pickFor(a.ch,counts[k],used).forEach(q=>{const it=makeItem(q,.2);it.area=a.id;it.part=a.p;it.chosen=null;it.flag=false;items.push(it)})});
   items=shuffle(items.filter(x=>x.part===1)).concat(shuffle(items.filter(x=>x.part===2)));
   const mins=scale<1?50:150;
-  R={mode:"mock",items,i:0,end:Date.now()+mins*60000,misses:[],scale};
-  play();
-  timerId=setInterval(()=>{const c=$("#clock");if(c)c.textContent=fmtClock();if(Date.now()>=R.end)finishMock()},1000);
+  R={mode:"mock",items,i:0,end:Date.now()+mins*60000,scale};
+  mockSave();mockRun();
+}
+function mockSave(paused){
+  if(!R||R.mode!=="mock")return;
+  S.curMock={left:Math.max(0,R.end-Date.now()),scale:R.scale,i:R.i,items:R.items.map(x=>({id:x.q.id,ord:x.ord,area:x.area,part:x.part,c:x.chosen,f:x.flag?1:0}))};save()}
+function resumeMock(){
+  const m=S.curMock;if(!m)return home();
+  const items=m.items.filter(x=>byId[x.id]).map(x=>{const it=itemFromOrd(byId[x.id],x.ord);it.area=x.area;it.part=x.part;it.chosen=x.c;it.flag=!!x.f;return it});
+  R={mode:"mock",items,i:Math.min(m.i,items.length-1),end:Date.now()+m.left,scale:m.scale};
+  if(m.left<=0)return finishMock();
+  mockRun()}
+function pauseMock(){mockSave();stopTimer();R=null;home()}
+function abandonMock(){stopTimer();S.curMock=null;save();R=null;home()}
+function mockRun(){
+  stopTimer();playMock();
+  timerId=setInterval(()=>{if(!R||R.mode!=="mock")return stopTimer();const c=$("#clock");if(c)c.textContent=fmtClock();
+    const left=R.end-Date.now();if(c&&left<300000)c.style.color="var(--red)";
+    if(left<=0){finishMock();return}
+    if((Date.now()/1000|0)%15===0)mockSave()},1000);
+}
+function mockChips(){const n=R.items.length,done=R.items.filter(x=>x.chosen!=null).length,fl=R.items.filter(x=>x.flag).length;
+  return `<div class="chips"><span class="chip">&#9201; <b id="clock">${fmtClock()}</b></span><span class="chip">Answered <b id="ansd">${done}</b>/${n}</span><span class="chip">&#9873; <b id="flg">${fl}</b></span></div>`}
+function playMock(){
+  window.scrollTo(0,0);R.answered=null;
+  const it=R.items[R.i],n=R.items.length,q=it.q,keys=it.tf?["T","F"]:["a","b","c","d"];
+  const done=R.items.filter(x=>x.chosen!=null).length;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*done/n}%"></i></div><div class="hudr">${R.i+1}/${n}</div></div>
+  ${mockChips()}
+  <div class="qcard"><div class="qmeta"><span>PART ${it.part} &middot; Q${R.i+1}</span><button class="flagb ${it.flag?"on":""}" id="flagb" onclick="toggleFlag()">&#9873; ${it.flag?"Flagged":"Flag"}</button></div>
+   <div class="qtext">${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>
+   ${q.l?`<div class="posbox">${q.l.map(x=>x?`<div class="${/^[IV]+\./.test(x)?"rnl":""}">${esc(x)}</div>`:`<div style="height:6px"></div>`).join("")}</div>`:""}
+   <div class="opts ${it.tf?"tfrow":""}">${it.opts.map((o,i)=>`<button class="opt ${it.chosen===i?"sel":""}" data-i="${i}" onclick="pickMock(${i})">${it.tf?"":`<span class="key">${keys[i]}</span>`}<span>${esc(o)}</span></button>`).join("")}</div>
+  </div>
+  <div class="row mnav"><button class="next ghost" ${R.i?"":"disabled style='opacity:.35'"} onclick="mockGo(${R.i-1})">&larr; Back</button>
+   <button class="next" onclick="${R.i<n-1?`mockGo(${R.i+1})`:"mockReview()"}">${R.i<n-1?"Next &rarr;":"Review &amp; submit"}</button></div>
+  <button class="next ghost" onclick="mockReview()">Question map &middot; submit</button>`;
+}
+function pickMock(i){const it=R.items[R.i];it.chosen=i;
+  document.querySelectorAll(".opt").forEach((b,k)=>b.classList.toggle("sel",k===i));
+  const a=$("#ansd");if(a)a.textContent=R.items.filter(x=>x.chosen!=null).length;
+  const pr=$(".prog i");if(pr)pr.style.width=(100*R.items.filter(x=>x.chosen!=null).length/R.items.length)+"%";
+  mockSave()}
+function toggleFlag(){const it=R.items[R.i];it.flag=!it.flag;const b=$("#flagb");if(b){b.classList.toggle("on",it.flag);b.innerHTML="&#9873; "+(it.flag?"Flagged":"Flag")}
+  const f=$("#flg");if(f)f.textContent=R.items.filter(x=>x.flag).length;mockSave()}
+function mockGo(k){if(k<0||k>=R.items.length)return;R.i=k;mockSave();playMock()}
+function mockReview(){
+  window.scrollTo(0,0);R.answered=-1;
+  const it=R.items,un=it.filter(x=>x.chosen==null).length,fl=it.filter(x=>x.flag).length;
+  const grid=p=>`<div class="lbl" style="margin:14px 0 8px">Part ${p} ${p===2?"&middot; rules":"&middot; markets"}</div><div class="qgrid">${it.map((x,k)=>x.part===p?`<button class="qn ${x.chosen!=null?"a":""} ${x.flag?"f":""} ${k===R.i?"cur":""}" onclick="mockGo(${k})">${k+1}</button>`:"").join("")}</div>`;
+  const firstOf=f=>it.findIndex(f);
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="brand" style="font-size:20px">Question<em>Map</em></div><div></div></div>
+  ${mockChips()}
+  <div class="card"><div class="legend"><span><i class="qn a"></i>answered</span><span><i class="qn"></i>blank</span><span><i class="qn f"></i>flagged</span></div>
+  ${grid(1)}${grid(2)}</div>
+  <div class="row" style="margin-top:12px">
+   <button class="next ghost" ${fl?"":"disabled style='opacity:.35'"} onclick="mockGo(${firstOf(x=>x.flag)})">First flagged</button>
+   <button class="next ghost" ${un?"":"disabled style='opacity:.35'"} onclick="mockGo(${firstOf(x=>x.chosen==null)})">First blank</button></div>
+  <div class="row"><button class="next ghost" onclick="mockGo(${R.i})">Back to Q${R.i+1}</button><button class="next" onclick="submitAsk()">Submit exam</button></div>`;
+}
+function submitAsk(){const it=R.items,un=it.filter(x=>x.chosen==null).length,fl=it.filter(x=>x.flag).length;
+  modal(`<div class="lbl">Final answer?</div><h2>Submit exam</h2><p>${un?`<b style="color:var(--red)">${un} unanswered.</b> Blanks score zero, so guess them first. `:"Every question answered. "}${fl?`<b>${fl} flagged</b> for review.`:""}</p>
+  <button class="next" onclick="closeModal();finishMock()">Submit and see results</button><button class="next ghost" onclick="closeModal()">Keep working</button>`)}
+
+/* ---------- results ---------- */
+function mockStats(res){
+  const items=res.items.filter(x=>byId[x.id]).map(x=>{const it=itemFromOrd(byId[x.id],x.ord);it.area=x.area;it.part=x.part;it.chosen=x.c;it.flag=!!x.f;it.ok=x.c===it.ans;return it});
+  const part=p=>{const all=items.filter(x=>x.part===p),ok=all.filter(x=>x.ok).length;return{ok,n:all.length,pct:all.length?Math.round(100*ok/all.length):0,need:Math.max(0,Math.ceil(.7*all.length-1e-9)-ok)}};
+  const areas=AREAS.map(a=>{const xs=items.filter(x=>x.area===a.id),ok=xs.filter(x=>x.ok).length;return{a,ok,n:xs.length,pc:xs.length?Math.round(100*ok/xs.length):0,drop:xs.length-ok}});
+  return{items,p1:part(1),p2:part(2),total:items.length?Math.round(100*items.filter(x=>x.ok).length/items.length):0,areas};
 }
 function finishMock(){
-  stopTimer();R.answered=-1;window.scrollTo(0,0);
-  const it=R.items,ans=it.filter(x=>x.chosen!=null);
-  const part=p=>{const all=it.filter(x=>x.part===p);const ok=all.filter(x=>x.ok).length;return{ok,n:all.length,pct:all.length?Math.round(100*ok/all.length):0}};
-  const p1=part(1),p2=part(2),pass=p1.pct>=70&&p2.pct>=70;
-  const total=Math.round(100*it.filter(x=>x.ok).length/it.length);
-  S.lastMock={p1:p1.pct,p2:p2.pct,full:R.scale===1};if(R.scale===1){S.mockBest=Math.max(S.mockBest||0,total);S.mocks.push(pass)}
-  it.filter(x=>x.chosen==null).forEach(x=>record(x.q,false));
-  save();
-  const rows=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);const ok=xs.filter(x=>x.ok).length;const pc=xs.length?Math.round(100*ok/xs.length):0;
-    return `<tr><td>${a.p===2?"<b>P2</b> ":""}${a.name}</td><td class="n">${ok}/${xs.length}</td><td class="n ${pc>=70?"pos":"neg"}">${pc}%</td></tr>`}).join("");
-  const ms=it.filter(x=>!x.ok).map(x=>({it:x,chosen:x.chosen==null?null:x.chosen}));
-  const weakest=AREAS.map(a=>{const xs=it.filter(x=>x.area===a.id);return{a,pc:xs.length?xs.filter(x=>x.ok).length/xs.length:1}}).sort((x,y)=>x.pc-y.pc)[0];
-  $("#app").innerHTML=`<div class="res-head"><div class="lbl">${R.scale===1?"Full mock exam":"Mini mock"} &middot; ${ans.length}/${it.length} answered</div>
-   <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${pass?"Passed":"Not yet"}</div><div class="big" style="margin-top:8px">${total}%</div></div>
-   <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="lbl">Part 1 &middot; need 70%</div><div class="v ${p1.pct>=70?"pos":"neg"}">${p1.pct}% <span style="color:var(--mute);font-size:12px">${p1.ok}/${p1.n}</span></div></div>
-   <div class="stat"><div class="lbl">Part 2 rules &middot; need 70%</div><div class="v ${p2.pct>=70?"pos":"neg"}">${p2.pct}% <span style="color:var(--mute);font-size:12px">${p2.ok}/${p2.n}</span></div></div></div>
-   <div class="sect">By exam area</div><div class="card" style="padding:6px 12px"><table><tr><th>Area</th><th style="text-align:right">Score</th><th style="text-align:right">%</th></tr>${rows}</table></div>
-   <div class="card" style="margin-top:10px;border-color:var(--amberD)"><div class="lbl" style="color:var(--amber)">Damage control plan</div><p style="font-size:14px;margin-top:6px;line-height:1.45">Weakest area: <b>${weakest.a.name}</b>. Re-read chapter ${weakest.a.ch.join(" & ")} in the book, then run ${weakest.a.ch.map(c=>"Desk "+c).join(" / ")} and clear your Damage Control list before your next mock.</p></div>
-   <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDamage()">Damage Control</button></div>
-   ${missListMock(ms)}`;
+  stopTimer();
+  const it=R.items;it.forEach(x=>{x.ok=x.chosen===x.ans;record(x.q,x.ok)});
+  S.mockHist.push({t:Date.now(),scale:R.scale,items:it.map(x=>({id:x.q.id,ord:x.ord,area:x.area,part:x.part,c:x.chosen,f:x.flag?1:0}))});
+  if(S.mockHist.length>12)S.mockHist.shift();
+  const m=mockStats(S.mockHist[S.mockHist.length-1]),pass=m.p1.pct>=70&&m.p2.pct>=70;
+  S.lastMock={p1:m.p1.pct,p2:m.p2.pct,full:R.scale===1};
+  if(R.scale===1){S.mockBest=Math.max(S.mockBest||0,m.total);S.mocks.push(pass)}
+  S.curMock=null;save();R=null;closeModal();
+  mockRecap(S.mockHist.length-1);
 }
-function missListMock(ms){
-  if(!ms.length)return "";
-  return `<div class="sect">Review <span class="lbl">${ms.length} missed</span></div><div class="card">`+ms.map(m=>{const q=m.it.q;
-    const your=m.chosen==null?"Not answered":m.it.proposal!=null?`You said ${m.chosen===0?"True":"False"} to "${m.it.proposal}"`:`You said: ${m.it.opts[m.chosen]}`;
-    return `<div class="miss"><q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}<div class="y">\u2715 ${esc(your)}</div><div class="a">\u2713 ${esc(q.o[q.a])}</div><div class="e">${esc(q.e)}</div></div>`}).join("")+`</div>`;
+// weak areas: below 80%, ordered by marks dropped
+function weakAreas(m){let w=m.areas.filter(x=>x.n&&x.pc<80).sort((a,b)=>b.drop-a.drop||a.pc-b.pc);
+  if(!w.length)w=m.areas.filter(x=>x.drop).sort((a,b)=>b.drop-a.drop).slice(0,2);return w}
+function mockRecap(k){
+  stopTimer();R=null;window.scrollTo(0,0);
+  const res=S.mockHist[k];if(!res)return home();
+  const m=mockStats(res),prev=k>0?mockStats(S.mockHist[k-1]):null,pass=m.p1.pct>=70&&m.p2.pct>=70;
+  const weak=weakAreas(m),pri=new Set(weak.slice(0,3).map(x=>x.a.id));
+  const totalDrop=m.areas.reduce((s,x)=>s+x.drop,0);
+  const rows=m.areas.filter(x=>x.n).slice().sort((a,b)=>b.drop-a.drop||a.pc-b.pc).map(x=>{
+    const pv=prev&&prev.areas.find(y=>y.a.id===x.a.id),tr=pv&&pv.n?x.pc-pv.pc:null;
+    const col=x.pc>=80?"var(--green)":x.pc>=70?"var(--amber)":"var(--red)";
+    return `<button class="arow" onclick="mockAnswers(${k},'${x.a.id}')">
+      <div class="arow-t"><span>${pri.has(x.a.id)?`<span class="tagp">PRIORITY</span>`:""}${x.a.p===2?`<span class="tagp p2">PART 2</span>`:""}${esc(x.a.name)}</span><span class="arow-n">${x.ok}/${x.n}</span></div>
+      <div class="abar"><i style="width:${x.pc}%;background:${col}"></i><b style="left:70%"></b></div>
+      <div class="arow-s"><span style="color:${col}">${x.pc}%</span>${tr!=null?`<span class="${tr>=0?"pos":"neg"}">${tr>=0?"&#9650;":"&#9660;"} ${Math.abs(tr)} vs last</span>`:""}<span>${x.drop?`<b class="neg">&minus;${x.drop} mark${x.drop>1?"s":""}</b>`:"no marks lost"} &middot; ${Math.round(100*x.a.n/120)}% of exam</span></div></button>`}).join("");
+  const top=weak.slice(0,3).filter(x=>x.drop);
+  const p2line=m.p2.need?`Part 2 needed <b>${m.p2.need} more right</b> to reach 70%.`:"";
+  const p1line=m.p1.need?`Part 1 needed <b>${m.p1.need} more right</b> to reach 70%.`:"";
+  const missN=m.items.filter(x=>!x.ok).length,flN=m.items.filter(x=>x.flag).length,flWrong=m.items.filter(x=>x.flag&&!x.ok).length;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="home()">&#10005;</button><div class="brand" style="font-size:20px">Mock<em>Recap</em></div><div></div></div>
+   <div class="res-head" style="padding-top:8px"><div class="lbl">${res.scale===1?"Full mock":"Mini mock"} &middot; ${new Date(res.t).toLocaleString("en-GB",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</div>
+   <div class="verdict ${pass?"pos":"neg"}" style="margin-top:8px">${pass?"Passed":"Not yet"}</div><div class="big" style="margin-top:8px">${m.total}%</div></div>
+   <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="lbl">Part 1 &middot; need 70%</div><div class="v ${m.p1.pct>=70?"pos":"neg"}">${m.p1.pct}% <span style="color:var(--mute);font-size:12px">${m.p1.ok}/${m.p1.n}</span></div></div>
+   <div class="stat"><div class="lbl">Part 2 rules &middot; need 70%</div><div class="v ${m.p2.pct>=70?"pos":"neg"}">${m.p2.pct}% <span style="color:var(--mute);font-size:12px">${m.p2.ok}/${m.p2.n}</span></div></div></div>
+   ${p1line||p2line?`<div class="card" style="margin-top:10px;border-color:#7a2230;background:#1c0a0e"><p style="font-size:14px;line-height:1.5">${[p1line,p2line].filter(Boolean).join(" ")}</p></div>`:""}
+   ${top.length?`<div class="card" style="margin-top:10px;border-color:var(--amberD)"><div class="lbl" style="color:var(--amber)">Where the marks went</div>
+     <p style="font-size:14px;margin-top:6px;line-height:1.5">You dropped <b>${totalDrop}</b> marks. <b>${top.reduce((s,x)=>s+x.drop,0)}</b> of them came from ${top.map(x=>`<b>${esc(x.a.name)}</b> (&minus;${x.drop})`).join(", ").replace(/, ([^,]*)$/," and $1")}. Fix those first.</p>
+     ${flN?`<p style="font-size:13px;margin-top:6px;color:var(--mute)">You flagged ${flN}; ${flWrong} of those were wrong.</p>`:""}</div>`:""}
+   <div class="sect">Your next steps</div>
+   <div class="tiles">
+    <button class="tile" style="grid-column:1/-1" onclick="mockNotes(${k})"><span class="ic">${ICONS.book}</span><span><h3>Revision notes for your weak areas</h3><p>${weak.slice(0,3).map(x=>esc(x.a.name.split(/[ ,&]/)[0])).join(" &middot; ")||"all areas"} &middot; plus what you got wrong</p></span></button>
+    <button class="tile" onclick="flashStart('mock',${k})"><span class="ic">${ICONS.cards}</span><span><h3>Flashcards</h3><p>${missN} from misses</p></span></button>
+    <button class="tile" onclick="startDrill([${weak.slice(0,3).map(x=>`'${x.a.id}'`).join(",")}])"><span class="ic">${ICONS.bolt}</span><span><h3>Targeted drill</h3><p>15 Qs, weak areas</p></span></button>
+    <button class="tile" style="grid-column:1/-1" onclick="mockAnswers(${k},'wrong')"><span class="ic">${ICONS.exam}</span><span><h3>Full answer review</h3><p>every question &middot; your answer, the right one and why</p></span></button>
+   </div>
+   <div class="sect">By exam area <span class="lbl">tap to see the questions</span></div>
+   <div class="card" style="padding:4px 12px">${rows}</div>
+   <p style="color:var(--mute);font-size:12px;margin-top:8px;text-align:center">The marker on each bar is the 70% pass line.</p>
+   <div class="row" style="margin-top:14px"><button class="next ghost" onclick="home()">Floor</button><button class="next" onclick="startDamage()">Damage Control</button></div>`;
 }
+function mockAnswers(k,filter){
+  window.scrollTo(0,0);const m=mockStats(S.mockHist[k]);
+  const pick=x=>filter==="all"?true:filter==="wrong"?!x.ok:filter==="flag"?x.flag:x.area===filter;
+  const list=m.items.map((x,i)=>[x,i]).filter(([x])=>pick(x));
+  const area=AREAS.find(a=>a.id===filter);
+  const chip=(f,l,n)=>`<button class="chip ${filter===f?"on":""}" onclick="mockAnswers(${k},'${f}')">${l}${n!=null?" "+n:""}</button>`;
+  const card=([x,i])=>{const q=x.q,a=AREAS.find(z=>z.id===x.area);
+    return `<div class="rv ${x.ok?"ok":"bad"}"><div class="qmeta"><span>Q${i+1} &middot; ${esc(a?a.name:"")}</span><span class="${x.ok?"pos":"neg"}">${x.ok?"&#10003; Right":x.chosen==null?"&ndash; Blank":"&#10005; Wrong"}${x.flag?" &middot; &#9873;":""}</span></div>
+     <q>${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</q>
+     ${q.l?`<div class="e" style="font-family:var(--mono);font-size:12px;margin-top:6px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}
+     <div class="rvopts">${x.opts.map((o,j)=>`<div class="${j===x.ans?"rc":j===x.chosen?"rw":""}">${j===x.ans?"&#10003;":j===x.chosen?"&#10005;":"&middot;"} ${esc(o)}${j===x.chosen?` <span class="lbl">your answer</span>`:""}</div>`).join("")}</div>
+     <div class="expl"><b>Why:</b> ${esc(q.e)}</div>${workHTML(q)}</div>`};
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="mockRecap(${k})">&larr;</button><div class="brand" style="font-size:20px">Answer<em>Review</em></div><div></div></div>
+   <div class="chips">${chip("wrong","Wrong",m.items.filter(x=>!x.ok).length)}${chip("flag","Flagged",m.items.filter(x=>x.flag).length)}${chip("all","All",m.items.length)}</div>
+   <div class="chips">${m.areas.filter(x=>x.n).map(x=>chip(x.a.id,x.a.name.split(/[ ,&]/)[0]+(x.a.p===2?" (P2)":""),x.drop?"\u2212"+x.drop:"\u2713")).join("")}</div>
+   ${area?`<div class="card" style="margin-bottom:10px"><div class="lbl">${esc(area.name)}</div><div class="row" style="margin-top:8px"><button class="next ghost" style="margin:0" onclick="notesArea('${area.id}',${k})">Revision notes</button><button class="next" style="margin:0" onclick="startDrill(['${area.id}'])">Drill this area</button></div></div>`:""}
+   ${list.length?list.map(card).join(""):`<div class="card"><p style="color:var(--mute)">Nothing here.</p></div>`}
+   <button class="next ghost" onclick="mockRecap(${k})">Back to recap</button>`;
+}
+
+/* ---------- revision notes ---------- */
+function notesBody(id){const n=NOTES[id];return n?n.h:""}
+function mockNotes(k){
+  window.scrollTo(0,0);const m=mockStats(S.mockHist[k]),weak=weakAreas(m);
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="mockRecap(${k})">&larr;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+   <p style="color:var(--mute);font-size:13px;margin-bottom:12px">Your weakest areas from this mock, biggest mark losses first. Each has the core notes, then the exact points you got wrong.</p>
+   ${weak.map(x=>notesCard(x.a.id,m.items.filter(y=>y.area===x.a.id&&!y.ok),x)).join("")}
+   <div class="row"><button class="next ghost" onclick="mockRecap(${k})">Back to recap</button><button class="next" onclick="flashStart('mock',${k})">Flashcards</button></div>`;
+}
+function notesCard(id,misses,stat){
+  const a=AREAS.find(z=>z.id===id),n=NOTES[id];
+  return `<div class="card cs" id="nt-${id}"><div class="lbl">${a.p===2?"Part 2":"Part 1"} &middot; ${Math.round(100*a.n/120)}% of the exam${stat?` &middot; you scored ${stat.ok}/${stat.n}`:""}</div><h3>${esc(a.name)}</h3>
+   ${n?n.h:""}
+   ${misses&&misses.length?`<div class="mynotes"><div class="lbl" style="color:var(--red)">What you got wrong (${misses.length})</div><ul>${misses.map(x=>`<li><span style="color:var(--mute)">${esc(x.q.q.replace(/^TRUE or FALSE:\s*/,""))}</span><br><b style="color:var(--green)">&rarr; ${esc(x.q.o[x.q.a])}</b>. ${esc(x.q.e)}</li>`).join("")}</ul></div>`:""}
+   <div class="row" style="margin-top:10px"><button class="next ghost" style="margin:0" onclick="flashStart('area',0,'${id}')">Flashcards</button><button class="next" style="margin:0" onclick="startDrill(['${id}'])">Drill 15 Qs</button></div></div>`}
+function notesMenu(){
+  stopTimer();R=null;window.scrollTo(0,0);
+  const last=S.mockHist.length?mockStats(S.mockHist[S.mockHist.length-1]):null;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="home()">&#10005;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+   <div class="chips">${AREAS.map(a=>{const st=last&&last.areas.find(x=>x.a.id===a.id);return `<button class="chip" style="${st&&st.n&&st.pc<70?"border-color:var(--red)":""}" onclick="document.getElementById('nt-${a.id}').scrollIntoView({behavior:'smooth'})">${a.name.split(/[ ,&]/)[0]}${a.p===2?" (P2)":""}</button>`}).join("")}</div>
+   ${AREAS.map(a=>notesCard(a.id,null,last&&last.areas.find(x=>x.a.id===a.id&&x.n))).join("")}
+   <button class="next" onclick="home()">Back to the floor</button>`;
+}
+function notesArea(id,k){window.scrollTo(0,0);const m=k!=null&&S.mockHist[k]?mockStats(S.mockHist[k]):null;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="${k!=null?`mockRecap(${k})`:"home()"}">&larr;</button><div class="brand" style="font-size:20px">Revision<em>Notes</em></div><div></div></div>
+  ${notesCard(id,m?m.items.filter(y=>y.area===id&&!y.ok):null,m&&m.areas.find(x=>x.a.id===id))}
+  <button class="next ghost" onclick="${k!=null?`mockRecap(${k})`:"home()"}">Back</button>`}
+
+/* ---------- targeted drill ---------- */
+function startDrill(ids){
+  const as=AREAS.filter(a=>ids.includes(a.id));if(!as.length)return home();
+  const chs=[...new Set(as.flatMap(a=>a.ch))],used=new Set();
+  // missed questions in these chapters first, then the usual unseen/oldest order
+  const due=rankPool(Q.filter(q=>chs.includes(q.c)&&S.srs[q.id])).slice(0,6);due.forEach(q=>used.add(q.id));
+  const items=shuffle(due.concat(pickFor(chs,15-due.length,used))).map(q=>makeItem(q,.2));
+  R={mode:"drill",areas:ids,label:as.map(a=>a.name.split(/[ ,&]/)[0]).join(" + "),items,i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
+  play();
+}
+
+/* ---------- flashcards ---------- */
+function flashMenu(){
+  const last=S.mockHist.length?mockStats(S.mockHist[S.mockHist.length-1]):null,due=dueIds().length;
+  modal(`<div class="lbl">Flashcards</div><h2>Pick a deck</h2><p>Tap a card to flip it, then say whether you knew it. Question cards you don't know go into Damage Control.</p>
+  ${last?`<button class="next" onclick="closeModal();flashStart('mock',${S.mockHist.length-1})">Last mock: ${last.items.filter(x=>!x.ok).length} misses</button>`:""}
+  ${due?`<button class="next ${last?"ghost":""}" onclick="closeModal();flashStart('due')">Due reviews: ${due}</button>`:""}
+  <div style="max-height:46vh;overflow:auto;margin-top:8px">${AREAS.map(a=>{const st=last&&last.areas.find(x=>x.a.id===a.id);
+    return `<button class="toggle" onclick="closeModal();flashStart('area',0,'${a.id}')"><span>${a.p===2?"<b>P2</b> ":""}${esc(a.name)}</span><span style="font:500 12px var(--mono);color:${st&&st.n?(st.pc>=70?"var(--green)":"var(--red)"):"var(--mute)"}">${st&&st.n?st.pc+"%":""} &rsaquo;</span></button>`}).join("")}</div>
+  <button class="next ghost" onclick="closeModal()">Back</button>`)}
+function qCard(q){return{id:q.id,f:`<div class="fq">${esc(q.q.replace(/^TRUE or FALSE:\s*/,""))}</div>${q.l?`<div class="posbox" style="font-size:12px">${q.l.filter(Boolean).map(esc).join("<br>")}</div>`:""}${q.tf?"":`<div class="fo">${shuffle(q.o).map(o=>"&middot; "+esc(o)).join("<br>")}</div>`}`,
+  b:`<div class="fa">${esc(q.o[q.a])}</div><div class="fe">${esc(q.e)}</div>${workHTML(q)}`}}
+function noteCards(id){return (NOTES[id]&&NOTES[id].c||[]).map(([f,b])=>({id:null,f:`<div class="fq">${f}</div>`,b:`<div class="fa">${b}</div>`}))}
+function flashStart(src,k,areaId){
+  let cards=[],label="";
+  if(src==="mock"){const m=mockStats(S.mockHist[k]),weak=weakAreas(m).slice(0,3);
+    cards=m.items.filter(x=>!x.ok).map(x=>qCard(x.q)).concat(...weak.map(x=>noteCards(x.a.id)));label="Mock misses + weak-area facts"}
+  if(src==="area"){const a=AREAS.find(z=>z.id===areaId);
+    const qs=rankPool(Q.filter(q=>a.ch.includes(q.c)&&S.srs[q.id])).slice(0,10);
+    cards=noteCards(areaId).concat(qs.map(qCard));label=a.name}
+  if(src==="due"){cards=dueIds().slice(0,30).map(id=>qCard(byId[id]));label="Due reviews"}
+  if(!cards.length)return modal(`<h2>No cards</h2><p>Nothing in this deck yet.</p><button class="next" onclick="closeModal()">OK</button>`);
+  R={mode:"flash",cards:shuffle(cards),i:0,flip:false,knew:0,again:[],label,src,k};playFlash();
+}
+function playFlash(){
+  window.scrollTo(0,0);const c=R.cards[R.i],n=R.cards.length;R.flip=false;
+  $("#app").innerHTML=`<div class="hud"><button class="quit" onclick="quitAsk()">&#10005;</button><div class="prog"><i style="width:${100*R.i/n}%"></i></div><div class="hudr">${R.i+1}/${n}</div></div>
+  <div class="chips"><span class="chip">FLASHCARDS</span><span class="chip">${esc(R.label)}</span><span class="chip">Knew <b>${R.knew}</b></span></div>
+  <button class="fcard" id="fcard" onclick="flipFlash()"><div class="lbl">${c.id?"Question":"Key fact"} &middot; tap to flip</div><div id="fside">${c.f}</div></button>
+  <div id="fbtn"></div>`;
+}
+function flipFlash(){if(R.flip)return;R.flip=true;const c=R.cards[R.i];
+  $("#fcard").classList.add("back");$("#fside").innerHTML=c.f+`<div class="fdiv"></div>`+c.b;
+  $("#fbtn").innerHTML=`<div class="row"><button class="next" style="background:var(--red);color:#fff" onclick="rateFlash(0)">Didn't know</button><button class="next" style="background:var(--green)" onclick="rateFlash(1)">Knew it</button></div>`;
+  setTimeout(()=>{const b=$("#fbtn");b&&b.scrollIntoView({behavior:"smooth",block:"nearest"})},50)}
+function rateFlash(ok){const c=R.cards[R.i];
+  if(c.id){if(ok)srsHit(c.id);else srsMiss(c.id);S.last[c.id]=Date.now();save()}
+  if(ok)R.knew++;else R.again.push(c);
+  R.i++;if(R.i<R.cards.length)return playFlash();
+  window.scrollTo(0,0);const ag=R.again.length;
+  $("#app").innerHTML=`<div class="res-head"><div class="lbl">Flashcards &middot; ${esc(R.label)}</div><div class="big">${R.knew}/${R.cards.length}</div>
+   <div class="verdict ${ag?"":"pos"}" style="font-size:18px;margin-top:8px">${ag?ag+" to go again":"Deck cleared"}</div></div>
+   <div class="row"><button class="next ghost" onclick="home()">Floor</button>${ag?`<button class="next" onclick="R={mode:'flash',cards:shuffle(R.again),i:0,knew:0,again:[],label:R.label};playFlash()">Go again on ${ag}</button>`:""}</div>`;
+}
+
+/* ---------- revision notes + key-fact flashcards, one block per exam area ----------
+   h = notes (HTML), c = flashcards [front, back]. Figures follow the printed textbook. */
+const NOTES={
+theory:{h:`<ul>
+ <li><b>Futures vs forwards:</b> futures are standardised, exchange-traded, cleared and marked to market daily. Forwards are private deals between two known parties, with no clearinghouse and settlement at the end.</li>
+ <li><b>The clearinghouse</b> is the counterparty to every trade and guarantees it. It matches trades, collects margin, oversees delivery and reports volume and open interest. It does <b>not</b> set prices.</li>
+ <li><b>Hedgers</b> transfer price risk. <b>Speculators</b> accept that risk hoping for a profit, and they add liquidity.</li>
+ <li><b>Locals</b> trade their own account: scalpers (minutes), day traders (out by the close), position traders (days or weeks).</li>
+ <li><b>Open interest</b> = contracts not yet offset or delivered. A new buyer and a new seller add 1. Two traders closing out remove 1. An old holder passing the position to a new one leaves it unchanged.</li>
+ <li><b>Technical reading:</b> price up + volume up + OI up = strong (bullish). Price up + OI down = short covering, so weak.</li>
+ <li><b>Fundamental analysis</b> = supply and demand (crop reports, stocks, weather). <b>Technical</b> = price, volume and OI charts.</li>
+ <li><b>Normal (contango) market:</b> deferred months above nearby, reflecting carrying charges. <b>Inverted (backwardation):</b> nearby above deferred, usually because of a shortage.</li>
+ <li><b>Convergence:</b> cash and futures meet at delivery, so the basis heads towards zero.</li></ul>`,
+ c:[["Who sets futures prices?","Supply and demand in open, competitive trading. Not the clearinghouse."],
+ ["New buyer + new seller: what happens to open interest?","It rises by 1."],
+ ["Both traders are offsetting existing positions: open interest?","It falls by 1."],
+ ["Price rising, open interest falling: what does it suggest?","Short covering, which is a weak rally."],
+ ["Contango (normal market)","Deferred months trade above the nearby month, reflecting carrying charges."],
+ ["Backwardation (inverted market)","The nearby month trades above deferred months, signalling a shortage."],
+ ["Scalper vs position trader","Scalpers hold for minutes and supply liquidity. Position traders hold for days or weeks."],
+ ["What happens to the basis as delivery approaches?","Convergence: cash and futures come together, so the basis moves towards zero."]]},
+margin:{h:`<ul>
+ <li><b>Initial margin</b> is a performance bond (good-faith deposit), not a down payment. <b>Maintenance</b> is the floor, about 75% of initial.</li>
+ <li><b>Margin call:</b> if equity drops below maintenance, you must deposit enough to get back to <b>initial</b> margin, not maintenance.</li>
+ <li><b>Variation margin</b> is called by the clearinghouse from clearing members. It's due within <b>1 hour</b>, in cash.</li>
+ <li><b>Mark to market:</b> every account is credited or debited daily at the settlement price.</li>
+ <li><b>Hedgers</b> get lower margins than speculators. <b>Spreads</b> get lower margins than outright positions.</li>
+ <li><b>Price limits</b> are measured from the previous day's settlement. They freeze the price, not trading. CBOT: after 3 straight limit days the limit goes to <b>150%</b>.</li>
+ <li><b>Delivery:</b> the short starts it. First notice day is the first day a delivery notice can be issued. A long who gets a notice can <b>re-tender</b> it by selling futures.</li>
+ <li><b>Option premium:</b> the buyer pays the full premium up front with no margin. The <b>writer</b> posts margin. Exercising a call gives the holder a long future, and a put gives a short future.</li></ul>
+ <div class="nt-k"><b>Margin call method:</b> work out equity (deposit \u00b1 running P&amp;L). If it's below maintenance, the call = initial \u2212 equity.</div>`,
+ c:[["A margin call brings the account back to\u2026","INITIAL margin, not maintenance."],
+ ["Maintenance margin is roughly\u2026","75% of initial margin."],
+ ["Variation margin: deadline and form","Within 1 hour, in cash."],
+ ["What are daily price limits measured from?","The previous day's settlement price."],
+ ["Does hitting the limit stop trading?","No. Trading continues at or within the limit."],
+ ["CBOT limit after 3 straight limit days","It rises to 150% of the old limit, and minimum margins rise too."],
+ ["Who starts the delivery process?","The short, by issuing a delivery notice."],
+ ["Re-tendering","A long who receives a delivery notice sells futures and passes the notice on to another long."],
+ ["Who posts margin on an option?","The writer (seller). The buyer just pays the premium."]]},
+orders:{h:`<div class="cs-pic"><div>SELL LIMIT &nbsp;/&nbsp; BUY STOP</div><div class="cs-mkt">\u2500\u2500 market price \u2500\u2500</div><div>BUY LIMIT &nbsp;/&nbsp; SELL STOP</div></div>
+ <ul><li><b>Limit</b> = that price or better. <b>Stop</b> = becomes a market order when hit (protects a position or catches a breakout). <b>Stop limit</b> = becomes a limit order, so it may not fill. <b>MIT</b> = placed where a limit would go, then becomes a market order once touched.</li>
+ <li><b>FOK</b> = fill the whole order now or cancel it. <b>OCO</b> = one cancels the other. <b>Market on close</b> = filled in the closing range.</li>
+ <li><b>New accounts:</b> the branch manager approves. Get the true name and address, approximate age, occupation, estimated income and net worth, and previous futures experience. Education is <b>not</b> required.</li>
+ <li><b>Know Your Customer is NFA Rule 2-30.</b> Update active customers' details at least <b>annually</b>. The risk disclosure must be given and acknowledged <b>before</b> the account opens.</li>
+ <li><b>Discretionary accounts</b> need written power of attorney. The AP needs <b>2 years</b> of experience, with a <b>$5,000</b> minimum. Each trade is still reported to the customer.</li>
+ <li><b>Price analysis:</b> volume and open interest confirm trends (see Futures trading theory).</li></ul>`,
+ c:[["Which orders sit BELOW the market?","Buy limit and sell stop."],["Which orders sit ABOVE the market?","Sell limit and buy stop."],
+ ["What does a stop order become once it's hit?","A market order."],["What does a stop-limit order become once it's hit?","A limit order, so it may not fill."],
+ ["MIT order","It sits where a limit would. Once touched it becomes a market order."],["Which NFA rule is Know Your Customer?","Rule 2-30."],
+ ["Who must approve a new futures account?","The branch manager."],["Is educational background required on a new account?","No."],
+ ["Discretionary account requirements","Written power of attorney, an AP with 2 years' experience and a $5,000 minimum."]]},
+hedge:{h:`<div class="cs-eq">Basis = Cash \u2212 Futures</div>
+ <ul><li><b>Short hedge</b> (sell futures): holders of inventory, farmers, anyone worried about prices <b>falling</b>. It gains if the basis <b>strengthens</b> (the number goes up).</li>
+ <li><b>Long hedge</b> (buy futures): processors, importers, anyone who must buy later and is worried about prices <b>rising</b>. It gains if the basis <b>weakens</b>.</li>
+ <li>"Under" = cash below futures (negative basis). "12 under" means \u22120.12.</li>
+ <li><b>A perfect hedge</b> needs an unchanged basis. Hedging swaps <b>price risk for basis risk</b>.</li></ul>
+ <div class="nt-k"><b>Net price, every time:</b><br>1. Futures P&amp;L = sell \u2212 buy.<br>2. A seller (short hedger) receives cash price + futures gain (or \u2212 loss).<br>3. A buyer (long hedger) pays cash price \u2212 futures gain (or + loss).<br>4. Check: short-hedge net = original futures + closing basis. Long-hedge net = original futures + closing basis too (the same formula).</div>`,
+ c:[["Basis formula","Cash \u2212 Futures."],["A short hedger profits when the basis\u2026","Strengthens (the number goes up). Short likes Strong."],
+ ["A long hedger profits when the basis\u2026","Weakens (the number goes down)."],["Basis goes from \u221220 to \u22128","Strengthened by 12."],
+ ["Basis goes from +5 to \u22123","Weakened by 8."],["A farmer with a growing crop hedges by\u2026","Selling futures (short hedge)."],
+ ["A miller who must buy wheat later hedges by\u2026","Buying futures (long hedge)."],["Hedging swaps price risk for\u2026","Basis risk."],
+ ["Net price formula (either hedge)","Initial futures price + closing basis."]]},
+fin:{h:`<ul><li><b>Interest rates and bond prices move in opposite directions.</b> Always hedge the <b>price</b>. Worried rates will rise? Bond prices will fall, so <b>sell</b> futures. Rates will fall? <b>Buy</b> futures.</li>
+ <li><b>T-bonds:</b> $100,000 face. Quoted in points and 32nds: 1/32 = $31.25 and 1 point = $1,000. Options on T-bonds are in 64ths, $15.625 each.</li>
+ <li><b>T-bills / short rates:</b> 1 basis point = $25 on a 3-month $1,000,000 contract. Price = 100 \u2212 yield.</li>
+ <li><b>Currencies:</b> paying in a foreign currency later? <b>Buy</b> its futures. Receiving it? <b>Sell</b>.</li>
+ <li><b>Stock index:</b> portfolio managers short index futures to protect against a fall. Contracts = portfolio value \u00d7 beta \u00f7 (index \u00d7 multiplier). Stock index futures are cash settled.</li></ul>
+ <div class="nt-k"><b>Stock index hedge:</b> $5m portfolio, beta 1.2, S&amp;P at 5,000 \u00d7 $250 = $1.25m per contract. 5m \u00d7 1.2 \u00f7 1.25m = <b>4.8, so 5 contracts</b>.</div>`,
+ c:[["Rates expected to RISE: bond hedge?","Sell bond futures. Prices fall when rates rise."],["T-bond futures: value of 1/32","$31.25."],
+ ["T-bond option: value of 1/64","$15.625."],["3-month T-bill: value of 1 basis point","$25."],["T-bond futures: value of 1 full point","$1,000."],
+ ["Importer paying euros in 3 months","Buy euro futures."],["How are stock index futures settled?","In cash."],
+ ["Stock index hedge: number of contracts","Portfolio value \u00d7 beta \u00f7 (index level \u00d7 multiplier)."]]},
+spread:{h:`<ul><li>A spread is long one contract and short a related one. You profit from the <b>change in the price difference</b>.</li>
+ <li><b>Bull spread</b> = buy the nearby, sell the deferred. <b>Bear spread</b> = sell the nearby, buy the deferred.</li>
+ <li>Intramarket (same commodity, different months), intermarket (e.g. wheat vs corn), intercommodity / processing (crush: soybeans vs meal and oil; crack: crude vs products).</li>
+ <li><b>Full carry</b> limits how far deferred can sit above nearby in a normal market. There's no limit in an inverted market.</li>
+ <li>Spreads have lower margins but are <b>not</b> necessarily less risky, and they <b>are</b> subject to position limits.</li></ul>
+ <div class="nt-k"><b>Don't trust the words, do the sums:</b> P&amp;L on each leg (sell \u2212 buy), add them, \u00d7 contract size \u00d7 number of contracts.</div>`,
+ c:[["Bull spread","Long the nearby month, short the deferred."],["Bear spread","Short the nearby month, long the deferred."],
+ ["Are spreads subject to position limits?","Yes."],["Crush spread","Soybeans against soybean meal and soybean oil."],
+ ["What limits a normal-market spread?","Full carrying charges."],["Spread P&L method","Each leg sell \u2212 buy, add the legs, \u00d7 size \u00d7 contracts."]]},
+spec:{h:`<ul><li><b>Leverage:</b> a small margin controls a large contract value, so small price moves make big percentage gains or losses on margin.</li>
+ <li><b>Return on margin</b> = P&amp;L \u00f7 margin deposited.</li>
+ <li><b>Contract sizes:</b> grains 5,000 bu (1\u00a2 = $50); crude 1,000 bbl ($1 = $1,000); gold 100 oz; silver 5,000 oz; live cattle 40,000 lb; feeder cattle 50,000 lb; coffee 37,500 lb; sugar 112,000 lb.</li>
+ <li><b>Pyramiding:</b> adding to a winning position using unrealised profits. Do it with smaller additions each time.</li>
+ <li><b>Stops</b> protect speculative positions: a sell stop below a long, a buy stop above a short.</li>
+ <li>Speculators provide <b>liquidity</b> and take on the risk hedgers want to shed.</li></ul>
+ <div class="nt-k"><b>P&amp;L method:</b> (exit \u2212 entry) \u00d7 contract size \u00d7 contracts, and flip the sign for a short. Then subtract round-turn commissions.</div>`,
+ c:[["Grain contract: size and value of 1\u00a2","5,000 bu, $50."],["Crude oil: size and value of $1","1,000 bbl, $1,000."],["Gold contract size","100 troy oz."],
+ ["Silver contract size","5,000 troy oz."],["Live cattle vs feeder cattle","40,000 lb vs 50,000 lb."],["Return on margin","Profit or loss \u00f7 margin deposited."],
+ ["A long speculator protects with a\u2026","Sell stop below the market."],["Round-turn commission","Both sides: $2 per side = $4 round turn."]]},
+opt:{h:`<table class="cs-t"><tr><th></th><th>If exercised you get\u2026</th><th>View</th></tr>
+  <tr><td>Buy call</td><td class="pos">Long future</td><td>Bullish</td></tr><tr><td>Sell put</td><td class="pos">Long future</td><td>Bullish</td></tr>
+  <tr><td>Buy put</td><td class="neg">Short future</td><td>Bearish</td></tr><tr><td>Sell call</td><td class="neg">Short future</td><td>Bearish</td></tr></table>
+ <ul><li><b>Intrinsic value:</b> call = futures \u2212 strike; put = strike \u2212 futures (zero if negative). <b>Time value</b> = premium \u2212 intrinsic.</li>
+ <li><b>Breakeven:</b> call = strike + premium; put = strike \u2212 premium.</li>
+ <li><b>Buyers:</b> risk is limited to the premium. <b>Writers:</b> profit is limited to the premium, and risk is large (unlimited for an uncovered call).</li>
+ <li><b>Hedging with options:</b> a short hedger buys puts (sets a floor price = strike \u2212 premium + basis). A long hedger buys calls (sets a ceiling).</li>
+ <li><b>Straddle</b> = a call and a put at the same strike and expiry. Long straddle = expecting volatility. Short straddle = expecting a quiet market.</li>
+ <li><b>Delta</b> = change in premium \u00f7 change in futures price. At the money \u2248 0.5.</li></ul>`,
+ c:[["Call breakeven","Strike + premium."],["Put breakeven","Strike \u2212 premium."],["Time value","Premium \u2212 intrinsic value."],
+ ["Call intrinsic value","Futures \u2212 strike, or zero if that's negative."],["Put intrinsic value","Strike \u2212 futures, or zero if that's negative."],
+ ["Selling a put, if exercised, leaves you\u2026","Long a future."],["Max loss for an option buyer","The premium paid."],
+ ["Long straddle","Buy a call and a put at the same strike: a bet on volatility."],["At-the-money delta","About 0.5."],
+ ["A short hedger using options buys\u2026","Puts."]]},
+rules:{h:`<ul><li><b>Who's who:</b> the CFTC (federal agency, 1974) is the ultimate regulator. The NFA (1982) is the industry's self-regulatory organisation. Exchanges are SROs too.</li>
+ <li><b>Capital:</b> FCM $1,000,000; independent IB $45,000. A guaranteed IB has no capital requirement because its FCM is responsible. Only <b>one</b> guarantee agreement at a time. Undercapitalised FCM: notify the CFTC + NFA. IB: notify the NFA and an independent IB must <b>cease operations</b>.</li>
+ <li><b>IBs</b> can't hold customer funds. Cheques are made payable to the FCM. Accounts are carried <b>fully disclosed</b>.</li>
+ <li><b>APs</b> are always individuals, aged 21+. Registering with a second sponsor needs Form 3-R, and both sponsors are jointly responsible for supervision.</li>
+ <li><b>Records:</b> 5 years, the first 2 readily accessible. Branch offices audited <b>annually</b>.</li>
+ <li><b>CPOs:</b> exempt if \u2264 $400,000 <b>and</b> \u2264 15 participants. Disclosure Document valid 12 months; performance data \u2264 3 months old; Risk Disclosure Statement alone on page 1; 5 years of principals' background; breakeven table excludes <b>incentive fees</b>. Monthly statements if the pool is over $500,000; annual report within 90 days. Funds are received in the <b>pool's</b> name.</li>
+ <li><b>CTAs:</b> exempt if \u2264 15 people in 12 months and not holding out to the public. Can't hold customer funds unless also an FCM.</li>
+ <li><b>Rule 2-29 (promotional material):</b> written supervisor approval <b>before first use</b>; keep 5 years from last use; radio/TV ads with specific recommendations go to the NFA <b>10 days</b> before use; no safe harbor. Hypothetical results with &lt; 12 months of real trading: the disclaimer goes <b>immediately before</b> them.</li>
+ <li><b>Discipline:</b> answer an NFA complaint in <b>30 days</b>. Hearing = 3-person Hearing Committee panel; then the Appeals Committee (final). Fines up to <b>$500,000 per violation</b>. An MRA is a summary action with no prior hearing.</li>
+ <li><b>Arbitration:</b> file within <b>2 years</b>. Mandatory for members, voluntary for customers. Up to $150k = 1 arbitrator (3 on request if over $50k, within 30 days); over $150k = 3. An unpaid award means automatic suspension.</li>
+ <li><b>Other rules:</b> 2-30 KYC; 2-38 business continuity; AML programme (policies, compliance officer, training, independent audit, customer due diligence). Bona fide hedgers are exempt from position limits; spreads aren't. Once at reportable levels, <b>everyone</b> files daily reports.</li></ul>`,
+ c:[["FCM minimum adjusted net capital","$1,000,000."],["Independent IB minimum capital","$45,000."],["Guarantee agreements a guaranteed IB may have","One at a time."],
+ ["Records retention","5 years, the first 2 readily accessible."],["CPO exemption","\u2264 $400,000 total contributions AND \u2264 15 participants."],
+ ["CTA exemption","Advised \u2264 15 people in the last 12 months and doesn't hold itself out to the public."],
+ ["Disclosure Document: how long usable?","12 months from its date."],["Performance data in a Disclosure Document","No more than 3 months old."],
+ ["Which fee is left out of the breakeven table?","Incentive fees."],["Pool size that triggers monthly statements","Net assets over $500,000."],
+ ["CPO annual report deadline","Within 90 calendar days of fiscal year-end."],["Rule 2-29","Promotional material: written supervisor approval before first use; kept 5 years."],
+ ["Radio/TV ad with trade recommendations","Submitted to the NFA at least 10 days before first use."],["Answer an NFA complaint within\u2026","30 days."],
+ ["Maximum NFA fine","$500,000 per violation."],["Arbitration filing deadline","Within 2 years."],["Arbitrators for a $200,000 claim","3."],
+ ["Arbitration: members vs customers","Mandatory for members, voluntary for customers."],["Who is exempt from position limits?","Bona fide hedgers (spreads are NOT)."],
+ ["Rule 2-30 and Rule 2-38","2-30 Know Your Customer; 2-38 business continuity and disaster recovery."],
+ ["Member Responsibility Action (MRA)","A summary action taken without a prior hearing when immediate action is needed."]]}
+};
+
 
 /* ---------- exam countdown + daily drill ---------- */
 function todayStr(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -1462,15 +2006,13 @@ function countdownCard(){
    <div class="lbl" style="margin-top:10px">Readiness: ${mockStreak()}/2 full mocks passed in a row</div></div>`;
 }
 function startPro(){
-  const pool=Q.filter(q=>q.d===3),used=new Set();
-  const w=q=>{const s=S.seen[q.id];if(!s)return 2+Math.random();return (s.w>s.r?1.5:0)+Math.random()};
-  const items=pool.map(q=>[w(q),q]).sort((a,b)=>b[0]-a[0]).slice(0,12).map(x=>makeItem(x[1],0));
+  const items=rankPool(Q.filter(q=>q.d===3)).slice(0,12).map(q=>makeItem(q,0));
   R={mode:"pro",items:shuffle(items),i:0,right:0,wrong:0,bal:0,streak:0,lives:99,misses:[],cleared:0};
   play();
 }
 function startDaily(){
   const used=new Set(),items=[];
-  const due=shuffle(Object.keys(S.missed).filter(id=>byId[id])).slice(0,4);
+  const due=shuffle(dueIds()).slice(0,4);
   due.forEach(id=>{used.add(id);items.push(makeItem(byId[id],.2))});
   const chs=DESKS.filter(d=>unlocked(d.c)).map(d=>d.c);
   pickFor(chs,10-items.length,used).forEach(q=>items.push(makeItem(q,.25)));
@@ -1626,6 +2168,13 @@ function matchIntro(){modal(`<div class="lbl">Memory game</div><h2>Contract Matc
 /* ---------- keyboard ---------- */
 document.addEventListener("keydown",e=>{
   if(!R||$("#modal").classList.contains("show"))return;
+  if(R.mode==="flash"){if(e.key===" "||e.key==="Enter"){e.preventDefault();R.flip?rateFlash(1):flipFlash()}else if(R.flip&&/^[1-2]$/.test(e.key))rateFlash(e.key==="2"?1:0);return}
+  if(R.mode==="mock"){if(R.answered===-1)return;const it=R.items[R.i];let i=-1;
+    if(it.tf){if(/^[t1]$/i.test(e.key))i=0;if(/^[f2]$/i.test(e.key))i=1}else if(/^[1-4]$/.test(e.key))i=+e.key-1;else if(/^[a-d]$/i.test(e.key))i="abcd".indexOf(e.key.toLowerCase());
+    if(i>=0&&i<it.opts.length)return pickMock(i);
+    if(e.key==="ArrowRight"||e.key==="Enter"){e.preventDefault();R.i<R.items.length-1?mockGo(R.i+1):mockReview()}
+    if(e.key==="ArrowLeft")mockGo(R.i-1);
+    if(/^[gG]$/.test(e.key))toggleFlag();return}
   if(!R.items)return;const it=R.items[R.i];if(!it)return;
   if(R.answered==null){
     let i=-1;

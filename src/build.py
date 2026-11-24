@@ -3,8 +3,8 @@ import re, os
 here=os.path.dirname(os.path.abspath(__file__))
 t=open(os.path.join(here,'template.html'),encoding='utf-8').read()
 qd=os.path.join(here,'questions')
-qs=''.join(open(os.path.join(qd,f'ch{i}.js'),encoding='utf-8').read() for i in range(1,11))+open(os.path.join(qd,'style.js'),encoding='utf-8').read()+open(os.path.join(qd,'official.js'),encoding='utf-8').read()+open(os.path.join(qd,'hard.js'),encoding='utf-8').read()
-s=t.replace('/*QUESTIONS*/',qs)
+qs=''.join(open(os.path.join(qd,f'ch{i}.js'),encoding='utf-8').read() for i in range(1,11))+open(os.path.join(qd,'style.js'),encoding='utf-8').read()+open(os.path.join(qd,'official.js'),encoding='utf-8').read()+open(os.path.join(qd,'hard.js'),encoding='utf-8').read()+(open(os.path.join(qd,'rules2.js'),encoding='utf-8').read() if os.path.exists(os.path.join(qd,'rules2.js')) else '')+(open(os.path.join(qd,'worked.js'),encoding='utf-8').read() if os.path.exists(os.path.join(qd,'worked.js')) else '')
+s=t.replace('/*QUESTIONS*/',qs).replace('/*NOTES*/',open(os.path.join(here,'notes.js'),encoding='utf-8').read())
 parts=re.split(r'(<script>|</script>|<style>|</style>)',s);out=[];mode='html'
 for p in parts:
     if p in('<script>','<style>'):mode='js' if p=='<script>' else 'css';out.append(p);continue

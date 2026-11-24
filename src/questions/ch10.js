@@ -16,7 +16,7 @@ Q.push(
 {c:10,q:"Who must post margin in options on futures?",o:["The option seller","The option buyer","Both the buyer and the seller","Neither the buyer nor the seller"],a:0,e:"Sellers carry obligation risk and must post margin; buyers pay the premium."},
 {c:10,q:"A call has intrinsic value when the futures price is…",o:["Above the strike","Below the strike","Equal to the strike","Zero"],a:0,e:"Call in the money: market above strike. Put in the money: market below strike."},
 {c:10,q:"Time value equals…",o:["Premium − intrinsic value","Intrinsic − premium","Strike − market","Premium + intrinsic"],a:0,e:"Time value is any premium exceeding intrinsic value."},
-{c:10,q:"Nov 6.40 corn put, premium 14¾¢, futures at $6.26¾. Time value?",o:["1¢","13¾¢","14¾¢","0"],a:0,e:"Intrinsic 6.40 − 6.2675 = 13¾¢. Time value 14¾ − 13¾ = 1¢."},
+{c:10,q:"Nov 6.40 corn put, premium 14¾¢, futures at $6.26¼. Time value?",o:["1¢","13¾¢","14¾¢","0"],a:0,e:"Put intrinsic = strike − futures = 6.40 − 6.26¼ = 13¾¢. Time value = premium − intrinsic = 14¾ − 13¾ = 1¢."},
 {c:10,q:"Dec 112 T-note CALL with futures at 114 is…",o:["In the money","At the money","Out of the money","Expired"],a:0,e:"Call: market above strike = in the money. (A 112 put at 114 would be out of the money.)"},
 {c:10,q:"Dec 112 T-note PUT with futures at 110 is…",o:["In the money","Out of the money","At the money","Worthless"],a:0,e:"Put: market below strike = in the money."},
 {c:10,q:"A futures move of 0.50 moves the option 0.25. Delta?",o:["50%","25%","200%","0%"],a:0,e:"0.25 ÷ 0.50 = 50% delta."},
