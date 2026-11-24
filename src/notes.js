@@ -65,12 +65,12 @@ fin:{h:`<ul><li><b>Interest rates and bond prices move in opposite directions.</
  <li><b>T-bonds:</b> $100,000 face. Quoted in points and 32nds: 1/32 = $31.25 and 1 point = $1,000. Options on T-bonds are in 64ths, $15.625 each.</li>
  <li><b>T-bills / short rates:</b> 1 basis point = $25 on a 3-month $1,000,000 contract. Price = 100 − yield.</li>
  <li><b>Currencies:</b> paying in a foreign currency later? <b>Buy</b> its futures. Receiving it? <b>Sell</b>.</li>
- <li><b>Stock index:</b> portfolio managers short index futures to protect against a fall. Contracts = portfolio value × beta ÷ (index × multiplier). Stock index futures are cash settled.</li></ul>
- <div class="nt-k"><b>Stock index hedge:</b> $5m portfolio, beta 1.2, S&amp;P at 5,000 × $250 = $1.25m per contract. 5m × 1.2 ÷ 1.25m = <b>4.8, so 5 contracts</b>.</div>`,
+ <li><b>Stock index:</b> portfolio managers short index futures to protect against a fall. Contracts = portfolio value ÷ (index × multiplier). Stock index futures are cash settled. The closer a stock's price tracks the index, the better the hedge.</li></ul>
+ <div class="nt-k"><b>Stock index hedge:</b> $6m portfolio, S&amp;P at 4,800 × $250 = $1.2m per contract. 6m ÷ 1.2m = <b>5 contracts</b> (sell). Watch the multiplier: an E-mini is $50.</div>`,
  c:[["Rates expected to RISE: bond hedge?","Sell bond futures. Prices fall when rates rise."],["T-bond futures: value of 1/32","$31.25."],
  ["T-bond option: value of 1/64","$15.625."],["3-month T-bill: value of 1 basis point","$25."],["T-bond futures: value of 1 full point","$1,000."],
  ["Importer paying euros in 3 months","Buy euro futures."],["How are stock index futures settled?","In cash."],
- ["Stock index hedge: number of contracts","Portfolio value × beta ÷ (index level × multiplier)."]]},
+ ["Stock index hedge: number of contracts","Portfolio value ÷ (index level × multiplier)."]]},
 spread:{h:`<ul><li>A spread is long one contract and short a related one. You profit from the <b>change in the price difference</b>.</li>
  <li><b>Bull spread</b> = buy the nearby, sell the deferred. <b>Bear spread</b> = sell the nearby, buy the deferred.</li>
  <li>Intramarket (same commodity, different months), intermarket (e.g. wheat vs corn), intercommodity / processing (crush: soybeans vs meal and oil; crack: crude vs products).</li>
