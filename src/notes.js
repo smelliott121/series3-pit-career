@@ -73,7 +73,7 @@ fin:{h:`<ul><li><b>Interest rates and bond prices move in opposite directions.</
  ["Stock index hedge: number of contracts","Portfolio value ÷ (index level × multiplier)."]]},
 spread:{h:`<ul><li>A spread is long one contract and short a related one. You profit from the <b>change in the price difference</b>.</li>
  <li><b>Bull spread</b> = buy the nearby, sell the deferred. <b>Bear spread</b> = sell the nearby, buy the deferred.</li>
- <li>Intramarket (same commodity, different months), intermarket (e.g. wheat vs corn), intercommodity / processing (crush: soybeans vs meal and oil; crack: crude vs products).</li>
+ <li>Intramarket (same commodity, different months), intermarket (e.g. wheat vs corn), intercommodity / processing (crush: soybeans vs meal and oil).</li>
  <li><b>Full carry</b> limits how far deferred can sit above nearby in a normal market. There's no limit in an inverted market.</li>
  <li>Spreads have lower margins but are <b>not</b> necessarily less risky, and they <b>are</b> subject to position limits.</li></ul>
  <div class="nt-k"><b>Don't trust the words, do the sums:</b> P&amp;L on each leg (sell − buy), add them, × contract size × number of contracts.</div>`,
